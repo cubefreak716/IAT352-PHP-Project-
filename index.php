@@ -14,6 +14,14 @@
 <body>
 
 
+<nav>
+  <a href="index.php"> Home </a>
+  <a href="browse.php"> Browse </a>
+  <a href="settings.php"> Settings </a>
+  <a href="signup.php"> Sign up </a>
+</nav>
+
+
 <? php
 echo "test";
 
