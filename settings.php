@@ -22,6 +22,11 @@
   <a href="signup.php"> Sign up </a>
 </nav>
 
+<?php
+$myfile =fopen("registrationText.txt","r") or die ("Unable to open file!");
+ ?>
+
+<h1> Profile Settings</h1>
 
 <div class="square">
   <p>Profile Picture</p>
@@ -30,25 +35,35 @@
   -->
 </div>
 <div class="userinfo">
+
   <p>User Name Goes Here:</p>
   <div class="userinfosquare">
     <!-- to be read from text file -->
-    <p>UserName</p>
+    <?php
+    echo "<p>", fgets($myfile), "</p>";
+     ?>
   </div>
   <p>Password</p>
   <div class="userinfosquare">
     <!-- to be read from text file -->
-    <p>Password</p>
+    <?php
+    echo "<p>", fgets($myfile), "</p>";
+     ?>
   </div>
   <p>Email</p>
   <div class="userinfosquare">
     <!-- to be read from text file -->
-    <p>Email@whatever.com</p>
+    <?php
+    echo "<p>", fgets($myfile), "</p>";
+     ?>
   </div>
   <p>Phone Number</p>
   <div class="userinfosquare">
     <!-- to be read from text file -->
-    <p>604444444</p>
+    <?php
+    echo "<p>", fgets($myfile), "</p>";
+    fclose($myfile);
+     ?>
   </div>
   <p>Notification Type</p>
     <!-- to be read from text file possibly? -->
