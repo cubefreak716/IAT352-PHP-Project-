@@ -4,7 +4,8 @@
 
 html{
   font-family: "Arial", sans-serif;
-
+  margin:0;
+  padding:0;
 }
 
 a{
@@ -16,10 +17,11 @@ nav {
   background-color: rgba(180, 180, 180, 1);
   width:100%;
   margin:0;
+
 }
 nav>a{
   margin-right;0.2rem;
-  font-size:1.3rem;
+  font-size:1rem;
   color:white;
   transition: color 1s ease-out;
 }
@@ -104,7 +106,19 @@ nav>a:hover{
 }
 
 .signup-signupbox{
-  width:20rem;
+  width:30rem;
+  margin-top:3rem;
   margin-left:auto;
   margin-right:auto;
+  padding-top:0.8rem;
+  padding-bottom:3rem;
+  padding-left:2rem;
+  background-color:#F8F8F8;
+}
+.signupform{
+  margin-left:3rem;
+
+}
+input{
+  margin-bottom:0.5rem;
 }

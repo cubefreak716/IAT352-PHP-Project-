@@ -26,20 +26,26 @@
 <div class="signup-signupbox">
   <h1>Sign up</h1>
 
-  <form action="registration.php" method="get">
-    Username: <input type="text" name="username"><br>
-    
-    Password: <input type="text" name="password"><br>
+  <form class="signupform" action="registration.php" method="get">
+    <label for="Uname">Username: </label><br><input type="text" name="username"><br>
 
-    Confirm Password:<input type="text" name="password2"><br>
+    <label for="Pword">Password: </label><br><input type="text" name="password"><br>
 
-    Email: <input type="text" name="email"><br>
+    <label for="Pword2">Confirm Password: </label><br><input type="text" name="password2"><br>
 
-    Phone Number: <input type="text" name="phone"><br>
+    <label for="Email">Email: </label> <br><input type="text" name="email"><br>
 
-    Notification Type:
+    <label for="Pnumber">Phone Number: </label> <br><input type="text" name="phone"><br>
+
+    <label for="Notif">Notification Preference: </label><br>
     <input type="radio" name="notification" value="sms">sms
-    <input type="radio" name="notification" value="mail">email <br>
+    <input type="radio" name="notification" value="mail">email <br><br>
+
+    <label for="Propicture">Profile Picture</label>
+    <input type="submit" name="upload" value="Upload">
+
+
+    <br><br><br>
 
     <input type="submit" name="submit" value="Submit">
 
