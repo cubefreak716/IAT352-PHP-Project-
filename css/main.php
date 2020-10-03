@@ -28,6 +28,9 @@ nav>a{
 nav>a:hover{
   color:black;
 }
+li{
+  list-style: none;
+}
 
 <!-- flexbox -->
 *, *::after, *::before{
@@ -117,8 +120,24 @@ nav>a:hover{
 }
 .signupform{
   margin-left:3rem;
-
 }
 input{
+  margin-bottom:0.5rem;
+}
+.browse-box{
+  padding-top:3rem;
+}
+.filter-box{
+  flex:1;
+  background-color:#F8F8F8;
+  font-size:0.8rem;
+}
+.items-box{
+  flex:4;
+  margin-left:0.5rem;
+}
+.item{
+  background-color:#b5b5b5;
+  height:3rem;
   margin-bottom:0.5rem;
 }
