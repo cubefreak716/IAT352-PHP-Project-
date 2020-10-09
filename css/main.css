@@ -12,5 +12,9 @@ nav {
 h1{
   background-color: rgba(220, 220, 220, 1);
   width:auto;
-  font-size: 
+  font-size:
+}
+
+li{
+  list-style: none;
 }
