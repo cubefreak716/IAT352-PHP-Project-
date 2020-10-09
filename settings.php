@@ -62,18 +62,18 @@ $myfile =fopen("registrationText.txt","r") or die ("Unable to open file!");
     <!-- to be read from text file -->
     <?php
     echo "<p>", fgets($myfile), "</p>";
-    fclose($myfile);
+
      ?>
   </div>
   <p>Notification Type</p>
     <!-- to be read from text file possibly? -->
-  <label class="container">SMS
-  <input type="radio" checked="checked" name="radio">
-  <span class="checkmark"></span>
-</label>
-<label class="container">Email
-  <input type="radio" name="radio">
-  <span class="checkmark"></span>
+    <div class="userinfosquare">
+    <?php
+    $notifType = fgets($myfile);
+    echo $notifType;
+    fclose($myfile);
+    ?>
+  </div>
 </label>
 
 

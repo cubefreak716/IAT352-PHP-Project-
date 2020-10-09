@@ -23,3 +23,15 @@
   font-size:1vw;
 
 }
+
+.iteminfo{
+
+  margin-left:2vw;
+  font-size:1vw;
+
+}
+
+.container{
+display:flex;
+
+}
