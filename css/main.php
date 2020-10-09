@@ -83,14 +83,30 @@ li{
 
 .index-signupbutton{
   width:5rem;
+  margin-top:20rem;
   padding:0.3rem;
   text-align:center;
   color:white;
   background-color: rgba(200, 200, 200, 1);
   transition:background-color 0.3s ease-out;
+  float:right;
 }
 .index-signupbutton:hover{
-  background-color: rgba(160, 160, 160, 1);
+  background-color: rgba(140, 140, 140, 1);
+}
+
+.index-browsebutton{
+  width:8rem;
+  margin-top:20rem;
+  padding:0.3rem;
+  text-align:center;
+  color:white;
+  background-color: rgba(180, 180, 180, 1);
+  transition:background-color 0.3s ease-out;
+  float:right;
+}
+.index-browsebutton:hover{
+  background-color: rgba(140, 140, 140, 1);
 }
 
 .index-meterbox{
@@ -140,4 +156,9 @@ input{
   background-color:#b5b5b5;
   height:3rem;
   margin-bottom:0.5rem;
+  transition:background-color 0.3s ease-out;
+  text-align: center;
+}
+.item:hover{
+  background-color: rgba(160, 160, 160, 1);
 }

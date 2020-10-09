@@ -14,53 +14,47 @@
 </head>
 
 <body>
+  <nav>
+    <a href="index.php"> Home </a>
+    <a href="browse.php"> Browse </a>
+    <a href="settings.php"> Settings </a>
+    <a href="signup.php"> Sign up </a>
+  </nav>
 
+  <div class="box index-top">
+    <div class="index-heading">
+      <h1>Surrey Parking Meter Nav </h1>
+      <a href="browse.php"><div class="index-browsebutton">Browse Meters</div></a>
+    </div>
 
-<nav>
-  <a href="index.php"> Home </a>
-  <a href="browse.php"> Browse </a>
-  <a href="settings.php"> Settings </a>
-  <a href="signup.php"> Sign up </a>
-</nav>
+    <div class="index-signupbox">
+      <h2>Sign up</h2>
+      <a href="signup.php"><div class="index-signupbutton">Confirm</div></a>
+    </div>
 
-<div class="box index-top">
-  <div class="index-heading">
-    <h1>Surrey Parking Meter Nav </h1>
   </div>
 
-  <div class="index-signupbox">
-    <h2>Sign up</h2>
-    <a href="signup.php"><div class="index-signupbutton">Confirm</div></a>
+  <div class="index-heading-2"><h2>Favourite Meters</h2></div>
+  <div class="box index-bottom">
+
+    <a href="item.php">
+      <div class="index-meterbox">
+        Meter 1
+      </div>
+    </a>
+    <a href="item.php">
+      <div class="index-meterbox">
+        Meter 2
+      </div>
+    </a>
+    <a href="item.php">
+      <div class="index-meterbox">
+        Meter 3
+      </div>
+    </a>
+
   </div>
 
-</div>
-
-<div class="index-heading-2"><h2>Favourite Meters</h2></div>
-<div class="box index-bottom">
-
-  <a href="item.php">
-    <div class="index-meterbox">
-      Meter 1
-    </div>
-  </a>
-  <a href="item.php">
-    <div class="index-meterbox">
-      Meter 2
-    </div>
-  </a>
-  <a href="item.php">
-    <div class="index-meterbox">
-      Meter 3
-    </div>
-  </a>
-
-</div>
-
-
-<?php
-  echo "test";
-
-?>
 
 </body>
 </html>

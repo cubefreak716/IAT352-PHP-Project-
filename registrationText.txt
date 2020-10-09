@@ -1,5 +1,5 @@
-JohnJones123
-1234
-lululul@sfu.ca
-123-234-2142
-sms
+username is required
+Password is required
+Email is required
+Phone number is required
+

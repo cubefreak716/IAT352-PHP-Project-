@@ -15,6 +15,19 @@
 
 <body>
 
+<?php
+  $itemList = array(
+  "Item 1",
+  "Item 2",
+  "Item 3",
+  "Item 4",
+  "Item 5",
+  "Item 6",
+  "Item 7",
+  "Item 8",
+  "Item 9",
+  "Item 10" );
+ ?>
 
 <nav>
   <a href="index.php"> Home </a>
@@ -69,17 +82,15 @@
     </ul>
   </div>
 
+
   <div class="items-box">
-    <div class="item"></div>
-    <div class="item"></div>
-    <div class="item"></div>
-    <div class="item"></div>
-    <div class="item"></div>
-    <div class="item"></div>
-    <div class="item"></div>
-    <div class="item"></div>
-    <div class="item"></div>
-    <div class="item"></div>
+    <?php
+      for($i = 0; $i<count($itemList); $i++){
+      echo "<a href='item.php'><div class='item'>";
+      print_r($itemList[$i]);
+      echo "</div></a>";
+      }
+    ?>
 
     <div class=" box pages-bar">
       <div class="prev"><</div>
