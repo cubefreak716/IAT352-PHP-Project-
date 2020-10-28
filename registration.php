@@ -24,6 +24,7 @@
 
 <?php
 
+  
   $username = "";
   $password = "";
   $email= "";
@@ -58,7 +59,7 @@
  ?>
 
  <?php
-  
+
   echo "Username: ".$username."";
   echo "<br />";
   echo "Email:  ".$email."";

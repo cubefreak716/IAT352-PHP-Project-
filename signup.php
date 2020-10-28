@@ -23,6 +23,7 @@
   <a href="signup.php"> Sign up </a>
 </nav>
 
+<!-- registration form -->
 <div class="signup-signupbox">
   <h1>Sign up</h1>
 
