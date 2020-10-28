@@ -24,6 +24,8 @@
 
 <?php
 $myfile =fopen("registrationText.txt","r") or die ("Unable to open file!");
+  // $idname = $_GET['Id'];
+  // echo "<h1> $idname </h1>";
  ?>
 
 <h1> Insert Item Name</h1>

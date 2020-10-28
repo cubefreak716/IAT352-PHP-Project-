@@ -30,26 +30,9 @@
         );
       }
       else{
-        echo "Database good to go";
+
       }
     ?>
-
-    <?php
-      $itemList = array();
-      //query for drop down list to show all orders from table orders
-      $query = "SELECT ZONE_NAME ";
-      $query .= "FROM pay_stations ";
-      // $query .= "ORDER BY orderNumber ASC";
-      $result = mysqli_query($connection, $query);
-      while ($row = mysqli_fetch_row($result)) {
-          //create option for each order
-          // echo "$row[0] <br> ";
-          $itemList[] = $row[0];
-      }
-
-    // temporary array list for item browsing
-
-     ?>
 
     <nav>
       <a href="index.php"> Home </a>
@@ -60,23 +43,24 @@
 
     <!-- Filter box -->
     <div class="browse-box box">
+      <form class="queryForm" action="browse.php" method="post">
       <div class="filter-box">
         Meter type
         <ul>
-          <li><input type="radio" name="Paystation" value="paystation">Paystation</li>
-          <li><input type="radio" name="EV Station" value="evstation">EV charging station</li>
+          <li><input type="checkbox" name="metertype[]" value="Paystation">Paystation</li>
+          <li><input type="checkbox" name="metertype[]" value="EV">EV charging station</li>
         </ul>
         Operation Hours
         <ul>
-          <li><input type="radio" name="6to6" value="6am-6pm">6:00am - 6:00pm</li>
-          <li><input type="radio" name="8to11" value="8am-11pm">8:00am - 11:00pm</li>
-          <li><input type="radio" name="cityhours" value="cityhours">City Hall/Library Hours</li>
-          <li><input type="radio" name="24hours" value="24hrs">24 hours </li>
+          <li><input type="checkbox" name="ophours[]" value="6:00 AM to 6:00 PM">6:00am - 6:00pm</li>
+          <li><input type="checkbox" name="ophours[]" value="8:00 AM to 11:00 PM">8:00am - 11:00pm</li>
+          <li><input type="checkbox" name="ophours[]" value="Outside of City Hall/Library Hours">City Hall/Library Hours</li>
+          <li><input type="checkbox" name="ophours[]" value="24 Hours">24 hours </li>
         </ul>
         Operation Days
         <ul>
-          <li><input type="radio" name="7days" value="7days">7 days a week</li>
-          <li><input type="radio" name="Weekdays" value="weekdays">Weekdays</li>
+          <li><input type="checkbox" name="opdays[]" value="7 Days/Week">7 days a week</li>
+          <li><input type="checkbox" name="opdays[]" value="Mon - Fri">Weekdays</li>
         </ul>
         Hourly Rate
         <ul>
@@ -88,32 +72,171 @@
         </ul>
         Zone Type
         <ul>
-          <li><input type="radio" name="OnStreet" value="onstreet">On-street</li>
-          <li><input type="radio" name="Public" value="public">Public</li>
-          <li><input type="radio" name="Employee" value="employee">Employee</li>
-          <li><input type="radio" name="Underground" value="underground">Underground</li>
-          <li><input type="radio" name="PavedOffStreet" value="pavedoffstreet">Surface Paved Off-street</li>
-          <li><input type="radio" name="GravelOffStreet" value="graveloffstreet">Surface Gravel Off-street</li>
-          <li><input type="radio" name="Fleet" value="fleet">Fleet</li>
+          <li><input type="checkbox" name="zonetype[]" value="On-Street Parking">On-street</li>
+          <li><input type="checkbox" name="zonetype[]" value="Public">Public</li>
+          <li><input type="checkbox" name="zonetype[]" value="employee">Employee</li>
+          <li><input type="checkbox" name="zonetype[]" value="underground">Underground</li>
+          <li><input type="checkbox" name="zonetype[]" value="pavedoffstreet">Surface Paved Off-street</li>
+          <li><input type="checkbox" name="zonetype[]" value="Surface Gravel Off-Street">Surface Gravel Off-street</li>
+          <li><input type="checkbox" name="zonetype[]" value="fleet">Fleet</li>
         </ul>
         Payment Methods
         <ul>
-          <li><input type="radio" name="Cash" value="cash">Cash</li>
-          <li><input type="radio" name="CreditCard" value="credit">Credit Card</li>
-          <li><input type="radio" name="PaybyPhone" value="paybyphone">Pay by Phone</li>
-          <li><input type="radio" name="Invoice" value="invoice">Invoice</li>
+          <li><input type="checkbox" name="paymethod[]" value="Cash">Cash</li>
+          <li><input type="checkbox" name="paymethod[]" value="Credit Card">Credit Card</li>
+          <li><input type="checkbox" name="paymethod[]" value="PayByPhone">Pay by Phone</li>
+          <li><input type="checkbox" name="paymethod[]" value="Invoice">Invoice</li>
         </ul>
+
+        <input type="submit" name="search" value="Search">
+
+      </form>
       </div>
+
+      <?php
+        $itemList = array();
+        $itemList[] = 13;
+        $itemList[] = 14;
+
+        //checkbox arrays
+        $selectedMeterType = array();
+        $selectedOperationHours = array();
+        $selectedOperationDays = array();
+          //sliders
+        $selectedZoneType = array();
+        $selectedPaymentMethods = array();
+
+        $query = "SELECT * ";
+        $query .= " FROM pay_stations ";
+        $query .= "WHERE ";
+
+        //if meter type was selected
+        if(isset($_POST['metertype'])){
+          $selectedMeterType = $_POST['metertype'];
+          // $query .= "WHERE pay_stations.METER_TYPE = 'Paystation' ";
+          if(!empty($_POST["metertype"])){
+            foreach($selectedMeterType as $value){
+              $query .= "pay_stations.METER_TYPE LIKE '%" . $value . "%' ";
+              $query .= " OR ";
+            }
+            $query = substr($query, 0,-4);
+
+          }
+        }
+        else{
+          //nothing was selected
+          $query .= "pay_stations.METER_TYPE LIKE '%%' ";
+        }
+        //if operation hours was selected
+        if(isset($_POST['ophours'])){
+            $selectedOperationHours = $_POST['ophours'];
+                      $query .= "AND ";
+            if(!empty($_POST["ophours"])){
+              foreach($selectedOperationHours as $value){
+                $query .= "pay_stations.OPERATION_HOURS LIKE '%" . $value . "%' ";
+                $query .= " OR ";
+              }
+              $query = substr($query, 0,-3);
+            }
+        }
+        else{
+          //nothing was selected
+          $query .= "AND ";
+          $query .= "pay_stations.OPERATION_HOURS LIKE '%%' ";
+        }
+        //if operation days was selected
+        if(isset($_POST['opdays'])){
+            $selectedOperationDays = $_POST['opdays'];
+                      $query .= "AND ";
+            if(!empty($_POST["opdays"])){
+              foreach($selectedOperationDays as $value){
+                $query .= "pay_stations.OPERATION_DAYS LIKE '%" . $value . "%' ";
+                $query .= " OR ";
+              }
+              $query = substr($query, 0,-3);
+            }
+        }
+        else{
+          //nothing was selected
+          $query .= "AND ";
+          $query .= "pay_stations.OPERATION_DAYS LIKE '%%' ";
+        }
+        //if zone type was selected
+        if(isset($_POST['zonetype'])){
+            $selectedZoneType = $_POST['zonetype'];
+                      $query .= "AND ";
+            if(!empty($_POST["zonetype"])){
+              foreach($selectedZoneType as $value){
+                $query .= "pay_stations.ZONE_TYPE LIKE '%" . $value . "%' ";
+                $query .= " OR ";
+              }
+              $query = substr($query, 0,-3);
+            }
+        }
+        else{
+          //nothing was selected
+          $query .= "AND ";
+          $query .= "pay_stations.ZONE_TYPE LIKE '%%' ";
+        }
+        //if Payment method was selected
+        if(isset($_POST['paymethod'])){
+            $selectedPaymentMethods = $_POST['paymethod'];
+                      $query .= "AND ";
+            if(!empty($_POST["paymethod"])){
+              foreach($selectedPaymentMethods as $value){
+                $query .= "pay_stations.PAYMENT_METHODS LIKE '%" . $value . "%' ";
+                $query .= " OR ";
+              }
+              $query = substr($query, 0,-3);
+            }
+        }
+        else{
+          //nothing was selected
+          $query .= "AND ";
+          $query .= "pay_stations.PAYMENT_METHODS LIKE '%%' ";
+        }
+
+
+      $result = mysqli_query($connection, $query);
+      if(!$result){
+        die("query failed");
+      }
+      else{
+        // echo "success";
+      }
+
+      ?>
 
       <!-- Items from future database -->
       <div class="items-box">
         <?php
-        // for loop to grab items from future database
-          for($i = 0; $i<count($itemList); $i++){
-          echo "<a href='item.php'><div class='item'>";
-          print_r($itemList[$i]);
-          echo "</div></a>";
+          // for loop to grab items from future database
+          while($row = mysqli_fetch_assoc($result)){
+            echo "<a href='item.php'><div class='item'>";
+            echo $row["METER_ID"];
+            echo " ";
+            echo $row["METER_TYPE"];
+            echo " ";
+            echo $row["OPERATION_HOURS"];
+            echo " ";
+            echo $row["OPERATION_DAYS"];
+            echo " ";
+            echo $row["ZONE_TYPE"];
+            echo " ";
+            echo $row["PAYMENT_METHODS"];
+            echo "</div></a>";
           }
+
+          // for($i = 0; $i<count($itemList); $i++){
+          // echo "<a href=";
+          // echo '"item.php?Id='.$itemList[$i].'">';
+          // echo "<div class='item'>";
+          // print_r($itemList[$i]);
+          // echo "</div></a>";
+          // }
+
+
+
         ?>
 
         <!-- Page navigation for items -->
