@@ -14,6 +14,24 @@
 </head>
 
 <body>
+  <?php
+    //connection set up
+    $dbhost = "localhost";
+    $dbuser = "root";
+    $dbpass = "";
+    $dbname = "louis_fourie";
+    $connection = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
+
+    //testing connection
+    if(mysqli_connect_errno()){
+      die("Database connection failed: " . mysqli_connect_error() .
+      " (" . mysqli_connect_errno() . ")"
+      );
+    }
+    else{
+
+    }
+  ?>
 
 <nav>
   <a href="index.php"> Home </a>
@@ -24,7 +42,7 @@
 
 <?php
 
-  
+
   $username = "";
   $password = "";
   $email= "";
@@ -60,6 +78,25 @@
 
  <?php
 
+ $query  = "INSERT INTO users (";
+ $query .= "  username, password, phone_number, email";
+ $query .= ") VALUES (";
+ $query .= " '{$username}', '{$password}', '{$phone}', '{$email}'";
+ $query .= ")";
+
+ $result = mysqli_query($connection, $query);
+
+ if ($result) {
+   // Success
+   // redirect_to("successpage.php");
+   echo "Success!";
+ } else {
+   // Failure
+   // $message = "Subject creation failed";
+   die("Database query failed. " . mysqli_error($connection));
+ }
+
+
   echo "Username: ".$username."";
   echo "<br />";
   echo "Email:  ".$email."";
@@ -67,7 +104,7 @@
   echo "Welcome! ";
   echo "<br />";
 
-
+  mysqli_close($connection);
   ?>
 
 </body>

@@ -1,5 +1,5 @@
-username is required
-Password is required
-Email is required
-Phone number is required
+LauraChen
+1234
+woo@sfu.ca
+12345678
 

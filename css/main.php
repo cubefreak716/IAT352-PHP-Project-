@@ -142,6 +142,9 @@ input{
 }
 .browse-box{
   padding-top:3rem;
+  width:60%;
+  margin-left:auto;
+  margin-right:auto;
 }
 .filter-box{
   flex:1;
@@ -153,12 +156,24 @@ input{
   margin-left:0.5rem;
 }
 .item{
-  background-color:#b5b5b5;
-  height:3rem;
+  background-color:rgb(242, 242, 242);
   margin-bottom:0.5rem;
   transition:background-color 0.3s ease-out;
-  text-align: center;
+  text-align: left;
+  padding-top:1.5rem;
+  padding-left:0.5rem;
+  padding-bottom:1.5rem;
 }
 .item:hover{
   background-color: rgba(160, 160, 160, 1);
+}
+.item-num{
+  font-size: 1.1rem;
+  font-weight:bold;
+  display:inline;
+}
+.item-stationtype{
+  font-weight:bold;
+  color:rgb(34, 70, 94);
+  display:inline;
 }

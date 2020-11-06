@@ -10,7 +10,6 @@
   <link rel="stylesheet" href="css/main.php">
   <link rel="stylesheet" href="css/fonts.css">
 
-
 </head>
 
   <body>
@@ -93,7 +92,21 @@
       </form>
       </div>
 
+
       <?php
+        if(isset($_GET['pageNum'])){
+          $pageNum = $_GET['pageNum'];
+        } else{
+          $pageNum = 1;
+        }
+
+        $maxItemPerPage = 10;
+        $offset = ($pageNum-1) * $maxItemPerPage;
+        $totalPagesSQL = "SELECT COUNT(*) FROM pay_stations";
+        $result2 = mysqli_query($connection, $totalPagesSQL);
+        $total_rows = mysqli_fetch_array($result2)[0];
+        $total_pages = ceil($total_rows / $maxItemPerPage);
+
         $itemList = array();
         $itemList[] = 13;
         $itemList[] = 14;
@@ -196,6 +209,8 @@
           $query .= "pay_stations.PAYMENT_METHODS LIKE '%%' ";
         }
 
+        $query .= "LIMIT $offset, $maxItemPerPage";
+
 
       $result = mysqli_query($connection, $query);
       if(!$result){
@@ -213,10 +228,11 @@
           // for loop to grab items from future database
           while($row = mysqli_fetch_assoc($result)){
             echo "<a href='item.php'><div class='item'>";
+            echo "<div class='item-num'>";
             echo $row["METER_ID"];
-            echo " ";
+            echo "</div> <div class='item-stationtype'>";
             echo $row["METER_TYPE"];
-            echo " ";
+            echo "</div> ";
             echo $row["OPERATION_HOURS"];
             echo " ";
             echo $row["OPERATION_DAYS"];
@@ -235,19 +251,32 @@
           // echo "</div></a>";
           // }
 
-
-
         ?>
+
 
         <!-- Page navigation for items -->
         <div class=" box pages-bar">
-          <div class="prev"><</div>
-          1
-          <div class="next">></div>
+          <?php
+          if($pageNum != 1){
+            echo "<a href='browse.php?pageNum=". ($pageNum - 1). "'> < </a>";
+          }
+          echo "<em>";
+          echo $pageNum;
+          echo "</em>";
+          if($pageNum != $total_pages){
+            echo "<a href='browse.php?pageNum=". ($pageNum + 1 ). "'> > </a>";
+          }
+          ?>
+          <!-- <a href="<?php echo 'browse.php?pageNum='.($pageNum + 1); ?>">></a> -->
         </div>
+
+
+
+
 
       </div>
     </div>
+    <!-- end of browse box -->
 
   </body>
 </html>
