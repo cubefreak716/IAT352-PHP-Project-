@@ -10,6 +10,66 @@
   <link rel="stylesheet" href="css/main.php">
   <link rel="stylesheet" href="css/louiscss.php">
   <link rel="stylesheet" href="css/fonts.css">
+
+  <?php
+      if(isset($_GET["data"]))
+      {
+
+          $data = $_GET["data"];
+          echo $data;
+      }
+
+  ?>
+  <?php
+    //connection set up
+    $dbhost = "localhost";
+    $dbuser = "root";
+    $dbpass = "";
+    $dbname = "louis_fourie";
+    $connection = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
+
+    //testing connection
+    if(mysqli_connect_errno()){
+      die("Database connection failed: " . mysqli_connect_error() .
+      " (" . mysqli_connect_errno() . ")"
+      );
+    }
+    else{
+
+    }
+    $query="SELECT * from pay_stations where METER_ID =".$data;
+    $result = mysqli_query($connection, $query);
+    if(!$result){
+      die("query failed");
+    }
+    else{
+      // echo "success";
+    }
+    while($row = mysqli_fetch_assoc($result)){
+
+
+
+      $meterType= $row["METER_TYPE"];
+
+      $operationHours= $row["OPERATION_HOURS"];
+
+      $operationDays= $row["OPERATION_DAYS"];
+
+      $zoneType= $row["ZONE_TYPE"];
+
+      $paymentMethods= $row["PAYMENT_METHODS"];
+
+      $hourlyRate=$row["HOURLY_RATE"];
+
+      $dailyRate= $row["DAILY_RATE"];
+
+      $maximumHours=$row["MAXIMUM_HOURS"];
+
+      $lat=$row["Latitude"];
+      $lon=$row["Longitude"];
+    }
+  ?>
+
 </head>
 
 <body>
@@ -39,18 +99,29 @@ $myfile =fopen("registrationText.txt","r") or die ("Unable to open file!");
 
 <div class="container">
 
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6201.8767840301925!2d-122.8539429915634!3d49.18978401278199!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5485d82ad672ef79%3A0x7b44815a5cbce013!2sSurrey%20Central%20Station!5e0!3m2!1sen!2sca!4v1602109306684!5m2!1sen!2sca" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+<div id="googleMap" style="width:35%;height:400px;"></div>
 
+<script>
+function myMap() {
+var mapProp= {
+  center:new google.maps.LatLng(<?php echo $lat.",".$lon; ?>),
+  zoom:20,
+};
+var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+}
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGdq4mHp4USTKJUduSaukvGy5tcdtf4IU&callback=myMap"></script>
 <div class="iteminfo">
 
-  <p>Meter type:</p>
-  <p>Operation Hours:</p>
-  <p>Operation Days:</p>
-  <p>Hourly Rate:</p>
-  <p>Daily Rate:</p>
-  <p>Maximum Hours:</p>
-  <p>Zone Type:</p>
-  <p>Payment Methods:</p>
+  <p>Meter type: <?php echo $meterType  ?></p>
+  <p>Operation Hours: <?php echo $operationHours  ?> </p>
+  <p>Operation Days: <?php echo $operationDays  ?> </p>
+  <p>Hourly Rate: <?php echo $hourlyRate  ?></p>
+  <p>Daily Rate: <?php echo $dailyRate  ?></p>
+  <p>Maximum Hours: <?php echo $maximumHours  ?></p>
+  <p>Zone Type: <?php echo $zoneType  ?></p>
+  <p>Payment Methods: <?php echo $paymentMethods  ?></p>
 
 </div>
 
