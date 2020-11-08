@@ -227,7 +227,7 @@
         <?php
           // for loop to grab items from future database
           while($row = mysqli_fetch_assoc($result)){
-            echo "<a href='item.php'><div class='item'>";
+            echo "<a href='item.php?data=".$row["METER_ID"]."'><div class='item'>";
             echo "<div class='item-num'>";
             echo $row["METER_ID"];
             echo "</div> <div class='item-stationtype'>";
