@@ -7,7 +7,8 @@
   <meta name="viewport" content="width=device-width, initial=scale=1.0"> <!-- -->
 
   <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/main.php">
+  <!-- <link rel="stylesheet" href="css/main.php"> -->
+  <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/louiscss.php">
   <link rel="stylesheet" href="css/fonts.css">
 
@@ -73,14 +74,13 @@
 </head>
 
 <body>
-
-
-<nav>
-  <a href="index.php"> Home </a>
-  <a href="browse.php"> Browse </a>
-  <a href="settings.php"> Settings </a>
-  <a href="signup.php"> Sign up </a>
-</nav>
+  <nav class="box">
+    <div class="nav-title">Paystation Finder </div>
+    <a href="index.php"><div class="nav-button">  Home  </div></a>
+    <a href="browse.php"><div class="nav-button"> Browse </div></a>
+    <a href="settings.php"> <div class="nav-button"> Settings  </div></a>
+    <a href="signup.php"><div class="signup-button">  Sign up </div></a>
+  </nav>
 
 <?php
 $myfile =fopen("registrationText.txt","r") or die ("Unable to open file!");

@@ -7,56 +7,69 @@
   <meta name="viewport" content="width=device-width, initial=scale=1.0"> <!-- -->
 
   <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/main.php">
+  <!-- <link rel="stylesheet" href="css/main.php"> -->
+  <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/fonts.css">
 
 
 </head>
 
 <body>
+  <nav class="box">
+    <div class="nav-title">Paystation Finder </div>
+    <a href="index.php"><div class="nav-button">  Home  </div></a>
+    <a href="browse.php"><div class="nav-button"> Browse </div></a>
+    <a href="settings.php"> <div class="nav-button"> Settings  </div></a>
+    <a href="signup.php"><div class="signup-button">  Sign up </div></a>
+  </nav>
 
+<div class="box">
+  <!-- registration form -->
+  <div class="signup-form">
+    <h2>Sign up</h2>
 
+    <form class="signupform" action="registration.php" method="get">
+      <label for="Uname">Username: </label><br><input type="text" name="username"><br>
 
+      <label for="Pword">Password: </label><br><input type="text" name="password"><br>
 
-<nav>
-  <a href="index.php"> Home </a>
-  <a href="browse.php"> Browse </a>
-  <a href="settings.php"> Settings </a>
-  <a href="signup.php"> Sign up </a>
-</nav>
+      <label for="Pword2">Confirm Password: </label><br><input type="text" name="password2"><br>
 
-<!-- registration form -->
-<div class="signup-signupbox">
-  <h1>Sign up</h1>
+      <label for="Email">Email: </label> <br><input type="text" name="email"><br>
 
-  <form class="signupform" action="registration.php" method="get">
-    <label for="Uname">Username: </label><br><input type="text" name="username"><br>
+      <label for="Pnumber">Phone Number: </label> <br><input type="text" name="phone"><br>
 
-    <label for="Pword">Password: </label><br><input type="text" name="password"><br>
+      <label for="Notif">Notification Preference: </label><br>
+      <input type="radio" name="notification" value="sms">sms
+      <input type="radio" name="notification" value="mail">email <br><br>
 
-    <label for="Pword2">Confirm Password: </label><br><input type="text" name="password2"><br>
+      <label for="Propicture">Profile Picture</label>
+      <input type="submit" name="upload" value="Upload">
 
-    <label for="Email">Email: </label> <br><input type="text" name="email"><br>
+      <br><br><br>
 
-    <label for="Pnumber">Phone Number: </label> <br><input type="text" name="phone"><br>
+      <input type="submit" name="submit" value="Submit">
 
-    <label for="Notif">Notification Preference: </label><br>
-    <input type="radio" name="notification" value="sms">sms
-    <input type="radio" name="notification" value="mail">email <br><br>
+    </form>
+  </div>
 
-    <label for="Propicture">Profile Picture</label>
-    <input type="submit" name="upload" value="Upload">
+  <!-- log in form -->
+  <div class="signup-form">
+    <h2>Log In</h2>
 
+    <form class="signupform" action="login.php" method="get">
+      <label for="Uname">Username: </label><br><input type="text" name="username"><br>
 
-    <br><br><br>
+      <label for="Pword">Password: </label><br><input type="text" name="password"><br>
 
-    <input type="submit" name="submit" value="Submit">
+      <br><br><br>
 
-  </form>
+      <input type="submit" name="submit" value="Submit">
+
+    </form>
+  </div>
 
 </div>
-
-
 
 
 </body>

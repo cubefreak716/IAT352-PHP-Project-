@@ -7,6 +7,9 @@ html{
   margin:0;
   padding:0;
 }
+body{
+  margin:0;
+}
 
 a{
   text-decoration:none;
@@ -14,20 +17,49 @@ a{
 }
 
 nav {
-  background-color: rgba(180, 180, 180, 1);
   width:100%;
   margin:0;
-
+  background-color: rgba(171, 222, 184, 1);
+  height:3rem;
 }
-nav>a{
-  margin-right;0.2rem;
-  font-size:1rem;
+.nav-title{
+  flex:5;
+  font-size:1.8rem;
   color:white;
-  transition: color 1s ease-out;
+  padding-left:3rem;
+  padding-top:0.5rem;
 }
-nav>a:hover{
-  color:black;
+.nav-button{
+  flex:1;
+  margin-right:0.2rem;
+  font-size:1rem;
+  background-color: rgba(197, 250, 211, 0);
+  transition: background-color 1s ease-out;
+  padding-top:0.8rem;
+  text-align:center;
 }
+.nav-button:hover{
+  background-color: rgba(197, 250, 211, 1);
+}
+.nav-button>a{
+    color:white;
+}
+.signup-button{
+  flex:1;
+  margin-right:0.2rem;
+  font-size:1rem;
+  background-color: rgba(155, 209, 169,1);
+  transition: background-color 1s ease-out;
+  padding-top:0.8rem;
+  text-align:center;
+}
+.signup-button>a{
+    color:white;
+}
+.signup-button:hover{
+  background-color: rgba(155, 209, 169,0);
+}
+
 li{
   list-style: none;
 }
@@ -176,4 +208,8 @@ input{
   font-weight:bold;
   color:rgb(34, 70, 94);
   display:inline;
+}
+
+.icon-meter{
+  width: 2rem;
 }

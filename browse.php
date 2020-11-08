@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial=scale=1.0"> <!-- -->
 
   <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/main.php">
+  <!-- <link rel="stylesheet" href="css/main.php"> -->
   <link rel="stylesheet" href="css/fonts.css">
-
+  <link rel="stylesheet" href="css/main.css">
 </head>
 
   <body>
@@ -33,43 +33,44 @@
       }
     ?>
 
-    <nav>
-      <a href="index.php"> Home </a>
-      <a href="browse.php"> Browse </a>
-      <a href="settings.php"> Settings </a>
-      <a href="signup.php"> Sign up </a>
+    <nav class="box">
+      <div class="nav-title">Paystation Finder </div>
+      <a href="index.php"><div class="nav-button">  Home  </div></a>
+      <a href="browse.php"><div class="nav-button"> Browse </div></a>
+      <a href="settings.php"> <div class="nav-button"> Settings  </div></a>
+      <a href="signup.php"><div class="signup-button">  Sign up </div></a>
     </nav>
 
     <!-- Filter box -->
     <div class="browse-box box">
       <form class="queryForm" action="browse.php" method="post">
       <div class="filter-box">
-        Meter type
+        <div class="filter-type-name">Meter type</div>
         <ul>
           <li><input type="checkbox" name="metertype[]" value="Paystation">Paystation</li>
           <li><input type="checkbox" name="metertype[]" value="EV">EV charging station</li>
         </ul>
-        Operation Hours
+        <div class="filter-type-name">Operation Hours</div>
         <ul>
           <li><input type="checkbox" name="ophours[]" value="6:00 AM to 6:00 PM">6:00am - 6:00pm</li>
           <li><input type="checkbox" name="ophours[]" value="8:00 AM to 11:00 PM">8:00am - 11:00pm</li>
           <li><input type="checkbox" name="ophours[]" value="Outside of City Hall/Library Hours">City Hall/Library Hours</li>
           <li><input type="checkbox" name="ophours[]" value="24 Hours">24 hours </li>
         </ul>
-        Operation Days
+        <div class="filter-type-name">Operation Days</div>
         <ul>
           <li><input type="checkbox" name="opdays[]" value="7 Days/Week">7 days a week</li>
           <li><input type="checkbox" name="opdays[]" value="Mon - Fri">Weekdays</li>
         </ul>
-        Hourly Rate
+        <div class="filter-type-name">Hourly Rate</div>
         <ul>
           <li>Rate slider</li>
         </ul>
-        Daily Rate
+        <div class="filter-type-name">Daily Rate</div>
         <ul>
           <li>Rate slider</li>
         </ul>
-        Zone Type
+        <div class="filter-type-name">Zone Type</div>
         <ul>
           <li><input type="checkbox" name="zonetype[]" value="On-Street Parking">On-street</li>
           <li><input type="checkbox" name="zonetype[]" value="Public">Public</li>
@@ -79,7 +80,7 @@
           <li><input type="checkbox" name="zonetype[]" value="Surface Gravel Off-Street">Surface Gravel Off-street</li>
           <li><input type="checkbox" name="zonetype[]" value="fleet">Fleet</li>
         </ul>
-        Payment Methods
+        <div class="filter-type-name">Payment Methods</div>
         <ul>
           <li><input type="checkbox" name="paymethod[]" value="Cash">Cash</li>
           <li><input type="checkbox" name="paymethod[]" value="Credit Card">Credit Card</li>
@@ -100,7 +101,7 @@
           $pageNum = 1;
         }
 
-        $maxItemPerPage = 10;
+        $maxItemPerPage = 8;
         $offset = ($pageNum-1) * $maxItemPerPage;
         $totalPagesSQL = "SELECT COUNT(*) FROM pay_stations";
         $result2 = mysqli_query($connection, $totalPagesSQL);
@@ -230,16 +231,27 @@
             echo "<a href='item.php?data=".$row["METER_ID"]."'><div class='item'>";
             echo "<div class='item-num'>";
             echo $row["METER_ID"];
-            echo "</div> <div class='item-stationtype'>";
-            echo $row["METER_TYPE"];
             echo "</div> ";
-            echo $row["OPERATION_HOURS"];
+            if(strpos($row["METER_TYPE"],'Paystation') !== false){
+              echo "<img class='icon-meter' src='img/parking.png' alt='paystationicon'> ";
+            }
+            if(strpos($row["METER_TYPE"],'EV') !== false){
+              echo "<img class='icon-meter' src='img/charging.png' alt='chargingstationicon'> ";
+            }
+
+            echo $row["ADDRESS"];
             echo " ";
-            echo $row["OPERATION_DAYS"];
-            echo " ";
-            echo $row["ZONE_TYPE"];
-            echo " ";
-            echo $row["PAYMENT_METHODS"];
+            // echo "</div> <div class='item-stationtype'>";
+            // echo $row["METER_TYPE"];
+            // echo "</div> ";
+            echo "<div class='item-hourrate'> Rate: ";
+            echo $row["HOURLY_RATE"];
+            echo "</div>";
+            // echo $row["OPERATION_DAYS"];
+            // echo " ";
+            // echo $row["ZONE_TYPE"];
+            // echo " ";
+            // echo $row["PAYMENT_METHODS"];
             echo "</div></a>";
           }
 
@@ -255,16 +267,22 @@
 
 
         <!-- Page navigation for items -->
-        <div class=" box pages-bar">
+        <div class="box pages-bar">
           <?php
           if($pageNum != 1){
-            echo "<a href='browse.php?pageNum=". ($pageNum - 1). "'> < </a>";
+            echo "<a class='pagination-button' href='browse.php?pageNum=". ($pageNum - 1). "'> < </a>";
           }
-          echo "<em>";
+          else{
+            echo "<a class='disabled-pagination' href='browse.php?pageNum=". ($pageNum - 1). "'></a>";
+          }
+          echo "<div class='curr-page'>";
           echo $pageNum;
-          echo "</em>";
+          echo "</div>";
           if($pageNum != $total_pages){
-            echo "<a href='browse.php?pageNum=". ($pageNum + 1 ). "'> > </a>";
+            echo "<a class='pagination-button' href='browse.php?pageNum=". ($pageNum + 1 ). "'> > </a>";
+          }
+          else{
+            echo "<a class='disabled-pagination' href='browse.php?pageNum=". ($pageNum + 1 ). "'></a>";
           }
           ?>
           <!-- <a href="<?php echo 'browse.php?pageNum='.($pageNum + 1); ?>">></a> -->
