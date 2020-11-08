@@ -7,8 +7,7 @@
   <meta name="viewport" content="width=device-width, initial=scale=1.0"> <!-- -->
 
   <link rel="stylesheet" href="css/normalize.css">
-  <!-- <link rel="stylesheet" href="css/main.php"> -->
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/main.php">
   <link rel="stylesheet" href="css/louiscss.php">
   <link rel="stylesheet" href="css/fonts.css">
 
@@ -17,7 +16,7 @@
       {
 
           $data = $_GET["data"];
-          echo $data;
+
       }
 
   ?>
@@ -38,7 +37,8 @@
     else{
 
     }
-    $query="SELECT * from pay_stations where METER_ID =".$data;
+    $query="SELECT * from pay_stations where METER_ID = '".$data."'";
+
     $result = mysqli_query($connection, $query);
     if(!$result){
       die("query failed");
@@ -66,6 +66,8 @@
 
       $maximumHours=$row["MAXIMUM_HOURS"];
 
+      $modelName= $row["METER_MODEL"];
+
       $lat=$row["Latitude"];
       $lon=$row["Longitude"];
     }
@@ -74,13 +76,14 @@
 </head>
 
 <body>
-  <nav class="box">
-    <div class="nav-title">Paystation Finder </div>
-    <a href="index.php"><div class="nav-button">  Home  </div></a>
-    <a href="browse.php"><div class="nav-button"> Browse </div></a>
-    <a href="settings.php"> <div class="nav-button"> Settings  </div></a>
-    <a href="signup.php"><div class="signup-button">  Sign up </div></a>
-  </nav>
+
+
+<nav>
+  <a href="index.php"> Home </a>
+  <a href="browse.php"> Browse </a>
+  <a href="settings.php"> Settings </a>
+  <a href="signup.php"> Sign up </a>
+</nav>
 
 <?php
 $myfile =fopen("registrationText.txt","r") or die ("Unable to open file!");
@@ -88,7 +91,7 @@ $myfile =fopen("registrationText.txt","r") or die ("Unable to open file!");
   // echo "<h1> $idname </h1>";
  ?>
 
-<h1> Insert Item Name</h1>
+<h1> <?php echo $modelName ?></h1>
 
 <div class="square">
   <p>Picture of Parking Model</p>
