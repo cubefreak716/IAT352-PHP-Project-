@@ -45,35 +45,60 @@
 <?php
 
 
-  $username = "";
-  $password = "";
-  $email= "";
-  $phone = "";
-  $notification = "";
+  $username = $password = $email= $phone = $notification = "";
+  $nameErr = $passwordErr = $emailErr = $phoneErr = "";
 
-  $username = !empty($_GET["username"]) ?$_GET["username"] : "username is required";
-  $password = !empty($_GET["password"]) ?$_GET["password"] : "Password is required";
-  $email = !empty($_GET["email"]) ?$_GET["email"] : "Email is required";
-  $phone = !empty($_GET["phone"]) ?$_GET["phone"] : "Phone number is required";
-  $notification = !empty($_GET["notification"]) ?$_GET["notification"] : "";
+  if($_SERVER["REQUEST_METHOD"] == "POST"){
+    //Username
+    if(empty($_POST["username"])){
+      $nameErr = "Username is required";
+    } else{
+      $username = test_input($_POST["username"]);
+      if(!preg_match(("/^[a-zA-Z0-9]*$/"), $username)){
+        $nameErr = "Only letters allowed";
+      }
+    }
 
-  $file = 'registrationText.txt';
 
-  if($handle = fopen($file,'w')){
-    echo "opened file <br/>";
-    fwrite($handle, '');
-    $content = "".$username."\n"
-      .$password."\n"
-      .$email."\n"
-      .$phone."\n"
-      .$notification."\n";
-    fwrite($handle, $content);
-
-    fclose($handle);
   }
-  else{
-    echo "error";
+
+  function test_input($data) {
+     $data = trim($data);
+     $data = stripslashes($data);
+     $data = htmlspecialchars($data);
+     return $data;
   }
+
+  echo $nameErr;
+
+
+  // $username = !empty($_POST["username"]) ?$_POST["username"] : "username is required";
+
+
+
+
+  // $password = !empty($_POST["password"]) ?$_POST["password"] : "Password is required";
+  // $email = !empty($_POST["email"]) ?$_POST["email"] : "Email is required";
+  // $phone = !empty($_POST["phone"]) ?$_POST["phone"] : "Phone number is required";
+  // $notification = !empty($_POST["notification"]) ?$_POST["notification"] : "";
+  //
+  // $file = 'registrationText.txt';
+  //
+  // if($handle = fopen($file,'w')){
+  //   echo "opened file <br/>";
+  //   fwrite($handle, '');
+  //   $content = "".$username."\n"
+  //     .$password."\n"
+  //     .$email."\n"
+  //     .$phone."\n"
+  //     .$notification."\n";
+  //   fwrite($handle, $content);
+  //
+  //   fclose($handle);
+  // }
+  // else{
+  //   echo "error";
+  // }
 
 
  ?>

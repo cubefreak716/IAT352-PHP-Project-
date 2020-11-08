@@ -26,6 +26,8 @@
 
 <?php
 $myfile =fopen("registrationText.txt","r") or die ("Unable to open file!");
+
+echo $_SESSION['log_username'];
  ?>
 
 <h1> Profile Settings</h1>

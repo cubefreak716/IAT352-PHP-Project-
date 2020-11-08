@@ -11,7 +11,9 @@ a{
   text-decoration:none;
   color:black;
 }
-
+a.link{
+  text-decoration: underline;
+}
 nav {
   width:100%;
   margin:0;
@@ -154,17 +156,22 @@ p{
 }
 
 .signup-form{
-  flex:1;
+  margin-left: auto;
+  margin-right: auto;
   padding-top:0.8rem;
   padding-bottom:3rem;
   padding-left:2rem;
-  background-color:rgba(120,120,120,1);
+  background-color:rgba(245,245,245,1);
 }
 .signupform{
   margin-left:3rem;
 }
 input{
   margin-bottom:0.5rem;
+}
+span.errorMsg{
+  color:red;
+  font-weight: bold;
 }
 .browse-box{
   padding-top:3rem;
