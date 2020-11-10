@@ -1,4 +1,8 @@
 <!DOCTYPE HTML>
+<?php
+session_start();
+
+ ?>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -127,6 +131,14 @@ var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
   <p>Payment Methods: <?php echo $paymentMethods  ?></p>
 
 </div>
+<br>
+<?php
+  if(isset($_SESSION['log_username'])){
+    echo "<button type='button'>Bookmark</button> <br /> <br />";
+    echo "<button type='button'>Occupy</button>";
+  }
+ ?>
+
 
 </div>
 
