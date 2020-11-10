@@ -46,12 +46,17 @@
 
   <?php
 
-
+    $user_id = "";
     $username = $password = $password2 = $email= $phone = $notification = "";
     $nameErr = $passwordErr = $passwordErr2 = $emailErr = $phoneErr = "";
     $check = 0;
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
+      $query = "SELECT * FROM users ";
+      $result = mysqli_query($connection, $query);
+      $user_id = mysqli_num_rows($result) + 1;
+      echo "number of row: ". $user_id . "";
+
       //Username
       if(empty($_POST["username"])){
         $nameErr = "Username is required";
@@ -64,15 +69,15 @@
           //good Input
           $query = "SELECT * FROM users ";
           $query.= "WHERE BINARY";
-          $query.= " users.username LIKE '" .$username. "' ";
+          $query.= " users.username = '" .$username. "' ";
           $result = mysqli_query($connection, $query);
-          echo $username;
-          if($result){
+          if($result && mysqli_num_rows($result)!=0){
             //no previous entry all good for registration
-            $check++;
+            $nameErr = "username already exists";
           }
           else{
-            $nameErr = "username already exists";
+            $nameErr = "username all good";
+            $check++;
           }
         }
       }
@@ -125,12 +130,37 @@
           $check++;
         }
       }
-      //Notification
-      if(empty($_POST["notification"])){
-        //nothing was selected
-      }else{
-        $notification = test_input($_POST["notification"]);
+
+      //after all entries are checked
+      //
+      if($check==4){
+        $query  = "INSERT INTO users (";
+        $query .= "  ID, username, password, phone_number, email";
+        $query .= ") VALUES (";
+        $query .= " '{$user_id}', '{$username}', '{$password}', '{$phone}', '{$email}'";
+        $query .= ")";
+
+        $result = mysqli_query($connection, $query);
+
+        if ($result) {
+          // Success
+          // redirect_to("successpage.php");
+          echo "Success!";
+          $check  = 0;
+        } else {
+          // Failure
+          // $message = "Subject creation failed";
+          $check = 0;
+          die("Database query failed. " . mysqli_error($connection));
+        }
       }
+      else{
+        //reset and redo
+        $check = 0;
+      }
+
+
+
     }// end of server if
 
     function test_input($data) {
@@ -168,9 +198,9 @@
 
       <label for="Pnumber">Phone Number: </label> <br><input type="text" name="phone"><br>
 
-      <label for="Notif">Notification Preference: </label><br>
+      <!-- <label for="Notif">Notification Preference: </label><br>
       <input type="radio" name="notification" value="sms">sms
-      <input type="radio" name="notification" value="mail">email <br><br>
+      <input type="radio" name="notification" value="mail">email <br><br> -->
 
       <label for="Propicture">Profile Picture</label>
       <input type="submit" name="upload" value="Upload">
@@ -186,26 +216,8 @@
   </div>
 
 <?php
-// if sign up was sucessfull
-if($check==4){
-  $query  = "INSERT INTO users (";
-  $query .= "  username, password, phone_number, email";
-  $query .= ") VALUES (";
-  $query .= " '{$username}', '{$password}', '{$phone}', '{$email}'";
-  $query .= ")";
 
-  $result = mysqli_query($connection, $query);
 
-  if ($result) {
-    // Success
-    // redirect_to("successpage.php");
-    echo "Success!";
-  } else {
-    // Failure
-    // $message = "Subject creation failed";
-    die("Database query failed. " . mysqli_error($connection));
-  }
-}
  // echo "Username: ".$username."";
  // echo "<br />";
  // echo "Email:  ".$email."";

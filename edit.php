@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +22,7 @@
     else{
 
     }
-    $query = "SELECT * from users where id='1';";
+    $query = "SELECT * from users where id='2';";
     $result = mysqli_query($con, $query) or die ( mysqli_error());
     $row = mysqli_fetch_assoc($result);
   ?>
@@ -31,7 +30,6 @@
 </head>
 <body>
   <div class="form">
-
       <h1>Update Profile</h1>
       <?php
       $status = "";
@@ -44,7 +42,7 @@
         $phonenumber = $_REQUEST["phonenumber"];
         $update="update users set username='".$username."',
         password='".$password."', email='".$email."',
-        phone_number='".$phonenumber."' where ID='1';";
+        phone_number='".$phonenumber."' where ID='0';";
 
         mysqli_query($con, $update) or die(mysqli_error());
         $status = "Profile Updated Successfully. </br></br>
