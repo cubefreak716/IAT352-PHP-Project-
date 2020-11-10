@@ -1,4 +1,7 @@
 <!DOCTYPE HTML>
+<?php
+session_start();
+ ?>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -36,9 +39,28 @@
     $currusername = $_POST['log_username'] ?? '';
     $currpassword = $_POST['log_password'] ?? '';
 
-    $_SESSION['log_username'] = $currusername;
 
-    echo $_SESSION['log_username'];
+    $sql = "SELECT id FROM users WHERE username = '$currusername' and password = '$currpassword'";
+     $result = mysqli_query($connection,$sql);
+     $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+     $id=$row['ID'];
+
+     $count = mysqli_num_rows($result);
+
+     // If result matched $myusername and $mypassword, table row must be 1 row
+
+     if($count == 1) {
+        //session_register("myusername");
+        $_SESSION['log_username'] = $currusername;
+        $_SESSION['ID']=$id;
+          echo $_SESSION['log_username'];
+        header("location: settings.php");
+     }else {
+        $error = "Your Login Name or Password is invalid";
+     }
+
+
+
     // header("localhost/matildac/IAT352-PHP-Project-/index.php");
   }
 

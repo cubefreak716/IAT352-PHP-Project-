@@ -1,4 +1,7 @@
 <!DOCTYPE HTML>
+<?php session_start();
+
+ ?>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -27,7 +30,7 @@
 <?php
 $myfile =fopen("registrationText.txt","r") or die ("Unable to open file!");
 
-echo $_SESSION['log_username'];
+
  ?>
 
 <h1> Profile Settings</h1>
@@ -44,7 +47,7 @@ echo $_SESSION['log_username'];
   <div class="userinfosquare">
     <!-- to be read from text file -->
     <?php
-    echo "<p>", fgets($myfile), "</p>";
+    echo "<p>", $_SESSION['log_username'], "</p>";
      ?>
   </div>
   <p>Password</p>
