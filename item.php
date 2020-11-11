@@ -22,6 +22,7 @@ session_start();
           $data = $_GET["data"];
           $_SESSION['current-item'] = $_GET["data"];
       }
+      echo $_SESSION['ID'];
 
   ?>
 
@@ -70,7 +71,9 @@ session_start();
 
       $maximumHours=$row["MAXIMUM_HOURS"];
 
-      $modelName= $row["METER_MODEL"];
+      // $modelName= $row["METER_MODEL"];
+
+      $parkingSpace = $row["NUMBER_SPACES"];
 
       $lat=$row["Latitude"];
       $lon=$row["Longitude"];
@@ -119,7 +122,7 @@ var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
 }
 </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGdq4mHp4USTKJUduSaukvGy5tcdtf4IU&callback=myMap"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACgCZhwU6s-5ODqPU8LqmVvvSa8nq2wZk&callback=myMap"></script>
 <div class="iteminfo">
 
   <p>Meter type: <?php echo $meterType  ?></p>
@@ -130,6 +133,7 @@ var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
   <p>Maximum Hours: <?php echo $maximumHours  ?></p>
   <p>Zone Type: <?php echo $zoneType  ?></p>
   <p>Payment Methods: <?php echo $paymentMethods  ?></p>
+  <p>Status: <?php ?></p>
 
 </div>
 <br>
@@ -144,7 +148,7 @@ var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
     echo "</form>";
 
     if(isset($_POST['bookmark'])){
-        $ID_user = $_SESSION['log_username'];
+        $ID_user = $_SESSION['ID'];
         $ID_paystation = $_SESSION['current-item'];
 
         //good Input

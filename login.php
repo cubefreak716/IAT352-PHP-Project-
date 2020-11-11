@@ -40,7 +40,7 @@ session_start();
     $currpassword = $_POST['log_password'] ?? '';
 
 
-    $sql = "SELECT id FROM users WHERE username = '$currusername' and password = '$currpassword'";
+    $sql = "SELECT ID FROM users WHERE username = '$currusername' and password = '$currpassword'";
      $result = mysqli_query($connection,$sql);
      $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
      $id=$row['ID'];
@@ -53,7 +53,7 @@ session_start();
         //session_register("myusername");
         $_SESSION['log_username'] = $currusername;
         $_SESSION['ID']=$id;
-          echo $_SESSION['log_username'];
+        echo $_SESSION['log_username'];
         header("location: settings.php");
      }else {
         $error = "Your Login Name or Password is invalid";
