@@ -131,6 +131,15 @@
         }
       }
 
+      //file upload
+      // $picture_dir = "uploads/";
+      // $picture_file = $picture_dir . basename($_FILES["profile_upload"]["name"]);
+      // $pictureFileType = strtrolower(pathinfo($picture_file, PATHINFO_EXTENSION));
+      // $check = getimagesize($_FILES["profile_upload"]["temp_name"]);
+      // if($check !==false){
+      //   echo
+      // }
+
       //after all entries are checked
       //
       if($check==4){
@@ -175,7 +184,7 @@
   <div class="signup-form">
     <h2>Sign up</h2>
     <!-- allows for form entry on same page -->
-    <form class="signupform" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+    <form class="signupform" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" enctype="multipart/form-data" method="post">
       <label for="Uname">Username: </label><br>
       <input type="text" name="username" value="<?php echo $username;?>">
       <span style="color:red;"><?php echo $nameErr;?></span>
@@ -203,7 +212,7 @@
       <input type="radio" name="notification" value="mail">email <br><br> -->
 
       <label for="Propicture">Profile Picture</label>
-      <input type="submit" name="upload" value="Upload">
+      <input type="file" name="profile_upload" id="profile_upload" value="Browse">
 
       <br><br><br>
 

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <?php session_start();
-  if(isset($_SESSION['log_username']))
+  // if(isset($_SESSION['log_username']))
  ?>
 <html lang="en">
 <head>
