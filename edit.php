@@ -7,6 +7,7 @@
 
   <?php
     //connection set up
+    session_start();
     $dbhost = "localhost";
     $dbuser = "root";
     $dbpass = "";
@@ -22,7 +23,7 @@
     else{
 
     }
-    $query = "SELECT * from users where id='2';";
+    $query = "SELECT * from users where id='{$_SESSION["ID"]}';";
     $result = mysqli_query($con, $query) or die ( mysqli_error());
     $row = mysqli_fetch_assoc($result);
   ?>
@@ -58,7 +59,7 @@
             <p><input type="text" name="username" placeholder="Enter Username"
               required value="<?php echo $row['username'];?>" /></p>
               <p><input type="text" name="password" placeholder="Enter Password"
-                required value="<?php echo $row['password'];?>" /></p>
+                required value="<?php echo "NewPassword";?>" /></p>
                 <p><input type="text" name="email" placeholder="Enter Email"
                   required value="<?php echo $row['email'];?>" /></p>
                   <p><input type="text" name="phonenumber" placeholder="Enter Phone Number"

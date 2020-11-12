@@ -30,8 +30,6 @@
 
      $username= $row["username"];
 
-     $password= $row["password"];
-
      $email= $row["email"];
 
      $phonenumber= $row["phone_number"];
@@ -77,20 +75,14 @@
 </div>
 <div class="userinfo">
 
-  <p>User Name Goes Here:</p>
+  <p>Username :</p>
   <div class="userinfosquare">
     <!-- to be read from text file -->
     <?php
     echo "<p>",$username, "</p>";
      ?>
   </div>
-  <p>Password</p>
-  <div class="userinfosquare">
-    <!-- to be read from text file -->
-    <?php
-    echo "<p>", $password, "</p>";
-     ?>
-  </div>
+
   <p>Email</p>
   <div class="userinfosquare">
     <!-- to be read from text file -->
@@ -109,11 +101,9 @@
   <!-- <p>Notification Type</p>
 
     <div class="userinfosquare">
-    <?php
-    $notifType = fgets($myfile);
-    echo $notifType;
-    fclose($myfile);
-    ?> -->
+     -->
+     <button onclick="location.href='edit.php'">Edit</button>
+     <button onclick="location.href='logout.php'">Logout</button>
   </div>
 </label>
 

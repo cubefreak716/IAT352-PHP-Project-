@@ -200,7 +200,9 @@
         $query  = "INSERT INTO users (";
         $query .= "  ID, username, password, phone_number, email, photo";
         $query .= ") VALUES (";
-        $query .= " '{$user_id}', '{$username}', '{$password}', '{$phone}', '{$email}','{$target_file}'";
+        $query .= " '{$user_id}', '{$username}',";
+        $query.=  "'".sha1($password)."'";
+        $query.=  ", '{$phone}', '{$email}','{$target_file}'";
         $query .= ")";
 
         $result = mysqli_query($connection, $query);

@@ -40,7 +40,7 @@ session_start();
     $currpassword = $_POST['log_password'] ?? '';
 
 
-    $sql = "SELECT ID FROM users WHERE username = '$currusername' and password = '$currpassword'";
+    $sql = "SELECT ID FROM users WHERE username = '$currusername' and password = '".sha1($currpassword)."'";
      $result = mysqli_query($connection,$sql);
      $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
      $id=$row['ID'];
@@ -51,6 +51,8 @@ session_start();
 
      if($count == 1) {
         //session_register("myusername");
+        unset($_SESSION["log_username"]);
+        unset($_SESSION["ID"]);
         $_SESSION['log_username'] = $currusername;
         $_SESSION['ID']=$id;
         echo $_SESSION['log_username'];
