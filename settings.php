@@ -105,6 +105,38 @@
      <button onclick="location.href='edit.php'">Edit</button>
      <button onclick="location.href='logout.php'">Logout</button>
   </div>
+  <!-- end of user info -->
+
+  <!-- show bookmarked parkingstations -->
+  <div class="bookmark-list">
+    <ul>
+    <?php
+      $query_getBookmarks = "SELECT * FROM bookmarks WHERE bookmarks.ID_user = '";
+      $query_getBookmarks .= $_SESSION['ID']. "'";
+      $result = mysqli_query($connection, $query_getBookmarks);
+
+      if(!$result){
+        die("query failed");
+      }
+      else{
+        while($row = mysqli_fetch_assoc($result)){
+          echo "<li>";
+          echo $row['ID_paystation'];
+          echo " ";
+          $query_getStreetName = "SELECT * FROM pay_stations WHERE pay_stations.METER_ID ='";
+          $query_getStreetName .= $row['ID_paystation']. "'";
+          $result2 = mysqli_query($connection, $query_getStreetName);
+          while($strname = mysqli_fetch_assoc($result2)){
+            echo $strname['ADDRESS'];
+          }
+          echo "</li>";
+        }
+      }
+
+    ?>
+    </ul>
+
+  </div>
 </label>
 
 

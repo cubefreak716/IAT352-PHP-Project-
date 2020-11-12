@@ -63,7 +63,7 @@
       } else{
         $username = test_input($_POST["username"]);
         if(!preg_match(("/^[a-zA-Z0-9]{4,9}$/"), $username)){
-          $nameErr = "Letters and Numbers Only max 9 char";
+          $nameErr = "Letters and Numbers Only min 4 max 9 char";
         }
         else{
           //good Input
