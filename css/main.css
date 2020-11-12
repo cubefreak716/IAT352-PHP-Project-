@@ -13,6 +13,10 @@ a{
 }
 a.link{
   text-decoration: underline;
+
+}
+a.link:hover{
+  color:blue;
 }
 nav {
   width:100%;
@@ -56,6 +60,10 @@ nav>a{
 .signup-button:hover{
   background-color: rgba(155, 209, 169,0);
 }
+.member-status-bar{
+  float:right;
+  background-color: rgba(155, 209, 169,1);
+}
 
 li{
   list-style: none;
@@ -93,12 +101,20 @@ li{
   margin-right:auto;
   margin-top:1.5rem;
 }
+.frame{
+  overflow:hidden;
+
+}
 .overlay{
   position: absolute;
   /* background-color: rgba(180,180,180,0.5); */
   z-index: 5;
   width:inherit;
   height:inherit;
+}
+.profile-image{
+  padding-top: auto;
+  padding-bottom: auto;
 }
 h1{
   padding:0;

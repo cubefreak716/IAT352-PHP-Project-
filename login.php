@@ -10,8 +10,8 @@ session_start();
   <meta name="viewport" content="width=device-width, initial=scale=1.0">
 
   <link rel="stylesheet" href="css/normalize.css">
-  <!-- <link rel="stylesheet" href="css/main.php"> -->
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/main.php">
+  <!-- <link rel="stylesheet" href="css/main.css"> -->
   <link rel="stylesheet" href="css/fonts.css">
 
 
@@ -40,7 +40,7 @@ session_start();
     $currpassword = $_POST['log_password'] ?? '';
 
 
-    $sql = "SELECT ID FROM users WHERE username = '$currusername' and password = '".sha1($currpassword)."'";
+     $sql = "SELECT ID FROM users WHERE username = '$currusername' and password = '".sha1($currpassword)."'";
      $result = mysqli_query($connection,$sql);
      $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
      $id=$row['ID'];
@@ -69,20 +69,34 @@ session_start();
 ?>
 
 <body>
-  <nav class="box">
-    <div class="nav-title">Paystation Finder </div>
-    <a href="index.php"><div class="nav-button">  Home  </div></a>
-    <a href="browse.php"><div class="nav-button"> Browse </div></a>
-    <a href="settings.php"> <div class="nav-button"> Settings  </div></a>
-    <a href="signup.php"><div class="signup-button">  Sign up </div></a>
-  </nav>
+  <div class="nav-box">
+    <nav class="box">
+      <div class="nav-title">Paystation Finder </div>
+      <a href="index.php"><div class="nav-button">  Home  </div></a>
+      <a href="browse.php"><div class="nav-button"> Browse </div></a>
+      <?php
+      if(isset($_SESSION['log_username'])){
+        echo "<a href='settings.php'><div class='nav-button'> Settings </div></a>";
+        echo "<a href='logout.php'><div class='signup-button'> Log Out </div></a>";
+      }
+      else{
+        echo "<a href='signup.php'><div class='signup-button'> Sign up/Sign in </div></a>";
+      }
+      ?>
+    </nav>
+    <div class="member-status-bar">
+      <?php
+        if(isset($_SESSION['log_username'])){
+          echo "Welcome: ";
+          echo $_SESSION['log_username'];
+        }
+        else{
+          echo "Welcome guest";
+        }
+      ?>
+    </div>
+  </div>
 
-
-  <?php
-
-   ?>
-
-<div class="box">
   <!-- log in form -->
   <div class="signup-form">
     <h2>Log In</h2>
@@ -105,11 +119,9 @@ session_start();
     </form>
   </div>
 
-</div>
-
-<?php
- mysqli_close($connection);
- ?>
+  <?php
+   mysqli_close($connection);
+   ?>
 
 
 </body>

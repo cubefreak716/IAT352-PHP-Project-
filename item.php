@@ -11,7 +11,8 @@ session_start();
   <meta name="viewport" content="width=device-width, initial=scale=1.0"> <!-- -->
 
   <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/main.php">
+  <!-- <link rel="stylesheet" href="css/main.css"> -->
   <link rel="stylesheet" href="css/louiscss.php">
   <link rel="stylesheet" href="css/fonts.css">
 
@@ -70,6 +71,8 @@ session_start();
       $lat=$row["Latitude"];
       $lon=$row["Longitude"];
     }
+    $bookmarkErr="";
+    $occupyErr="";
   ?>
 
 </head>
@@ -90,19 +93,39 @@ session_start();
   }
   ?>
 
-  <nav class="box">
-    <div class="nav-title">Paystation Finder </div>
-    <a href="index.php"><div class="nav-button">  Home  </div></a>
-    <a href="browse.php"><div class="nav-button"> Browse </div></a>
-    <a href="settings.php"> <div class="nav-button"> Settings  </div></a>
-    <a href="signup.php"><div class="signup-button">  Sign up </div></a>
-  </nav>
+  <div class="nav-box">
+    <nav class="box">
+      <div class="nav-title">Paystation Finder </div>
+      <a href="index.php"><div class="nav-button">  Home  </div></a>
+      <a href="browse.php"><div class="nav-button"> Browse </div></a>
+      <?php
+      if(isset($_SESSION['log_username'])){
+        echo "<a href='settings.php'><div class='nav-button'> Settings </div></a>";
+        echo "<a href='logout.php'><div class='signup-button'> Log Out </div></a>";
+      }
+      else{
+        echo "<a href='signup.php'><div class='signup-button'> Sign up/Sign in </div></a>";
+      }
+      ?>
+    </nav>
+    <div class="member-status-bar">
+      <?php
+        if(isset($_SESSION['log_username'])){
+          echo "Welcome: ";
+          echo $_SESSION['log_username'];
+        }
+        else{
+          echo "Welcome guest";
+        }
+      ?>
+    </div>
+  </div>
 
 <?php
 $myfile =fopen("registrationText.txt","r") or die ("Unable to open file!");
  ?>
 
-<h1> <?php echo $meterAddress ?></h1>
+<h1 class="itempage-heading"> <?php echo $meterAddress ?></h1>
 
 <div class="container box">
     <div id="googleMap" style="width:35%;height:400px;"></div>
@@ -128,40 +151,32 @@ $myfile =fopen("registrationText.txt","r") or die ("Unable to open file!");
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACgCZhwU6s-5ODqPU8LqmVvvSa8nq2wZk&callback=myMap"></script>
 
   <div class="iteminfo">
-    <p>Meter ID: <?php echo $_SESSION['current-item'] ?></p>
-    <p>Meter type: <?php echo $meterType  ?></p>
-    <p>Operation Hours: <?php echo $operationHours  ?> </p>
-    <p>Operation Days: <?php echo $operationDays  ?> </p>
-    <p>Hourly Rate: <?php echo $hourlyRate  ?></p>
-    <p>Daily Rate: <?php echo $dailyRate  ?></p>
-    <p>Maximum Hours: <?php echo $maximumHours  ?></p>
-    <p>Zone Type: <?php echo $zoneType  ?></p>
-    <p>Payment Methods: <?php echo $paymentMethods  ?></p>
-    <p>Status: <?php echo $occupiedSpace?> / <?php echo $parkingSpace?></p>
-
-
-
+    <p><em>Meter ID: </em><?php echo $_SESSION['current-item'] ?></p>
+    <p><em>Meter type: </em><?php echo $meterType  ?></p>
+    <p><em>Operation Hours: </em><?php echo $operationHours  ?> </p>
+    <p><em>Operation Days: </em><?php echo $operationDays  ?> </p>
+    <p><em>Hourly Rate: </em><?php echo $hourlyRate  ?></p>
+    <p><em>Daily Rate: </em><?php echo $dailyRate  ?></p>
+    <p><em>Maximum Hours:</em> <?php echo $maximumHours  ?></p>
+    <p><em>Zone Type: </em><?php echo $zoneType  ?></p>
+    <p><em>Payment Methods: </em><?php echo $paymentMethods  ?></p>
+    <p><em>Status: </em><?php echo $occupiedSpace?> / <?php echo $parkingSpace?></p>
 
     <?php
       if(isset($_SESSION['log_username'])){
         $ID_user = $_SESSION['ID'];
         $ID_paystation = $_SESSION['current-item'];
 
-        //bookmark feature
-        echo "<form method='post' action='item.php?data=".$_SESSION['current-item']."'>";
-        echo "<input type='checkbox' id='bk' name='bookmark' value='bookmark'>";
-        echo "<input type='submit' id='bookmark' name='bookmark-button' value='Bookmark' /> ";
-        echo "</form>";
-
         if(isset($_POST['bookmark'])){
             //good Input
             $query_check = "SELECT * FROM bookmarks ";
             $query_check.= "WHERE BINARY";
-            $query_check.= " bookmarks.ID_paystation = '" .$ID_paystation. "' ";
+            $query_check.= " bookmarks.ID_paystation = '" .$ID_paystation. "' AND";
+            $query_check.= " bookmarks.ID_user = '" .$ID_user. "'";
             $result = mysqli_query($connection, $query_check);
             if($result && mysqli_num_rows($result)!=0){
               //no previous entry all good for registration
-              echo "Bookmark already exists";
+              $bookmarkErr= "Bookmark already exists";
             }
             else{
               $query_bookmark  = "INSERT INTO bookmarks (";
@@ -174,18 +189,22 @@ $myfile =fopen("registrationText.txt","r") or die ("Unable to open file!");
 
 
               if($result_bookmark){
-                echo "everything is hunkeydory";
+                $bookmarkErr = "Bookmarked!";
               }
               else{
-                echo "everything is not hunkeydory";
+                $bookmarkErr = "something went wrong";
               }
             }
         }// end of bookmark post
-        //occupy feature
+        //bookmark feature
         echo "<form method='post' action='item.php?data=".$_SESSION['current-item']."'>";
-        echo "<input type='checkbox' id='ocpy' name='occupy' value='occupy'>";
-        echo "<input type='submit' id='occupy' name='occupy-button' value='Occupy' /> ";
+        echo "<input type='checkbox' id='bk' name='bookmark' value='bookmark'>";
+        echo "<input type='submit' id='bookmark' name='bookmark-button' value='Bookmark' /> ";
+        echo "<span style='color:red; font-size:0.8rem;'>";
+        echo $bookmarkErr;
+        echo "</span>";
         echo "</form>";
+
 
         if(isset($_POST['occupy'])){
           $query_check = "SELECT * FROM occupy ";
@@ -194,15 +213,15 @@ $myfile =fopen("registrationText.txt","r") or die ("Unable to open file!");
           $result = mysqli_query($connection, $query_check);
           if($occupiedSpace < $parkingSpace){
             if($result && mysqli_num_rows($result)!=0){
-              echo "Switched Paystations!";
+              $occupyErr = "Switched Paystations!";
               $change_occupy = "UPDATE occupy SET occupy.ID_paystation = '" .$ID_paystation. "' ";
               $change_occupy .= "WHERE BINARY occupy.ID_user = '".$ID_user. "' ";
               $result_occupy = mysqli_query($connection, $change_occupy);
               if($result_occupy){
-                echo "Updated occupied space";
+                $occupyErr = "Updated occupied space";
               }
               else{
-                echo "update failed";
+                $occupyErr = "update occupied failed";
               }
             }
             else{
@@ -214,17 +233,25 @@ $myfile =fopen("registrationText.txt","r") or die ("Unable to open file!");
 
               $result_occupy = mysqli_query($connection, $query_occupy);
               if($result_occupy){
-                echo "everything is hunkeydory again";
+                $occupyErr = "Updated occupied space";
               }
               else{
-                echo "everything is not hunkeydory again";
+                $occupyErr = "Something went wrong.";
               }
             }
           }//end of if space is full
           else{
-            echo "FUll!";
+            $occupyErr = "Parking space is full!";
           }
-        }
+        }//end of occupy isset
+        //occupy feature
+        echo "<form method='post' action='item.php?data=".$_SESSION['current-item']."'>";
+        echo "<input type='checkbox' id='ocpy' name='occupy' value='occupy'>";
+        echo "<input type='submit' id='occupy' name='occupy-button' value='Occupy' /> ";
+        echo "<span style='color:red; font-size:0.8rem;'>";
+        echo $occupyErr;
+        echo "</span>";
+        echo "</form>";
       }
      ?>
    </div>

@@ -3,7 +3,11 @@
 <head>
   <meta charset="utf-8">
   <title>Update Record</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/main.php">
+  <!-- <link rel="stylesheet" href="css/main.css"> -->
+  <link rel="stylesheet" href="css/louiscss.php">
+  <link rel="stylesheet" href="css/fonts.css">
 
   <?php
     //connection set up
@@ -30,8 +34,36 @@
 
 </head>
 <body>
+  <div class="nav-box">
+    <nav class="box">
+      <div class="nav-title">Paystation Finder </div>
+      <a href="index.php"><div class="nav-button">  Home  </div></a>
+      <a href="browse.php"><div class="nav-button"> Browse </div></a>
+      <?php
+      if(isset($_SESSION['log_username'])){
+        echo "<a href='settings.php'><div class='nav-button'> Settings </div></a>";
+        echo "<a href='logout.php'><div class='signup-button'> Log Out </div></a>";
+      }
+      else{
+        echo "<a href='signup.php'><div class='signup-button'> Sign up/Sign in </div></a>";
+      }
+      ?>
+    </nav>
+    <div class="member-status-bar">
+      <?php
+        if(isset($_SESSION['log_username'])){
+          echo "Welcome: ";
+          echo $_SESSION['log_username'];
+        }
+        else{
+          echo "Welcome guest";
+        }
+      ?>
+    </div>
+  </div>
+
   <div class="form">
-      <h1>Update Profile</h1>
+      <h1 class="itempage-heading">Update Profile</h1>
       <?php
       $status = "";
       if(isset($_POST['new']) && $_POST['new']==1)
@@ -41,9 +73,9 @@
         $username =$_REQUEST['username'];
         $email =$_REQUEST['email'];
         $phonenumber = $_REQUEST["phonenumber"];
-        $update="update users set username='".$username."',
+        $update="UPDATE users SET username='".$username."',
         password='".$password."', email='".$email."',
-        phone_number='".$phonenumber."' where ID='0';";
+        phone_number='".$phonenumber."' WHERE BINARY username='".$_SESSION['log_username']."'";
 
         mysqli_query($con, $update) or die(mysqli_error());
         $status = "Profile Updated Successfully. </br></br>
@@ -51,23 +83,23 @@
         echo '<p style="color:#FF0000;">'.$status.'</p>';
 
       }else {
-        ?>
-        <div>
+      ?>
+        <div class="profile-box">
           <form name="form" method="post" action="">
             <input type="hidden" name="new" value="1" />
             <input name="id" type="hidden" value="<?php echo $row['ID'];?>" />
             <p><input type="text" name="username" placeholder="Enter Username"
               required value="<?php echo $row['username'];?>" /></p>
-              <p><input type="text" name="password" placeholder="Enter Password"
-                required value="<?php echo "NewPassword";?>" /></p>
-                <p><input type="text" name="email" placeholder="Enter Email"
-                  required value="<?php echo $row['email'];?>" /></p>
-                  <p><input type="text" name="phonenumber" placeholder="Enter Phone Number"
-                    required value="<?php echo $row['phone_number'];?>" /></p>
-                <p><input name="submit" type="submit" value="Update" /></p>
-              </form>
+            <p><input type="text" name="password" placeholder="Enter Password"
+              required value="<?php echo "NewPassword";?>" /></p>
+            <p><input type="text" name="email" placeholder="Enter Email"
+              required value="<?php echo $row['email'];?>" /></p>
+            <p><input type="text" name="phonenumber" placeholder="Enter Phone Number"
+              required value="<?php echo $row['phone_number'];?>" /></p>
+            <p><input name="submit" type="submit" value="Update" /></p>
+          </form>
             <?php } ?>
-          </div>
         </div>
-      </body>
-      </html>
+    </div>
+</body>
+</html>

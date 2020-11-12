@@ -48,8 +48,8 @@
   <meta name="viewport" content="width=device-width, initial=scale=1.0"> <!-- -->
 
   <link rel="stylesheet" href="css/normalize.css">
-  <!-- <link rel="stylesheet" href="css/main.php"> -->
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/main.php">
+  <!-- <link rel="stylesheet" href="css/main.css"> -->
   <link rel="stylesheet" href="css/louiscss.php">
   <link rel="stylesheet" href="css/fonts.css">
 </head>
@@ -57,90 +57,106 @@
 <body>
 
 
-  <nav class="box">
-    <div class="nav-title">Paystation Finder </div>
-    <a href="index.php"><div class="nav-button">  Home  </div></a>
-    <a href="browse.php"><div class="nav-button"> Browse </div></a>
-    <a href="settings.php"> <div class="nav-button"> Settings  </div></a>
-    <a href="signup.php"><div class="signup-button">  Sign up </div></a>
-  </nav>
-
-
-
-<h1> Profile Settings</h1>
-
-<div class="square">
-  <!-- <p>Profile Picture</p> -->
-  <img src="<?php echo $photo; ?>" alt="Profile Picture" width="100%" height="100%">
-</div>
-<div class="userinfo">
-
-  <p>Username :</p>
-  <div class="userinfosquare">
-    <!-- to be read from text file -->
-    <?php
-    echo "<p>",$username, "</p>";
-     ?>
-  </div>
-
-  <p>Email</p>
-  <div class="userinfosquare">
-    <!-- to be read from text file -->
-    <?php
-    echo "<p>", $email, "</p>";
-     ?>
-  </div>
-  <p>Phone Number</p>
-  <div class="userinfosquare">
-    <!-- to be read from text file -->
-    <?php
-    echo "<p>", $phonenumber, "</p>";
-
-     ?>
-  </div>
-  <!-- <p>Notification Type</p>
-
-    <div class="userinfosquare">
-     -->
-     <button onclick="location.href='edit.php'">Edit</button>
-     <button onclick="location.href='logout.php'">Logout</button>
-  </div>
-  <!-- end of user info -->
-
-  <!-- show bookmarked parkingstations -->
-  <div class="bookmark-list">
-    <ul>
-    <?php
-      $query_getBookmarks = "SELECT * FROM bookmarks WHERE bookmarks.ID_user = '";
-      $query_getBookmarks .= $_SESSION['ID']. "'";
-      $result = mysqli_query($connection, $query_getBookmarks);
-
-      if(!$result){
-        die("query failed");
+  <div class="nav-box">
+    <nav class="box">
+      <div class="nav-title">Paystation Finder </div>
+      <a href="index.php"><div class="nav-button">  Home  </div></a>
+      <a href="browse.php"><div class="nav-button"> Browse </div></a>
+      <?php
+      if(isset($_SESSION['log_username'])){
+        echo "<a href='settings.php'><div class='nav-button'> Settings </div></a>";
+        echo "<a href='logout.php'><div class='signup-button'> Log Out </div></a>";
       }
       else{
-        while($row = mysqli_fetch_assoc($result)){
-          echo "<li>";
-          echo $row['ID_paystation'];
-          echo " ";
-          $query_getStreetName = "SELECT * FROM pay_stations WHERE pay_stations.METER_ID ='";
-          $query_getStreetName .= $row['ID_paystation']. "'";
-          $result2 = mysqli_query($connection, $query_getStreetName);
-          while($strname = mysqli_fetch_assoc($result2)){
-            echo $strname['ADDRESS'];
-          }
-          echo "</li>";
-        }
+        echo "<a href='signup.php'><div class='signup-button'> Sign up/Sign in </div></a>";
       }
-
-    ?>
-    </ul>
-
+      ?>
+    </nav>
+    <div class="member-status-bar">
+      <?php
+        if(isset($_SESSION['log_username'])){
+          echo "Welcome: ";
+          echo $_SESSION['log_username'];
+        }
+        else{
+          echo "Welcome guest";
+        }
+      ?>
+    </div>
   </div>
-</label>
 
 
-</div>
+
+<h1 class="itempage-heading"> Profile Settings</h1>
+<div class="profile-box">
+  <div class="square">
+      <!-- <p>Profile Picture</p> -->
+      <img class="profile-image" src="<?php echo $photo;?>" alt="Profile Picture">
+  </div>
+  <div class="userinfo">
+    <p>Username :</p>
+    <div class="userinfosquare">
+      <?php
+      echo "<p>",$username, "</p>";
+       ?>
+    </div>
+    <p>Email</p>
+    <div class="userinfosquare">
+      <?php
+      echo "<p>", $email, "</p>";
+       ?>
+    </div>
+    <p>Phone Number</p>
+    <div class="userinfosquare">
+      <?php
+      echo "<p>", $phonenumber, "</p>";
+       ?>
+    </div>
+
+    <div class="edit-features">
+       <button onclick="location.href='edit.php'">Edit</button>
+       <button onclick="location.href='logout.php'">Logout</button>
+    </div>
+      <!-- end of user info -->
+    </div>
+  </div>
+
+  <!-- show bookmarked parkingstations -->
+  <div class="favourite-box">
+    <h2 class=""> Favourite Paystations</h2>
+    <div class="bookmark-list">
+      <ul>
+      <?php
+        $query_getBookmarks = "SELECT * FROM bookmarks WHERE bookmarks.ID_user = '";
+        $query_getBookmarks .= $_SESSION['ID']. "'";
+        $result = mysqli_query($connection, $query_getBookmarks);
+
+        if(!$result){
+          die("query failed");
+        }
+        else{
+          while($row = mysqli_fetch_assoc($result)){
+            echo "<li>";
+            echo $row['ID_paystation'];
+            echo " ";
+            $query_getStreetName = "SELECT * FROM pay_stations WHERE pay_stations.METER_ID ='";
+            $query_getStreetName .= $row['ID_paystation']. "'";
+            $result2 = mysqli_query($connection, $query_getStreetName);
+            while($strname = mysqli_fetch_assoc($result2)){
+              echo "<a class='link' href='item.php?data=";
+              echo $row['ID_paystation']. "'>";
+              echo $strname['ADDRESS'];
+              echo "</a>";
+            }
+            echo "</li>";
+          }
+        }
+      ?>
+      </ul>
+    </div>
+  </div>
+
+
 
 
 </body>
