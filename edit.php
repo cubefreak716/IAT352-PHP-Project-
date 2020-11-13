@@ -62,11 +62,66 @@
     </div>
   </div>
 
+  <?php
+  $checkP=0;
+  if(isset($_POST["fileToUpload"])) {
+    $target_dir = "uploads/";
+    $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+    // Check if image file is a actual image or fake image
+    if(isset($_POST["submit"])) {
+      $checkimg = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+      if($checkimg !== false) {
+        echo "File is an image - " . $checkimg["mime"] . ".";
+        $uploadOk = 1;
+      } else {
+        echo "File is not an image.";
+        $uploadOk = 0;
+      }
+    }
+
+    // Check if file already exists
+    if (file_exists($target_file)) {
+      echo "Sorry, file already exists.";
+      $uploadOk = 0;
+    }
+
+    // Check file size
+    if ($_FILES["fileToUpload"]["size"] > 500000) {
+      echo "Sorry, your file is too large.";
+      $uploadOk = 0;
+    }
+
+    // Allow certain file formats
+    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+    && $imageFileType != "gif" ) {
+      echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+      $uploadOk = 0;
+    }
+
+    // Check if $uploadOk is set to 0 by an error
+    if ($uploadOk == 0) {
+      echo "Sorry, your file was not uploaded.";
+      $checkP=1;
+      // if everything is ok, try to upload file
+    } else {
+      if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+        echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
+        $check++;
+      } else {
+        echo "Sorry, there was an error uploading your file.";
+        $checkP=1;
+      }
+    }
+   ?>
+
   <div class="form">
       <h1 class="itempage-heading">Update Profile</h1>
       <?php
       $status = "";
-      if(isset($_POST['new']) && $_POST['new']==1)
+      if(isset($_POST['new']) && $_POST['new']==1 && $checkP==0)
       {
         $id=$_REQUEST['id'];
         $password = $_REQUEST['password'];
@@ -74,8 +129,10 @@
         $email =$_REQUEST['email'];
         $phonenumber = $_REQUEST["phonenumber"];
         $update="UPDATE users SET username='".$username."',
-        password='".$password."', email='".$email."',
-        phone_number='".$phonenumber."' WHERE BINARY username='".$_SESSION['log_username']."'";
+        password='".sha1($password)."', email='".$email."',
+        phone_number='".$phonenumber."'";
+        
+        $update.= " WHERE BINARY username='".$_SESSION['log_username']."'";
 
         mysqli_query($con, $update) or die(mysqli_error());
         $status = "Profile Updated Successfully. </br></br>
@@ -96,6 +153,8 @@
               required value="<?php echo $row['email'];?>" /></p>
             <p><input type="text" name="phonenumber" placeholder="Enter Phone Number"
               required value="<?php echo $row['phone_number'];?>" /></p>
+              <label for="Propicture">Profile Picture</label>
+              <input type="file" name="fileToUpload" id="fileToUpload">
             <p><input name="submit" type="submit" value="Update" /></p>
           </form>
             <?php } ?>
