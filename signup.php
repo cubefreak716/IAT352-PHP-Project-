@@ -15,22 +15,22 @@
 </head>
 
 <?php
-  //connection set up
-  $dbhost = "localhost";
-  $dbuser = "root";
-  $dbpass = "";
-  $dbname = "louis_fourie";
-  $connection = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
+//connection set up
+$dbhost = "localhost";
+$dbuser = "root";
+$dbpass = "";
+$dbname = "louis_fourie";
+$connection = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
 
-  //testing connection
-  if(mysqli_connect_errno()){
-    die("Database connection failed: " . mysqli_connect_error() .
-    " (" . mysqli_connect_errno() . ")"
-    );
-  }
-  else{
+//testing connection
+if(mysqli_connect_errno()){
+  die("Database connection failed: " . mysqli_connect_error() .
+  " (" . mysqli_connect_errno() . ")"
+);
+}
+else{
 
-  }
+}
 
 ?>
 
@@ -66,93 +66,94 @@
 
   <?php
 
-    $user_id = "";
-    $username = $password = $password2 = $email= $phone = $notification = "";
-    $nameErr = $passwordErr = $passwordErr2 = $emailErr = $phoneErr = "";
-    $check = 0;
+  $user_id = "";
+  $username = $password = $password2 = $email= $phone = $notification = "";
+  $nameErr = $passwordErr = $passwordErr2 = $emailErr = $phoneErr = "";
+  $check = 0;
 
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
+  if($_SERVER["REQUEST_METHOD"] == "POST"){
+    $query = "SELECT * FROM users ";
+    $result = mysqli_query($connection, $query);
+    $user_id = mysqli_num_rows($result) + 1;
+    echo "number of row: ". $user_id . "";
+
+    //Username
+    if(empty($_POST["username"])){
+      $nameErr = "Username is required";
+    } else{
+      $username = test_input($_POST["username"]);
+      if(!preg_match(("/^[a-zA-Z0-9]{4,9}$/"), $username)){
+        $nameErr = "Letters and Numbers Only min 4 max 9 char";
+      }
+      else{
+        //good Input
         $query = "SELECT * FROM users ";
+        $query.= "WHERE BINARY";
+        $query.= " users.username = '" .$username. "' ";
         $result = mysqli_query($connection, $query);
-        $user_id = mysqli_num_rows($result) + 1;
-        // echo "number of row: ". $user_id . "";
-
-        //Username
-        if(empty($_POST["username"])){
-          $nameErr = "Username is required";
-        } else{
-          $username = test_input($_POST["username"]);
-          if(!preg_match(("/^[a-zA-Z0-9]{4,9}$/"), $username)){
-            $nameErr = "Letters and Numbers <br> Minimum 4 Maximum 9 characters";
-          }
-          else{
-            //good Input
-            $query = "SELECT * FROM users ";
-            $query.= "WHERE BINARY";
-            $query.= " users.username = '" .$username. "' ";
-            $result = mysqli_query($connection, $query);
-            if($result && mysqli_num_rows($result)!=0){
-              //no previous entry all good for registration
-              $nameErr = "username already exists";
-            }
-            else{
-              $nameErr = "username all good";
-              $check++;
-            }
-          }
+        if($result && mysqli_num_rows($result)!=0){
+          //no previous entry all good for registration
+          $nameErr = "username already exists";
         }
-        //password
-        if(empty($_POST["password"])){
-          $passwordErr = "Password is Required";
-        } else{
-          $password = test_input($_POST["password"]);
-          if(!preg_match(("/^[\w@.()#&+-]*$/"), $password)){
-            $passwordErr = "a-z A-Z 0-9 _ @ . ( ) \ # & + -";
-          }
-          else{   //now check if password has been confirmed twice
-            if(empty($_POST["password2"])){
-              $passwordErr2 = "Please confirm your password";
-            } else{
-              $password2 = test_input($_POST["password2"]);
-              if(strcmp($password,$password2)==0){
-                //good Input
-                $check++;
-              }
-              else{
-                $passwordErr2 = "passwords are not the same";
-              }
-            }
-          }
+        else{
+          $nameErr = "username all good";
+          $check++;
         }
-        //Email
-        if(empty($_POST["email"])){
-          $emailErr = "Email is Required";
+      }
+    }
+    //password
+    if(empty($_POST["password"])){
+      $passwordErr = "Password is Required";
+    } else{
+      $password = test_input($_POST["password"]);
+      if(!preg_match(("/^[\w@.()#&+-]*$/"), $password)){
+        $passwordErr = "a-z A-Z 0-9 _ @ . ( ) \ # & + -";
+      }
+      else{   //now check if password has been confirmed twice
+        if(empty($_POST["password2"])){
+          $passwordErr2 = "Please confirm your password";
         } else{
-          $email = test_input($_POST["email"]);
-          if(!preg_match(("/([\w\-]+\@[\w\-+\.[\w\-]+)/"), $email)){
-            $emailErr = "Invalid email";
-          }
-          else{
+          $password2 = test_input($_POST["password2"]);
+          if(strcmp($password,$password2)==0){
             //good Input
             $check++;
           }
-        }
-        //phone number
-        if(empty($_POST["phone"])){
-          $phoneErr = "Phone number is Required";
-        } else{
-          $phone = test_input($_POST["phone"]);
-          if(!preg_match(("/^[0-9]*$/"), $phone)){
-            $phoneErr = "Numbers only";
-          }
           else{
-            //good Input
-            $check++;
+            $passwordErr2 = "passwords are not the same";
           }
         }
-        ?>
-        <?php
-        if($check==4){
+      }
+    }
+    //Email
+    if(empty($_POST["email"])){
+      $emailErr = "Email is Required";
+    } else{
+      $email = test_input($_POST["email"]);
+      if(!preg_match(("/([\w\-]+\@[\w\-+\.[\w\-]+)/"), $email)){
+        $emailErr = "Invalid email";
+      }
+      else{
+        //good Input
+        $check++;
+      }
+    }
+    //phone number
+    if(empty($_POST["phone"])){
+      $phoneErr = "Phone number is Required";
+    } else{
+      $phone = test_input($_POST["phone"]);
+      if(!preg_match(("/^[0-9]*$/"), $phone)){
+        $phoneErr = "Numbers only";
+      }
+      else{
+        //good Input
+        $check++;
+      }
+    }
+    ?>
+    <?php
+    if($check==4){
+      if(isset($_POST["fileToUpload"])) {
         $target_dir = "uploads/";
         $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
         $uploadOk = 1;
@@ -192,7 +193,7 @@
         // Check if $uploadOk is set to 0 by an error
         if ($uploadOk == 0) {
           echo "Sorry, your file was not uploaded.";
-        // if everything is ok, try to upload file
+          // if everything is ok, try to upload file
         } else {
           if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
             echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
@@ -201,104 +202,127 @@
             echo "Sorry, there was an error uploading your file.";
           }
         }
+      }else{
+        $check++;
       }
-      //after all entries are checked
-      //
-      if($check==5){
-        $query  = "INSERT INTO users (";
+    }
+
+
+
+    //file upload
+    // $picture_dir = "uploads/";
+    // $picture_file = $picture_dir . basename($_FILES["profile_upload"]["name"]);
+    // $pictureFileType = strtrolower(pathinfo($picture_file, PATHINFO_EXTENSION));
+    // $check = getimagesize($_FILES["profile_upload"]["temp_name"]);
+    // if($check !==false){
+    //   echo
+    // }
+
+    //after all entries are checked
+    //
+    if($check==5){
+      $query  = "INSERT INTO users (";
         $query .= "  ID, username, password, phone_number, email, photo";
         $query .= ") VALUES (";
-        $query .= " '{$user_id}', '{$username}',";
-        $query.=  "'".sha1($password)."'";
-        $query.=  ", '{$phone}', '{$email}','{$target_file}'";
-        $query .= ")";
+          $query .= " '{$user_id}', '{$username}',";
+          $query.=  "'".sha1($password)."'";
+          $query.=  ", '{$phone}', '{$email}'";
+          if(isset($_POST["fileToUpload"])){
+            $query.=", '{$target_file}';";
+          }else{
+            $query.=", 'uploads/charging.png'";
+          }
+          $query .= ")";
+        
+          $result = mysqli_query($connection, $query);
 
-        $result = mysqli_query($connection, $query);
-
-        if ($result) {
-          // Success
-          // redirect_to("successpage.php");
-          echo "Success!";
-          $check  = 0;
-        } else {
-          // Failure
-          // $message = "Subject creation failed";
-          $check = 0;
-          die("Database query failed. " . mysqli_error($connection));
+          if ($result) {
+            // Success
+            // redirect_to("successpage.php");
+            echo "Success!";
+            $check  = 0;
+          } else {
+            // Failure
+            // $message = "Subject creation failed";
+            $check = 0;
+            die("Database query failed. " . mysqli_error($connection));
+          }
         }
+        else{
+          //reset and redo
+          $check = 0;
+        }
+
+
+
+      }// end of server if
+
+      function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
       }
-      else{
-        //reset and redo
-        $check = 0;
-      }
-    }// end of server if
+      ?>
 
-    function test_input($data) {
-       $data = trim($data);
-       $data = stripslashes($data);
-       $data = htmlspecialchars($data);
-       return $data;
-    }
-   ?>
+      <!-- registration form -->
+      <div class="signup-form">
+        <h2>Sign up</h2>
+        <!-- allows for form entry on same page -->
+        <form class="signupform" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" enctype="multipart/form-data" method="post">
+          <label for="Uname">Username: </label><br>
+          <input type="text" name="username" value="<?php echo $username;?>">
+          <span style="color:red;"><?php echo $nameErr;?></span>
+          <br>
 
-  <!-- registration form -->
-  <div class="signup-form">
-    <h2>Sign up</h2>
-    <!-- allows for form entry on same page -->
-    <form class="signupform" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" enctype="multipart/form-data" method="post">
-      <label for="Uname">Username: </label><br>
-      <input type="text" name="username" value="<?php echo $username;?>"><br>
-      <span style="color:red; font-size:0.8rem;"><?php echo $nameErr;?></span>
-      <br>
+          <label for="Pword">Password: </label><br>
+          <input type="text" name="password" value="<?php echo $password;?>">
+          <span style="color:red;"><?php echo $passwordErr;?></span>
+          <br>
 
-      <label for="Pword">Password: </label><br>
-      <input type="text" name="password" value="<?php echo $password;?>">
-      <span style="color:red; font-size:0.8rem;"><?php echo $passwordErr;?></span>
-      <br>
+          <label for="Pword2">Confirm Password: </label><br>
+          <input type="text" name="password2">
+          <span style="color:red;"><?php echo $passwordErr2;?></span>
+          <br>
 
-      <label for="Pword2">Confirm Password: </label><br>
-      <input type="text" name="password2">
-      <span style="color:red; font-size:0.8rem;"><?php echo $passwordErr2;?></span>
-      <br>
+          <label for="Email">Email: </label> <br>
+          <input type="text" name="email" value="<?php echo $email;?>">
+          <span style="color:red;"><?php echo $emailErr;?></span>
+          <br>
 
-      <label for="Email">Email: </label> <br>
-      <input type="text" name="email" value="<?php echo $email;?>">
-      <span style="color:red; font-size:0.8rem;"><?php echo $emailErr;?></span>
-      <br>
+          <label for="Pnumber">Phone Number: </label> <br><input type="text" name="phone"><br>
 
-      <label for="Pnumber">Phone Number: </label> <br><input type="text" name="phone"><br>
+          <!-- <label for="Notif">Notification Preference: </label><br>
+          <input type="radio" name="notification" value="sms">sms
+          <input type="radio" name="notification" value="mail">email <br><br> -->
 
-      <!-- <label for="Notif">Notification Preference: </label><br>
-      <input type="radio" name="notification" value="sms">sms
-      <input type="radio" name="notification" value="mail">email <br><br> -->
+          <label for="Propicture">Profile Picture</label>
+          <input type="file" name="fileToUpload" id="fileToUpload">
 
-      <label for="Propicture">Profile Picture</label>
-      <input type="file" name="fileToUpload" id="fileToUpload">
+          <br><br><br>
 
-      <br><br><br>
+          <input type="submit" name="submit" value="Submit">
 
-      <input type="submit" name="submit" value="Submit">
+          <br><br>
+          <a class="link" href="login.php">Already a member? Log in! </a>
 
-      <br><br>
-      <a class="link" href="login.php">Already a member? Log in! </a>
+        </form>
+      </div>
 
-    </form>
-  </div>
-
-<?php
+      <?php
 
 
- // echo "Username: ".$username."";
- // echo "<br />";
- // echo "Email:  ".$email."";
- // echo "<br />";
- // echo "Welcome! ";
- // echo "<br />";
+      // echo "Username: ".$username."";
+      // echo "<br />";
+      // echo "Email:  ".$email."";
+      // echo "<br />";
+      // echo "Welcome! ";
+      // echo "<br />";
 
- mysqli_close($connection);
- ?>
+      mysqli_close($connection);
+      ?>
 
 
-</body>
+    </body>
 
-</html>
+    </html>
