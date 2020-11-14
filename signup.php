@@ -218,7 +218,7 @@
           if(""!==($_FILES["fileToUpload"]["name"])) {
             $query.=", '{$target_file}'";
           }else{
-            $query.=", 'charging.png'";
+            $query.=", 'uploads/charging.png'";
           }
           $query .= ")";
 
