@@ -127,8 +127,8 @@ $myfile =fopen("registrationText.txt","r") or die ("Unable to open file!");
 
 <h1 class="itempage-heading"> <?php echo $meterAddress ?></h1>
 
-<div class="container box">
-    <div id="googleMap" style="width:35%;height:400px;"></div>
+<div class="container2 box">
+  <div id="googleMap" style="width:35%;height:400px;"></div>
 
     <script>
     function myMap() {
@@ -151,16 +151,16 @@ $myfile =fopen("registrationText.txt","r") or die ("Unable to open file!");
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACgCZhwU6s-5ODqPU8LqmVvvSa8nq2wZk&callback=myMap"></script>
 
   <div class="iteminfo">
-    <p><em>Meter ID: </em><?php echo $_SESSION['current-item'] ?></p>
-    <p><em>Meter type: </em><?php echo $meterType  ?></p>
-    <p><em>Operation Hours: </em><?php echo $operationHours  ?> </p>
-    <p><em>Operation Days: </em><?php echo $operationDays  ?> </p>
-    <p><em>Hourly Rate: </em><?php echo $hourlyRate  ?></p>
-    <p><em>Daily Rate: </em><?php echo $dailyRate  ?></p>
-    <p><em>Maximum Hours:</em> <?php echo $maximumHours  ?></p>
-    <p><em>Zone Type: </em><?php echo $zoneType  ?></p>
-    <p><em>Payment Methods: </em><?php echo $paymentMethods  ?></p>
-    <p><em>Status: </em><?php echo $occupiedSpace?> / <?php echo $parkingSpace?></p>
+    <p class="meterlist"><em class="meterlist">Meter ID: </em><?php echo $_SESSION['current-item'] ?></p>
+    <p class="meterlist"><em>Meter type: </em><?php echo $meterType  ?></p>
+    <p class="meterlist"><em>Operation Hours: </em><?php echo $operationHours  ?> </p>
+    <p class="meterlist"><em>Operation Days: </em><?php echo $operationDays  ?> </p>
+    <p class="meterlist"><em>Hourly Rate: </em><?php echo $hourlyRate  ?></p>
+    <p class="meterlist"><em>Daily Rate: </em><?php echo $dailyRate  ?></p>
+    <p class="meterlist"><em>Maximum Hours:</em> <?php echo $maximumHours  ?></p>
+    <p class="meterlist"><em>Zone Type: </em><?php echo $zoneType  ?></p>
+    <p class="meterlist"><em>Payment Methods: </em><?php echo $paymentMethods  ?></p>
+    <p class="meterlist"><em>Status: </em><?php echo $occupiedSpace?> / <?php echo $parkingSpace?></p>
 
     <?php
       if(isset($_SESSION['log_username'])){

@@ -1,38 +1,38 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title> IAT352 PHP Project </title>
+<meta charset="utf-8">
+<title> IAT352 PHP Project </title>
 
-  <meta name="viewport" content="width=device-width, initial=scale=1.0"> <!-- -->
+<meta name="viewport" content="width=device-width, initial=scale=1.0"> <!-- -->
 
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/main.php">
-  <!-- <link rel="stylesheet" href="css/main.css"> -->
-  <link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/normalize.css">
+<link rel="stylesheet" href="css/main.php">
+<!-- <link rel="stylesheet" href="css/main.css"> -->
+<link rel="stylesheet" href="css/fonts.css">
 
 
 </head>
 
 <?php
-//connection set up
-$dbhost = "localhost";
-$dbuser = "root";
-$dbpass = "";
-$dbname = "louis_fourie";
-$connection = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
+  //connection set up
+  $dbhost = "localhost";
+  $dbuser = "root";
+  $dbpass = "";
+  $dbname = "louis_fourie";
+  $connection = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
 
-//testing connection
-if(mysqli_connect_errno()){
-  die("Database connection failed: " . mysqli_connect_error() .
-  " (" . mysqli_connect_errno() . ")"
-);
-}
-else{
+  //testing connection
+  if(mysqli_connect_errno()){
+    die("Database connection failed: " . mysqli_connect_error() .
+    " (" . mysqli_connect_errno() . ")"
+  );
+  }
+  else{
 
-}
+  }
 
-?>
+  ?>
 
 <body>
   <div class="nav-box">
@@ -206,18 +206,6 @@ else{
          $check++;
        }
     }
-
-
-
-    //file upload
-    // $picture_dir = "uploads/";
-    // $picture_file = $picture_dir . basename($_FILES["profile_upload"]["name"]);
-    // $pictureFileType = strtrolower(pathinfo($picture_file, PATHINFO_EXTENSION));
-    // $check = getimagesize($_FILES["profile_upload"]["temp_name"]);
-    // if($check !==false){
-    //   echo
-    // }
-
     //after all entries are checked
     //
     if($check==5){
@@ -238,8 +226,6 @@ else{
 
           if ($result) {
             // Success
-            // redirect_to("successpage.php");
-            // echo "Success!";
             session_start();
             $_SESSION['log_username'] = $username;
             $_SESSION['ID']=$user_id;
@@ -248,7 +234,6 @@ else{
             $check  = 0;
           } else {
             // Failure
-            // $message = "Subject creation failed";
             $check = 0;
             die("Database query failed. " . mysqli_error($connection));
           }
@@ -257,9 +242,6 @@ else{
           //reset and redo
           $check = 0;
         }
-
-
-
       }// end of server if
 
       function test_input($data) {
@@ -297,10 +279,6 @@ else{
 
           <label for="Pnumber">Phone Number: </label> <br><input type="text" name="phone"><br>
 
-          <!-- <label for="Notif">Notification Preference: </label><br>
-          <input type="radio" name="notification" value="sms">sms
-          <input type="radio" name="notification" value="mail">email <br><br> -->
-
           <label for="Propicture">Profile Picture</label>
           <input type="file" name="fileToUpload" id="fileToUpload">
 
@@ -315,19 +293,7 @@ else{
       </div>
 
       <?php
-
-
-      // echo "Username: ".$username."";
-      // echo "<br />";
-      // echo "Email:  ".$email."";
-      // echo "<br />";
-      // echo "Welcome! ";
-      // echo "<br />";
-
-      mysqli_close($connection);
+        mysqli_close($connection);
       ?>
-
-
-    </body>
-
-    </html>
+</body>
+</html>

@@ -100,6 +100,14 @@ li{
 
   justify-content: space-around;
 }
+.container2{
+  display:flex;
+  width:70%;
+  border: 1px solid rgba(89, 255, 170,1);
+  margin-top:2rem;
+  margin-left:auto;
+  margin-right:auto;
+}
 
 .index-top{
   width:60%;
@@ -156,8 +164,8 @@ h2{
   width:8rem;
   padding:0.3rem;
   text-align:center;
-  color:white;
-  background-color: rgba(240, 240, 240, 0.5);
+  color:rgba(80, 80, 80, 1);
+  background-color: rgba(171, 222, 184, 1);
   transition:background-color 0.3s ease-out;
 }
 .index-browsebutton:hover{

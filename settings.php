@@ -98,25 +98,25 @@
       <img class="profile-image" src="<?php echo $photo;?>" alt="Profile Picture">
   </div>
   <div class="userinfo">
-    <p>Username :</p>
+    <p><em>Username :</em></p>
     <div class="userinfosquare">
       <?php
       echo "<p>",$username, "</p>";
        ?>
     </div>
-    <p>Email</p>
+    <p><em>Email</em></p>
     <div class="userinfosquare">
       <?php
       echo "<p>", $email, "</p>";
        ?>
     </div>
-    <p>Phone Number</p>
+    <p><em>Phone Number</em></p>
     <div class="userinfosquare">
       <?php
       echo "<p>", $phonenumber, "</p>";
        ?>
     </div>
-
+    <br>
     <div class="edit-features">
        <button onclick="location.href='edit.php'">Edit</button>
        <button onclick="location.href='logout.php'">Logout</button>
