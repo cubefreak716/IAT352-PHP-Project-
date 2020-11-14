@@ -153,7 +153,7 @@ else{
     ?>
     <?php
     if($check==4){
-      if(isset($_POST["fileToUpload"])) {
+      if(""!==($_FILES["fileToUpload"]["name"])) {
         $target_dir = "uploads/";
         $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
         $uploadOk = 1;
@@ -202,9 +202,9 @@ else{
             echo "Sorry, there was an error uploading your file.";
           }
         }
-      }else{
-        $check++;
-      }
+       }else{
+         $check++;
+       }
     }
 
 
@@ -227,13 +227,13 @@ else{
           $query .= " '{$user_id}', '{$username}',";
           $query.=  "'".sha1($password)."'";
           $query.=  ", '{$phone}', '{$email}'";
-          if(isset($_POST["fileToUpload"])){
-            $query.=", '{$target_file}';";
+          if(""!==($_FILES["fileToUpload"]["name"])) {
+            $query.=", '{$target_file}'";
           }else{
-            $query.=", 'uploads/charging.png'";
+            $query.=", 'charging.png'";
           }
           $query .= ")";
-        
+
           $result = mysqli_query($connection, $query);
 
           if ($result) {

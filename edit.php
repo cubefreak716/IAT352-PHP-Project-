@@ -64,7 +64,11 @@
 
   <?php
   $checkP=0;
-  if(isset($_POST["fileToUpload"])) {
+  if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+
+  if(""!==($_FILES["fileToUpload"]["name"])) {
+
     $target_dir = "uploads/";
     $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
     $uploadOk = 1;
@@ -109,12 +113,16 @@
     } else {
       if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
         echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
-        $check++;
+
       } else {
         echo "Sorry, there was an error uploading your file.";
         $checkP=1;
       }
     }
+  }else{
+
+  }
+}
    ?>
 
   <div class="form">
@@ -131,9 +139,11 @@
         $update="UPDATE users SET username='".$username."',
         password='".sha1($password)."', email='".$email."',
         phone_number='".$phonenumber."'";
+        if(""!==$_FILES["fileToUpload"]["name"]){
+          $update.=", photo= '"."uploads/" . basename($_FILES["fileToUpload"]["name"])."'";
+        }
+        $update.= " WHERE ID='".$_SESSION['ID']."'";
         
-        $update.= " WHERE BINARY username='".$_SESSION['log_username']."'";
-
         mysqli_query($con, $update) or die(mysqli_error());
         $status = "Profile Updated Successfully. </br></br>
         <a href='settings.php'>View Updated Profile</a>";
@@ -142,7 +152,7 @@
       }else {
       ?>
         <div class="profile-box">
-          <form name="form" method="post" action="">
+          <form name="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" enctype="multipart/form-data">
             <input type="hidden" name="new" value="1" />
             <input name="id" type="hidden" value="<?php echo $row['ID'];?>" />
             <p><input type="text" name="username" placeholder="Enter Username"
@@ -153,8 +163,8 @@
               required value="<?php echo $row['email'];?>" /></p>
             <p><input type="text" name="phonenumber" placeholder="Enter Phone Number"
               required value="<?php echo $row['phone_number'];?>" /></p>
-              <label for="Propicture">Profile Picture</label>
-              <input type="file" name="fileToUpload" id="fileToUpload">
+
+            <p><input type="file" name="fileToUpload" id="fileToUpload"></p>
             <p><input name="submit" type="submit" value="Update" /></p>
           </form>
             <?php } ?>
