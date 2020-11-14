@@ -78,7 +78,7 @@
     if(isset($_POST["submit"])) {
       $checkimg = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
       if($checkimg !== false) {
-        echo "File is an image - " . $checkimg["mime"] . ".";
+        //echo "File is an image - " . $checkimg["mime"] . ".";
         $uploadOk = 1;
       } else {
         echo "File is not an image.";
@@ -112,7 +112,7 @@
       // if everything is ok, try to upload file
     } else {
       if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-        echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
+        //echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
 
       } else {
         echo "Sorry, there was an error uploading your file.";
@@ -143,7 +143,7 @@
           $update.=", photo= '"."uploads/" . basename($_FILES["fileToUpload"]["name"])."'";
         }
         $update.= " WHERE ID='".$_SESSION['ID']."'";
-        
+
         mysqli_query($con, $update) or die(mysqli_error());
         $status = "Profile Updated Successfully. </br></br>
         <a href='settings.php'>View Updated Profile</a>";
