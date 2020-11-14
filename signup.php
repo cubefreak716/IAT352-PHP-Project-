@@ -75,7 +75,7 @@ else{
     $query = "SELECT * FROM users ";
     $result = mysqli_query($connection, $query);
     $user_id = mysqli_num_rows($result) + 1;
-    echo "number of row: ". $user_id . "";
+    // echo "number of row: ". $user_id . "";
 
     //Username
     if(empty($_POST["username"])){
@@ -239,7 +239,12 @@ else{
           if ($result) {
             // Success
             // redirect_to("successpage.php");
-            echo "Success!";
+            // echo "Success!";
+            session_start();
+            $_SESSION['log_username'] = $username;
+            $_SESSION['ID']=$user_id;
+            echo $_SESSION['log_username'];
+            header("location: settings.php");
             $check  = 0;
           } else {
             // Failure

@@ -1,6 +1,10 @@
 <!DOCTYPE HTML>
 <?php session_start();
-  // if(isset($_SESSION['log_username']))
+  if(isset($_SESSION['log_username'])){
+  }else{
+    header("Location: signup.php");
+  }
+
  ?>
  <?php
    //connection set up

@@ -12,7 +12,7 @@ session_start();
   <!-- <link rel="stylesheet" href="css/normalize.css"> -->
   <link rel="stylesheet" href="css/main.php">
   <link rel="stylesheet" href="css/fonts.css">
-  <link rel="stylesheet" href="css/main.css">
+  <!-- <link rel="stylesheet" href="css/main.css"> -->
 
 
 </head>
