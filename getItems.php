@@ -23,12 +23,32 @@
 ?>
 <?php
   //get current page number
-  if(isset($_GET['pageNum'])){
-    $pageNum = $_GET['pageNum'];
-  } else{
-    $pageNum = 1;
-  }
+  // if(isset($_POST['pageNum'])){
+  //   $pageNum = $_POST['pageNum'];
+  // } else{
+  //   $pageNum = 1;
+  // }
 
+
+
+  //incoming string
+  $filterString = $_REQUEST['metertype'];
+  $filterlist = explode(",", $filterString);
+  // $j=0;
+  // foreach($filterlist as $value){
+  //   echo $j;echo": ";
+  //   echo $value;
+  //   echo "<br>";
+  //   $j++;
+  // }
+
+  $selectedMeterType = array($filterlist[0],$filterlist[1]);
+  $selectedOperationHours = array($filterlist[2],$filterlist[3],$filterlist[4],$filterlist[5]);
+  $selectedOperationDays = array($filterlist[6],$filterlist[7]);
+  $selectedZoneType = array($filterlist[8],$filterlist[9],$filterlist[10],$filterlist[11],$filterlist[12],$filterlist[13],$filterlist[14]);
+  $selectedPaymentMethods = array($filterlist[15],$filterlist[16],$filterlist[17],$filterlist[18]);
+
+  $pageNum = intval($filterlist[19]);
   //pagination
   $maxItemPerPage = 8;
   $offset = ($pageNum-1) * $maxItemPerPage;
@@ -36,132 +56,107 @@
   $result2 = mysqli_query($connection, $totalPagesSQL);
   $total_rows = mysqli_fetch_array($result2)[0];
   $total_pages = ceil($total_rows / $maxItemPerPage);
-
-  //checkbox arrays
-  $selectedMeterType = array();
-  $selectedOperationHours = array();
-  $selectedOperationDays = array();
-  $selectedZoneType = array();
-  $selectedPaymentMethods = array();
+  echo $pageNum;
+  echo $offset;
 
   $query = "SELECT * ";
   $query .= " FROM pay_stations ";
   $query .= "WHERE ";
 
-  // echo $_REQUEST['metertype'];
-  if(isset($_REQUEST['metertype'])){
-    $selectedMeterType = $_REQUEST['metertype'];
-    // $query .= "WHERE pay_stations.METER_TYPE = 'Paystation' ";
-    if(!empty($_REQUEST["metertype"])){
-        $query .= "pay_stations.METER_TYPE LIKE '%" . $selectedMeterType . "%' ";
-
+  //meter type
+  $numItem=0;
+  $check_if_all_empty = 0;
+  foreach($selectedMeterType as $value){
+    if(!empty($value)){
+      if($numItem==0){
+        $query .= "pay_stations.METER_TYPE LIKE binary '%" . $value . "%' ";
+      }
+      else if($numItem < count($selectedMeterType)){
+        $query .= " OR ";
+        $query .= "pay_stations.METER_TYPE LIKE binary '%" . $value . "%' ";
+      }
+      else{
+        $query .= "pay_stations.METER_TYPE LIKE '%" . $value . "%' ";
+      }
+    $numItem++;
+    }
+    else{
+      $check_if_all_empty ++;
     }
   }
-  else{
-    //nothing was selected
-    $query .= "pay_stations.METER_TYPE LIKE '%%' ";
+  if($check_if_all_empty==2){
+    //display all
+    $query .= "pay_stations.METER_TYPE LIKE binary '%%' ";
   }
-  if(isset($_REQUEST['ophours'])){
-      $selectedOperationHours = $_REQUEST['ophours'];
-      $query .= "AND ";
-      if(!empty($_REQUEST["ophours"])){
-          $query .= "pay_stations.OPERATION_HOURS LIKE '%" . $selectedOperationHours . "%' ";
+  //operation hours
+  $numItem=0;
+  foreach($selectedOperationHours as $value){
+    if(!empty($value)){
+      if($numItem==0){
+        $query .= "AND ";
+        $query .= "pay_stations.OPERATION_HOURS LIKE '%" . $value . "%' ";
+      }else if($numItem < count($selectedOperationHours)){
+        $query .= "pay_stations.OPERATION_HOURS LIKE '%" . $value . "%' ";
+        $query .= " OR ";
       }
-  }
-  else{
-    //nothing was selected
-    $query .= "AND ";
-    $query .= "pay_stations.OPERATION_HOURS LIKE '%%' ";
-  }
-
-
-  //if meter type was selected
-  // if(isset($_POST['metertype'])){
-  //   $selectedMeterType = $_POST['metertype'];
-  //   // $query .= "WHERE pay_stations.METER_TYPE = 'Paystation' ";
-  //   if(!empty($_POST["metertype"])){
-  //     foreach($selectedMeterType as $value){
-  //       $query .= "pay_stations.METER_TYPE LIKE '%" . $value . "%' ";
-  //       $query .= " OR ";
-  //
-  //     }
-  //     $query = substr($query, 0,-4);
-  //
-  //   }
-  // }
-  // else{
-  //   //nothing was selected
-  //   $query .= "pay_stations.METER_TYPE LIKE '%%' ";
-  // }
-  //if operation hours was selected
-  // if(isset($_POST['ophours'])){
-  //     $selectedOperationHours = $_POST['ophours'];
-  //               $query .= "AND ";
-  //     if(!empty($_POST["ophours"])){
-  //       foreach($selectedOperationHours as $value){
-  //         $query .= "pay_stations.OPERATION_HOURS LIKE '%" . $value . "%' ";
-  //         $query .= " OR ";
-  //       }
-  //       $query = substr($query, 0,-3);
-  //     }
-  // }
-  // else{
-  //   //nothing was selected
-  //   $query .= "AND ";
-  //   $query .= "pay_stations.OPERATION_HOURS LIKE '%%' ";
-  // }
-  //if operation days was selected
-  if(isset($_POST['opdays'])){
-      $selectedOperationDays = $_POST['opdays'];
-                $query .= "AND ";
-      if(!empty($_POST["opdays"])){
-        foreach($selectedOperationDays as $value){
-          $query .= "pay_stations.OPERATION_DAYS LIKE '%" . $value . "%' ";
-          $query .= " OR ";
-        }
-        $query = substr($query, 0,-3);
+      else{
+        $query .= "pay_stations.OPERATION_HOURS LIKE '%" . $value . "%' ";
       }
+      $numItem++;
+    }
   }
-  else{
-    //nothing was selected
-    $query .= "AND ";
-    $query .= "pay_stations.OPERATION_DAYS LIKE '%%' ";
-  }
-  //if zone type was selected
-  if(isset($_POST['zonetype'])){
-      $selectedZoneType = $_POST['zonetype'];
-                $query .= "AND ";
-      if(!empty($_POST["zonetype"])){
-        foreach($selectedZoneType as $value){
-          $query .= "pay_stations.ZONE_TYPE LIKE '%" . $value . "%' ";
-          $query .= " OR ";
-        }
-        $query = substr($query, 0,-3);
+  //operation days
+  $numItem=0;
+  foreach($selectedOperationDays as $value){
+    if(!empty($value)){
+      if($numItem==0){
+        $query .= "AND ";
+        $query .= "pay_stations.OPERATION_DAYS LIKE '%" . $value . "%' ";
+      }else if($numItem < count($selectedOperationDays)){
+      $query .= "pay_stations.OPERATION_DAYS LIKE '%" . $value . "%' ";
+      $query .= " OR ";
       }
-  }
-  else{
-    //nothing was selected
-    $query .= "AND ";
-    $query .= "pay_stations.ZONE_TYPE LIKE '%%' ";
-  }
-  //if Payment method was selected
-  if(isset($_POST['paymethod'])){
-      $selectedPaymentMethods = $_POST['paymethod'];
-                $query .= "AND ";
-      if(!empty($_POST["paymethod"])){
-        foreach($selectedPaymentMethods as $value){
-          $query .= "pay_stations.PAYMENT_METHODS LIKE '%" . $value . "%' ";
-          $query .= " OR ";
-        }
-        $query = substr($query, 0,-3);
+      else{
+        $query .= "pay_stations.OPERATION_DAYS LIKE '%" . $value . "%' ";
       }
+      $numItem++;
+    }
   }
-  else{
-    //nothing was selected
-    $query .= "AND ";
-    $query .= "pay_stations.PAYMENT_METHODS LIKE '%%' ";
+  //zone type
+  $numItem=0;
+  foreach($selectedZoneType as $value){
+    if(!empty($value)){
+      if($numItem==0){
+        $query .= "AND ";
+        $query .= "pay_stations.ZONE_TYPE LIKE '%" . $value . "%' ";
+      }else if($numItem < count($selectedZoneType)){
+      $query .= "pay_stations.ZONE_TYPE LIKE '%" . $value . "%' ";
+      $query .= " OR ";
+      }
+      else{
+        $query .= "pay_stations.ZONE_TYPE LIKE '%" . $value . "%' ";
+      }
+      $numItem++;
+    }
   }
-
+  //paymethod
+  $numItem=0;
+  foreach($selectedPaymentMethods as $value){
+    if(!empty($value)){
+      if($numItem==0){
+        $query .= "AND ";
+        $query .= "pay_stations.PAYMENT_METHODS LIKE '%" . $value . "%' ";
+      }else if($numItem < count($selectedPaymentMethods)){
+        $query .= "pay_stations.PAYMENT_METHODS LIKE '%" . $value . "%' ";
+        $query .= " OR ";
+      }
+      else{
+        $query .= "pay_stations.PAYMENT_METHODS LIKE '%" . $value . "%' ";
+      }
+      $numItem++;
+    }
+  }
+  //limit page
   $query .= "LIMIT $offset, $maxItemPerPage";
 
 echo "<br>";
@@ -202,28 +197,28 @@ else{
 
   ?>
 
-
   <!-- Page navigation for items -->
   <div class="box pages-bar">
     <?php
-    if($pageNum != 1){
-      echo "<a class='pagination-button' href='browse.php?pageNum=". ($pageNum - 1). "'> < </a>";
-    }
-    else{
-      echo "<a class='disabled-pagination' href='browse.php?pageNum=". ($pageNum - 1). "'></a>";
-    }
-    echo "<div class='curr-page'>";
-    echo $pageNum;
-    echo "</div>";
-    if($pageNum != $total_pages){
-      echo "<a class='pagination-button' href='browse.php?pageNum=". ($pageNum + 1 ). "'> > </a>";
-    }
-    else{
-      echo "<a class='disabled-pagination' href='browse.php?pageNum=". ($pageNum + 1 ). "'></a>";
-    }
+    // if($pageNum != 1){
+    //   echo "<a class='pagination-button' href='browse.php?pageNum=". ($pageNum - 1). "'> < </a>";
+    // }
+    // else{
+    //   echo "<a class='disabled-pagination' href='browse.php?pageNum=". ($pageNum - 1). "'></a>";
+    // }
+    // echo "<div class='curr-page'>";
+    // echo $pageNum;
+    // echo "</div>";
+    // if($pageNum != $total_pages){
+    //   echo "<a class='pagination-button' href='browse.php?pageNum=". ($pageNum + 1 ). "'> > </a>";
+    // }
+    // else{
+    //   echo "<a class='disabled-pagination' href='browse.php?pageNum=". ($pageNum + 1 ). "'></a>";
+    // }
     ?>
-    <!-- <a href="<?php echo 'browse.php?pageNum='.($pageNum + 1); ?>">></a> -->
+    <!-- <?php echo 'browse.php?pageNum='.($pageNum + 1); ?> -->
   </div>
+
 
 
 

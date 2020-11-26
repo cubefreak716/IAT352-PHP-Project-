@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+$pageNum = 1;
 ?>
 <!DOCTYPE HTML>
 <html lang="en">
@@ -14,7 +14,7 @@ session_start();
   <link rel="stylesheet" href="css/main.php">
   <link rel="stylesheet" href="css/fonts.css">
   <!-- <link rel="stylesheet" href="css/main.css"> -->
-  <script src="js/ajax_functions.js" type="text/javascript"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
   <script>
     function getXMLHTTPRequest(){
@@ -39,8 +39,20 @@ session_start();
 
     }
 
-    function refreshPage(str){
-      if(str==""){
+    function changePage(){
+      var clist = document.forms[0];
+      var filterString = "";
+      // var current_page = ","+document.getElementsByClassName("curr-page");
+
+      for(i = 0; i < clist.length; i++){
+        if (clist[i].checked) {
+          filterString = filterString + clist[i].value + ",";
+        }
+        else{
+          filterString = filterString + ",";
+        }
+      }
+      if(filterString==""){
         document.getElementById("db_display").innerHTML= "";
         return;
       }
@@ -51,31 +63,17 @@ session_start();
             document.getElementById("db_display").innerHTML = this.responseText;
           }
         };
-        xmlhttp.open("POST","getItems.php?metertype="+str,true);
+
+        xmlhttp.open("POST","getItems.php?metertype="+filterString+"<?php echo $pageNum ?>",true);
         xmlhttp.send();
       }
-    }
-    function refreshOPHours(str){
-      if(str==""){
-        document.getElementById("db_display").innerHTML= "";
-        return;
-      }
-      else{
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function(){
-          if(this.readyState == 4 && this.status ==200){
-            document.getElementById("db_display").innerHTML = this.responseText;
-          }
-        };
-        xmlhttp.open("POST","getItems.php?ophours="+str,true);
-        xmlhttp.send();
-      }
+
     }
   </script>
 </head>
 
-  <body>
-
+<body>
+    <!-- <input type="text" id="demo" size="50"> -->
     <?php
       //connection set up
       $dbhost = "localhost";
@@ -123,55 +121,43 @@ session_start();
       </div>
     </div>
 
-
-
-    <!-- <div id="showtime" class="displaybox"> looo</div> -->
-
     <!-- Filter box -->
     <div class="browse-box box">
-      <form class="queryForm" action="browse.php" method="post">
+      <form class="queryForm" action="browse.php" method="post" onchange="changePage()">
       <div class="filter-box">
         <div class="filter-type-name">Meter type</div>
-        <ul div id="">
-          <li><input type="checkbox" name="metertype[]" value="Paystation" onchange="refreshPage(this.value)">Paystation</li>
-          <li><input type="checkbox" name="metertype[]" value="EV"  onchange="refreshPage(this.value)">EV charging station</li>
-        </ul>
-        <div class="filter-type-name">Operation Hours</div>
-        <ul>
-          <li><input type="checkbox" name="ophours[]" value="6:00 AM to 6:00 PM" onclick="refreshOPHours(this.value)">6:00am - 6:00pm</li>
-          <li><input type="checkbox" name="ophours[]" value="8:00 AM to 11:00 PM" onclick="refreshOPHours(this.value)">8:00am - 11:00pm</li>
-          <li><input type="checkbox" name="ophours[]" value="Outside of City Hall/Library Hours" onclick="refreshOPHours(this.value)">City Hall/Library Hours</li>
-          <li><input type="checkbox" name="ophours[]" value="24 Hours" onclick="refreshOPHours(this.value)">24 hours </li>
-        </ul>
-        <div class="filter-type-name">Operation Days</div>
-        <ul>
-          <li><input type="checkbox" name="opdays[]" value="7 Days/Week" onclick="refreshPage(this.value)">7 days a week</li>
-          <li><input type="checkbox" name="opdays[]" value="Mon - Fri" onclick="refreshPage(this.value)">Weekdays</li>
-        </ul>
-        <div class="filter-type-name">Zone Type</div>
-        <ul>
-          <li><input type="checkbox" name="zonetype[]" value="On-Street Parking" onclick="refreshPage(this.value)">On-street</li>
-          <li><input type="checkbox" name="zonetype[]" value="Public" onclick="refreshPage(this.value)" onclick="refreshPage(this.value)">Public</li>
-          <li><input type="checkbox" name="zonetype[]" value="employee" onclick="refreshPage(this.value)">Employee</li>
-          <li><input type="checkbox" name="zonetype[]" value="underground" onclick="refreshPage(this.value)">Underground</li>
-          <li><input type="checkbox" name="zonetype[]" value="pavedoffstreet" onclick="refreshPage(this.value)">Surface Paved Off-street</li>
-          <li><input type="checkbox" name="zonetype[]" value="Surface Gravel Off-Street" onclick="refreshPage(this.value)">Surface Gravel Off-street</li>
-          <li><input type="checkbox" name="zonetype[]" value="fleet" onclick="refreshPage(this.value)">Fleet</li>
-        </ul>
-        <div class="filter-type-name">Payment Methods</div>
-        <ul>
-          <li><input type="checkbox" name="paymethod[]" value="Cash" onclick="refreshPage(this.value)">Cash</li>
-          <li><input type="checkbox" name="paymethod[]" value="Credit Card" onclick="refreshPage(this.value)">Credit Card</li>
-          <li><input type="checkbox" name="paymethod[]" value="PayByPhone" onclick="refreshPage(this.value)">Pay by Phone</li>
-          <li><input type="checkbox" name="paymethod[]" value="Invoice" onclick="refreshPage(this.value)">Invoice</li>
-        </ul>
-
-        <input type="submit" name="search" value="Search">
-
-      </form>
+          <input type="checkbox" class="meter-type" name="metertype[]" value="Paystation" onchange="refreshPage(this.value)">Paystation<br>
+          <input type="checkbox" class="meter-type" name="metertype[]" value="EV"  onchange="refreshPage(this.value)">EV charging station<br>
+        <div class="filter-type-name">Operation Hours</div><br>
+          <input type="checkbox" name="ophours[]" value="6:00 AM to 6:00 PM" onclick="refreshPage(this.value)">6:00am - 6:00pm<br>
+          <input type="checkbox" name="ophours[]" value="8:00 AM to 11:00 PM" onclick="refreshPage(this.value)">8:00am - 11:00pm<br>
+          <input type="checkbox" name="ophours[]" value="Outside of City Hall/Library Hours" onclick="refreshPage(this.value)">City Hall/Library Hours<br>
+          <input type="checkbox" name="ophours[]" value="24 Hours" onclick="refreshPage(this.value)">24 hours<br>
+        <div class="filter-type-name">Operation Days</div><br>
+          <input type="checkbox" name="opdays[]" value="7 Days/Week" onclick="refreshPage(this.value)">7 days a week<br>
+          <input type="checkbox" name="opdays[]" value="Mon - Fri" onclick="refreshPage(this.value)">Weekdays<br>
+        <div class="filter-type-name">Zone Type</div><br>
+          <input type="checkbox" name="zonetype[]" value="On-Street Parking" onclick="refreshPage(this.value)">On-street<br>
+          <input type="checkbox" name="zonetype[]" value="Public" onclick="refreshPage(this.value)" onclick="refreshPage(this.value)">Public<br>
+          <input type="checkbox" name="zonetype[]" value="employee" onclick="refreshPage(this.value)">Employee<br>
+          <input type="checkbox" name="zonetype[]" value="underground" onclick="refreshPage(this.value)">Underground<br>
+          <input type="checkbox" name="zonetype[]" value="pavedoffstreet" onclick="refreshPage(this.value)">Surface Paved Off-street<br>
+          <input type="checkbox" name="zonetype[]" value="Surface Gravel Off-Street" onclick="refreshPage(this.value)">Surface Gravel Off-street<br>
+          <input type="checkbox" name="zonetype[]" value="fleet" onclick="refreshPage(this.value)">Fleet<br>
+        <div class="filter-type-name">Payment Methods</div><br>
+          <input type="checkbox" name="paymethod[]" value="Cash" onclick="refreshPage(this.value)">Cash<br>
+          <input type="checkbox" name="paymethod[]" value="Credit Card" onclick="refreshPage(this.value)">Credit Card<br>
+          <input type="checkbox" name="paymethod[]" value="PayByPhone" onclick="refreshPage(this.value)">Pay by Phone<br>
+          <input type="checkbox" name="paymethod[]" value="Invoice" onclick="refreshPage(this.value)">Invoice
       </div>
-
+      </form>
       <div id="db_display"></div>
+
+    </div>
+
+
+
+
 
 </body>
 </html>
