@@ -22,25 +22,17 @@
   }
 ?>
 <?php
-  //get current page number
-  // if(isset($_POST['pageNum'])){
-  //   $pageNum = $_POST['pageNum'];
-  // } else{
-  //   $pageNum = 1;
-  // }
-
-
 
   //incoming string
   $filterString = $_REQUEST['metertype'];
   $filterlist = explode(",", $filterString);
-  // $j=0;
-  // foreach($filterlist as $value){
-  //   echo $j;echo": ";
-  //   echo $value;
-  //   echo "<br>";
-  //   $j++;
-  // }
+  $j=0;
+  foreach($filterlist as $value){
+    echo $j;echo": ";
+    echo $value;
+    echo "<br>";
+    $j++;
+  }
 
   $selectedMeterType = array($filterlist[0],$filterlist[1]);
   $selectedOperationHours = array($filterlist[2],$filterlist[3],$filterlist[4],$filterlist[5]);
@@ -50,19 +42,11 @@
 
   $pageNum = intval($filterlist[19]);
   //pagination
-  $maxItemPerPage = 8;
-  $offset = ($pageNum-1) * $maxItemPerPage;
-  $totalPagesSQL = "SELECT COUNT(*) FROM pay_stations";
-  $result2 = mysqli_query($connection, $totalPagesSQL);
-  $total_rows = mysqli_fetch_array($result2)[0];
-  $total_pages = ceil($total_rows / $maxItemPerPage);
-  echo $pageNum;
-  echo $offset;
 
-  $query = "SELECT * ";
-  $query .= " FROM pay_stations ";
-  $query .= "WHERE ";
 
+  $query0 = "SELECT * FROM pay_stations WHERE ";
+
+  $query ="";
   //meter type
   $numItem=0;
   $check_if_all_empty = 0;
@@ -157,8 +141,22 @@
     }
   }
   //limit page
+  $maxItemPerPage = 8;
+  $offset = ($pageNum-1) * $maxItemPerPage;
+  $totalPagesSQL = "SELECT COUNT(*) FROM pay_stations WHERE ";
+  $totalPagesSQL = $totalPagesSQL.$query;
+  echo $totalPagesSQL;
+  $result2 = mysqli_query($connection, $totalPagesSQL);
+  $total_rows = mysqli_fetch_array($result2)[0];
+  $total_pages = ceil($total_rows / $maxItemPerPage);
+  echo "got page num = ".$pageNum;
+  echo " offset = ".$offset;
+  echo " total_row = ".$total_rows;
+  echo " total pages = ".$total_pages;
+
   $query .= "LIMIT $offset, $maxItemPerPage";
 
+$query = $query0.$query;
 echo "<br>";
 echo $query;
 echo "<br>";
@@ -200,6 +198,26 @@ else{
   <!-- Page navigation for items -->
   <div class="box pages-bar">
     <?php
+    if($pageNum != 1){
+    echo "<a class='pagination-button' onclick='pagination(".($pageNum-1).")'> < </a>";
+    }
+    else{
+      echo "<a class='disabled-pagination' onclick='pagination(".($pageNum-1).")'> < </a>";
+    }
+    echo "<div class='curr-page'>";
+    echo $pageNum;
+    echo "</div>";
+    if($pageNum != $total_pages){
+      echo "<a class='pagination-button' onclick='pagination(".($pageNum+1).")'> > </a>";
+    }
+    else{
+      echo "<a class='disabled-pagination' onclick='pagination(".($pageNum+1).")'> > </a>";
+    }
+    ?>
+  </div>
+
+  <div class="box pages-bar">
+    <?php
     // if($pageNum != 1){
     //   echo "<a class='pagination-button' href='browse.php?pageNum=". ($pageNum - 1). "'> < </a>";
     // }
@@ -216,7 +234,9 @@ else{
     //   echo "<a class='disabled-pagination' href='browse.php?pageNum=". ($pageNum + 1 ). "'></a>";
     // }
     ?>
-    <!-- <?php echo 'browse.php?pageNum='.($pageNum + 1); ?> -->
+    <?php
+    // echo 'browse.php?pageNum='.($pageNum + 1);
+     ?>
   </div>
 
 
