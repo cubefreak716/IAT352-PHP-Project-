@@ -45,28 +45,23 @@ p.meterlist{
   border: 1px solid black;
 }
 .profile-box{
-  margin-top:3rem;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 3rem;
+  margin-right: 0.5rem;
   margin-bottom:1rem;
-  display:flex;
-  width:40rem;
-  height:15rem;
+  flex:1;
   padding-left: auto;
   padding-right: auto;
   padding-top:0.5rem;
   border: 1px solid rgba(89, 255, 170,1);
 }
 .favourite-box{
+  flex:3;
   margin-left: auto;
   margin-right: auto;
   margin-bottom:1rem;
-  width:40rem;
-  height:25rem;
   padding-left: auto;
   padding-right: auto;
   border: 1px solid rgba(89, 255, 170,1);
-  display:flex;
 }
 
 .userinfosquare {
@@ -83,7 +78,7 @@ p.meterlist{
 }
 
 .userinfo{
-  margin-left:5rem;
+  <!-- margin-left:5rem; -->
   font-size:1vw;
 }
 
@@ -98,7 +93,7 @@ p.meterlist{
   border-style: none none none solid;
 }
 .edit-features{
-  float:right;
+  text-align:center;
 }
 
 .container{

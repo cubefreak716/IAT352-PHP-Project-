@@ -1,2 +1,51 @@
-<?xml version="1.0"?>
-<stations/>
+<?xml version="1.0" encoding="UTF-8"?>
+<stations>
+  <station>
+    <ID>006</ID>
+    <Type>Paystation</Type>
+    <Address>13479 108 Ave</Address>
+    <Rate>$1.00 </Rate>
+  </station>
+  <station>
+    <ID>019</ID>
+    <Type>Paystation</Type>
+    <Address>1688 17 Ave</Address>
+    <Rate>$1.00 </Rate>
+  </station>
+  <station>
+    <ID>026</ID>
+    <Type>Paystation</Type>
+    <Address>10428 153 Street</Address>
+    <Rate>$1.75 </Rate>
+  </station>
+  <station>
+    <ID>EV001</ID>
+    <Type>EV Charging Station - Level 2</Type>
+    <Address>16555 Fraser Hwy</Address>
+    <Rate/>
+  </station>
+  <station>
+    <ID>066</ID>
+    <Type>Paystation</Type>
+    <Address>10290 133 St</Address>
+    <Rate>$1.00 </Rate>
+  </station>
+  <station>
+    <ID>067</ID>
+    <Type>Paystation</Type>
+    <Address>13321 102A Ave</Address>
+    <Rate>$1.00 </Rate>
+  </station>
+  <station>
+    <ID>068</ID>
+    <Type>Paystation</Type>
+    <Address>10297 133A St</Address>
+    <Rate>$1.00 </Rate>
+  </station>
+  <station>
+    <ID>035</ID>
+    <Type>Paystation</Type>
+    <Address>1238 137 St</Address>
+    <Rate>$1.00 </Rate>
+  </station>
+</stations>

@@ -110,7 +110,7 @@ li{
 }
 
 .index-top{
-  width:80rem;
+  width:80em;
   height:30rem;
   margin-top:0.5rem;
   margin-left:auto;
@@ -214,7 +214,6 @@ span.errorMsg{
 }
 .browse-box{
   width:60%;
-  height:100vh;
   margin-left:auto;
   margin-right:auto;
 }
@@ -223,10 +222,11 @@ span.errorMsg{
   font-size:0.8rem;
 }
 .queryForm{
-  
+
 }
 .filter-type-name{
   font-weight: bold;
+  font-size:1.4rem;
 }
 
 .items-box{
@@ -269,6 +269,7 @@ span.errorMsg{
 .browse-box{
   flex:3;
   padding:0;
+
 }
 
 .disabled-pagination{
@@ -279,7 +280,6 @@ span.errorMsg{
 
 .pages-bar{
   margin-top:2rem;
-  margin-bottom: 5rem;
   background-color: rgba(209, 237, 216,1);
 }
 .curr-page{

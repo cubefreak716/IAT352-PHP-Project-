@@ -90,13 +90,14 @@
   </div>
 
 
-
-<h1 class="itempage-heading"> Profile Settings</h1>
+<div class="box">
+<!-- <h1 class="itempage-heading"> Profile Settings </h1> -->
 <div class="profile-box">
   <div class="square">
       <!-- <p>Profile Picture</p> -->
       <img class="profile-image" src="<?php echo $photo;?>" alt="Profile Picture">
   </div>
+  <br>
   <div class="userinfo">
     <p><em>Username :</em></p>
     <div class="userinfosquare">
@@ -129,7 +130,6 @@
   <div class="favourite-box">
     <h2 class=""> Favourite Paystations</h2>
     <div class="bookmark-list">
-      <ul>
       <?php
         $query_getBookmarks = "SELECT * FROM bookmarks WHERE bookmarks.ID_user = '";
         $query_getBookmarks .= $_SESSION['ID']. "'";
@@ -139,28 +139,40 @@
           die("query failed");
         }
         else{
+          echo"<table>";
+          echo"<tr><th>ID</th><th>Address</th><th>Remove</th></tr>";
           while($row = mysqli_fetch_assoc($result)){
-            echo "<li>";
+            echo"<tr>";
+            echo"<td>";
             echo $row['ID_paystation'];
-            echo " ";
+            echo"</td>";
             $query_getStreetName = "SELECT * FROM pay_stations WHERE pay_stations.METER_ID ='";
             $query_getStreetName .= $row['ID_paystation']. "'";
             $result2 = mysqli_query($connection, $query_getStreetName);
+            echo"<td>";
             while($strname = mysqli_fetch_assoc($result2)){
               echo "<a class='link' href='item.php?data=";
               echo $row['ID_paystation']. "'>";
               echo $strname['ADDRESS'];
               echo "</a>";
             }
-            echo "</li>";
+            echo"</td>";
+            echo"<td>";
+            echo "<a class='remove-button' href='removeBookmark.php?removeid=";
+            echo $row['ID_paystation']. "'>";
+            echo " X ";
+            echo "</a>";
+            echo"</td>";
+            echo"</tr>";
           }
         }
+        echo"</table>";
       ?>
-      </ul>
     </div>
   </div>
 
-
+</div>
+<!-- end of box -->
 
 
 </body>

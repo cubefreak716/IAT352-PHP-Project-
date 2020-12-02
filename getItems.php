@@ -17,9 +17,6 @@
     " (" . mysqli_connect_errno() . ")"
     );
   }
-  else{
-
-  }
 ?>
 <?php
 
@@ -153,73 +150,105 @@
   // echo " offset = ".$offset;
   // echo " total_row = ".$total_rows;
   // echo " total pages = ".$total_pages;
+  $noLimitQuery = $query0.$query;
   $query .= "LIMIT $offset, $maxItemPerPage";
 
   $query = $query0.$query;
   // echo "<br>";
   // echo $query;
   // echo "<br>";
-  $result = mysqli_query($connection, $query);
-  if(!$result){
-    die("query failed");
-  }
-  else{
-    // echo "success";
-  }
+  // $result = mysqli_query($connection, $query);
+  // if(!$result){
+  //   die("query failed");
+  // }
+  // else{
+  //   // echo "success";
+  // }
 
 ?>
 
-<!-- Items from future database -->
-<div class="items-box">
-  <?php
-    // for loop to grab items from future database
-    while($row = mysqli_fetch_assoc($result)){
-      echo "<a href='item.php?data=".$row["METER_ID"]."'><div class='item'>";
-      echo "<div class='item-num'>";
-      echo $row["METER_ID"];
-      echo "</div> ";
-      if(strpos($row["METER_TYPE"],'Paystation') !== false){
-        echo "<img class='icon-meter' src='img/parking.png' alt='paystationicon'> ";
-      }
-      if(strpos($row["METER_TYPE"],'EV') !== false){
-        echo "<img class='icon-meter' src='img/charging.png' alt='chargingstationicon'> ";
-      }
-      echo $row["ADDRESS"];
-      echo " ";
-      echo "<div class='item-hourrate'> Rate: ";
-      echo $row["HOURLY_RATE"];
-      echo "</div>";
-      echo "</div></a>";
-    }
-
+<?php
     //xml
-    // if(result>0){
-    $xmlFile = new DOMDocument("1.0");
-    $xmlFile ->formatOutput=true;
+    $result = mysqli_query($connection, $query);
+    $xmlFile = new DOMDocument('1.0', 'UTF-8');
+    $xmlFile -> formatOutput=true;
     $meterstation = $xmlFile->createElement("stations");
-    $xmlFile -> appendChild($meterstation);
+    $meterstation = $xmlFile-> appendChild($meterstation);
 
     while($row = mysqli_fetch_assoc($result)){
       $station = $xmlFile -> createElement("station");
       $meterstation -> appendChild($station);
 
-      $m_ID = $xmlFile -> createElement("m_ID", $row["METER_ID"]);
+      $m_ID = $xmlFile -> createElement("ID", $row["METER_ID"]);
       $station ->appendChild($m_ID);
 
-      $m_Type = $xmlFile -> createElement("m_Type", $row["METER_TYPE"]);
+      $m_Type = $xmlFile -> createElement("Type", $row["METER_TYPE"]);
       $station ->appendChild($m_Type);
 
-      $m_addr = $xmlFile -> createElement("m_addr", $row["ADDRESS"]);
+      $m_addr = $xmlFile -> createElement("Address", $row["ADDRESS"]);
       $station ->appendChild($m_addr);
 
-      $m_HRate = $xmlFile -> createElement("m_HRate", $row["HOURLY_RATE"]);
+      $m_HRate = $xmlFile -> createElement("Rate", $row["HOURLY_RATE"]);
       $station ->appendChild($m_HRate);
     }
-    echo "<xmp>".$xmlFile->saveXML()."</xmp>";
+    $xmlFile->saveXML();
     $xmlFile ->save("query.xml");
+
+?>
+
+
+
+<!-- Items from future database -->
+<div class="items-box">
+  <?php
+    // for loop to grab items from future database
+    $result = mysqli_query($connection, $query);
+    if(!$result){
+      die("query failed");
+    }
+    else{
+      // echo "success";
+    }
+    $xmlFile = simplexml_load_file("query.xml") or die("Error");
+    foreach($xmlFile->children() as $stations){
+        echo "<a href='item.php?data=".$stations ->ID."'><div class='item'>";
+        echo "<div class='item-num'>";
+        echo $stations ->ID;
+        echo "</div> ";
+        if(strpos($stations ->Type,'Paystation') !== false){
+          echo "<img class='icon-meter' src='img/parking.png' alt='paystationicon'> ";
+        }
+        if(strpos($stations ->Type,'EV') !== false){
+          echo "<img class='icon-meter' src='img/charging.png' alt='chargingstationicon'> ";
+        }
+        echo $stations ->Address;
+        echo " ";
+        echo "<div class='item-hourrate'> Rate: ";
+        echo $stations ->Rate;
+        echo "</div>";
+        echo "</div></a>";
+    }
+    // while($row = mysqli_fetch_assoc($result)){
+    //   echo "<a href='item.php?data=".$row["METER_ID"]."'><div class='item'>";
+    //   echo "<div class='item-num'>";
+    //   echo $row["METER_ID"];
+    //   echo "</div> ";
+    //   if(strpos($row["METER_TYPE"],'Paystation') !== false){
+    //     echo "<img class='icon-meter' src='img/parking.png' alt='paystationicon'> ";
+    //   }
+    //   if(strpos($row["METER_TYPE"],'EV') !== false){
+    //     echo "<img class='icon-meter' src='img/charging.png' alt='chargingstationicon'> ";
+    //   }
+    //   echo $row["ADDRESS"];
+    //   echo " ";
+    //   echo "<div class='item-hourrate'> Rate: ";
+    //   echo $row["HOURLY_RATE"];
+    //   echo "</div>";
+    //   echo "</div></a>";
     // }
 
   ?>
+
   <!-- Page navigation for items -->
   <div class="box pages-bar">
     <?php
@@ -242,8 +271,7 @@
   </div>
 
 </div>
-</div>
-<!-- end of browse box -->
+
 
 </body>
 </html>
