@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="css/fonts.css">
   <!-- <link rel="stylesheet" href="css/main.css"> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
+  <!-- <script src="script.js"></script> -->
   <script>
     function getXMLHTTPRequest(){
       var request = false;
@@ -36,14 +36,38 @@
         }
       }
       return request;
-
     }
-
     function changePage(){
       var clist = document.forms[0];
       var filterString = "";
-      // var current_page = ","+document.getElementsByClassName("curr-page");
+      for(i = 0; i < clist.length; i++){
+        if (clist[i].checked) {
+          filterString = filterString + clist[i].value + ",";
+        }
+        else{
+          filterString = filterString + ",";
+        }
+      }
+      if(filterString==""){
+        document.getElementById("db_display").innerHTML= "";
+        return;
+      }
+      else{
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+          if(this.readyState == 4 && this.status ==200){
+            document.getElementById("db_display").innerHTML = this.responseText;
+          }
+        };
+        xmlhttp.open("POST","getItems.php?metertype="+filterString+"<?php echo $pageNum ?>",true);
+        xmlhttp.send();
+      }
 
+    }
+    function pagination(page){
+      var clist = document.forms[0];
+      var filterString = "";
+      page = parseInt(page);
       for(i = 0; i < clist.length; i++){
         if (clist[i].checked) {
           filterString = filterString + clist[i].value + ",";
@@ -64,18 +88,13 @@
           }
         };
 
-        xmlhttp.open("POST","getItems.php?metertype="+filterString+"<?php echo $pageNum ?>",true);
+        xmlhttp.open("POST","getItems.php?metertype="+filterString+page,true);
         xmlhttp.send();
       }
-
     }
   </script>
-
-
 </head>
-
-<body>
-    <!-- <input type="text" id="demo" size="50"> -->
+<body onload="changePage()">
     <?php
       //connection set up
       $dbhost = "localhost";
@@ -153,42 +172,7 @@
           <input type="checkbox" name="paymethod[]" value="Invoice" onclick="refreshPage(this.value)">Invoice
       </div>
       </form>
-      <div id="db_display"></div>
-
-
-      <script>
-      function pagination(page){
-        var clist = document.forms[0];
-        var filterString = "";
-        // var current_page = ","+document.getElementsByClassName("curr-page");
-        page = parseInt(page);
-        for(i = 0; i < clist.length; i++){
-          if (clist[i].checked) {
-            filterString = filterString + clist[i].value + ",";
-          }
-          else{
-            filterString = filterString + ",";
-          }
-        }
-        if(filterString==""){
-          document.getElementById("db_display").innerHTML= "";
-          return;
-        }
-        else{
-          var xmlhttp = new XMLHttpRequest();
-          xmlhttp.onreadystatechange = function(){
-            if(this.readyState == 4 && this.status ==200){
-              document.getElementById("db_display").innerHTML = this.responseText;
-            }
-          };
-
-          xmlhttp.open("POST","getItems.php?metertype="+filterString+page,true);
-          xmlhttp.send();
-        }
-      }
-      </script>
-
-      
+      <div id="db_display" class="browse-box"></div>
     </div>
 
 

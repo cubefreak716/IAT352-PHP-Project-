@@ -26,13 +26,13 @@
   //incoming string
   $filterString = $_REQUEST['metertype'];
   $filterlist = explode(",", $filterString);
-  $j=0;
-  foreach($filterlist as $value){
-    echo $j;echo": ";
-    echo $value;
-    echo "<br>";
-    $j++;
-  }
+  // $j=0;
+  // foreach($filterlist as $value){
+  //   echo $j;echo": ";
+  //   echo $value;
+  //   echo "<br>";
+  //   $j++;
+  // }
 
   $selectedMeterType = array($filterlist[0],$filterlist[1]);
   $selectedOperationHours = array($filterlist[2],$filterlist[3],$filterlist[4],$filterlist[5]);
@@ -145,28 +145,27 @@
   $offset = ($pageNum-1) * $maxItemPerPage;
   $totalPagesSQL = "SELECT COUNT(*) FROM pay_stations WHERE ";
   $totalPagesSQL = $totalPagesSQL.$query;
-  echo $totalPagesSQL;
+  // echo $totalPagesSQL;
   $result2 = mysqli_query($connection, $totalPagesSQL);
   $total_rows = mysqli_fetch_array($result2)[0];
   $total_pages = ceil($total_rows / $maxItemPerPage);
-  echo "got page num = ".$pageNum;
-  echo " offset = ".$offset;
-  echo " total_row = ".$total_rows;
-  echo " total pages = ".$total_pages;
-
+  // echo "got page num = ".$pageNum;
+  // echo " offset = ".$offset;
+  // echo " total_row = ".$total_rows;
+  // echo " total pages = ".$total_pages;
   $query .= "LIMIT $offset, $maxItemPerPage";
 
-$query = $query0.$query;
-echo "<br>";
-echo $query;
-echo "<br>";
-$result = mysqli_query($connection, $query);
-if(!$result){
-  die("query failed");
-}
-else{
-  // echo "success";
-}
+  $query = $query0.$query;
+  // echo "<br>";
+  // echo $query;
+  // echo "<br>";
+  $result = mysqli_query($connection, $query);
+  if(!$result){
+    die("query failed");
+  }
+  else{
+    // echo "success";
+  }
 
 ?>
 
@@ -193,8 +192,34 @@ else{
       echo "</div></a>";
     }
 
-  ?>
+    //xml
+    // if(result>0){
+    $xmlFile = new DOMDocument("1.0");
+    $xmlFile ->formatOutput=true;
+    $meterstation = $xmlFile->createElement("stations");
+    $xmlFile -> appendChild($meterstation);
 
+    while($row = mysqli_fetch_assoc($result)){
+      $station = $xmlFile -> createElement("station");
+      $meterstation -> appendChild($station);
+
+      $m_ID = $xmlFile -> createElement("m_ID", $row["METER_ID"]);
+      $station ->appendChild($m_ID);
+
+      $m_Type = $xmlFile -> createElement("m_Type", $row["METER_TYPE"]);
+      $station ->appendChild($m_Type);
+
+      $m_addr = $xmlFile -> createElement("m_addr", $row["ADDRESS"]);
+      $station ->appendChild($m_addr);
+
+      $m_HRate = $xmlFile -> createElement("m_HRate", $row["HOURLY_RATE"]);
+      $station ->appendChild($m_HRate);
+    }
+    echo "<xmp>".$xmlFile->saveXML()."</xmp>";
+    $xmlFile ->save("query.xml");
+    // }
+
+  ?>
   <!-- Page navigation for items -->
   <div class="box pages-bar">
     <?php
@@ -215,34 +240,6 @@ else{
     }
     ?>
   </div>
-
-  <div class="box pages-bar">
-    <?php
-    // if($pageNum != 1){
-    //   echo "<a class='pagination-button' href='browse.php?pageNum=". ($pageNum - 1). "'> < </a>";
-    // }
-    // else{
-    //   echo "<a class='disabled-pagination' href='browse.php?pageNum=". ($pageNum - 1). "'></a>";
-    // }
-    // echo "<div class='curr-page'>";
-    // echo $pageNum;
-    // echo "</div>";
-    // if($pageNum != $total_pages){
-    //   echo "<a class='pagination-button' href='browse.php?pageNum=". ($pageNum + 1 ). "'> > </a>";
-    // }
-    // else{
-    //   echo "<a class='disabled-pagination' href='browse.php?pageNum=". ($pageNum + 1 ). "'></a>";
-    // }
-    ?>
-    <?php
-    // echo 'browse.php?pageNum='.($pageNum + 1);
-     ?>
-  </div>
-
-
-
-
-
 
 </div>
 </div>

@@ -56,21 +56,14 @@ session_start();
   <div class="box index-top">
     <div class="overlay">
       <div class="index-heading">
-        <h1>Surrey Paystation Finder</h1>
+        <h1>Surrey <br>Paystation<br> Finder</h1>
         <p class="heading-subtitle">Helping you find the best paystation since 2020</p>
         <a href="browse.php"><div class="index-browsebutton">Browse Meters</div></a>
       </div>
     </div>
-    <img src="img/Pay-Parking-t2.jpg" alt="payparkingheader">
-<!--
-    <div class="index-signupbox">
-      <h2>Sign up</h2>
-      <a href="signup.php"><div class="index-signupbutton">Confirm</div></a>
-    </div> -->
-
+    <img class="index-image" src="img/Pay-Parking-t2.jpg" alt="payparkingheader">
   </div>
 
-  <!-- <div class="index-heading-2"><h2>Popular Meters</h2></div> -->
   <div class="index-bottom box">
     <div class="index-info">
       <div class="title">What is Paystation Finder</div>

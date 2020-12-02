@@ -26,7 +26,7 @@ a.link:hover{
 nav {
   width:100%;
   margin:0;
-  background-color: rgba(171, 222, 184, 1);
+  background-color: #24272B;
   height:3rem;
 }
 .nav-box{
@@ -39,19 +39,20 @@ nav {
   color:white;
   padding-left:3rem;
   padding-top:0.5rem;
+  font-weight:bold;
 }
 .nav-button{
   flex:1;
   margin-right:0.2rem;
   font-size:1rem;
-  background-color: rgba(197, 250, 211, 0);
-  transition: background-color 1s ease-out;
+  background-color: #24272B;
+  transition: background-color 0.5s ease-out;
   padding-top:0.8rem;
   text-align:center;
   height:3rem;;
 }
 .nav-button:hover{
-  background-color: rgba(197, 250, 211, 1);
+  background-color: #4b525c;
 }
 nav>a{
     color:white;
@@ -60,24 +61,23 @@ nav>a{
 .signup-button{
   margin-right:0.2rem;
   font-size:1rem;
-  background-color: rgba(155, 209, 169,1);
-  transition: background-color 1s ease-out;
+  background-color: #07070A;
+  transition: background-color 0.5s ease-out;
   padding-top:0.8rem;
   text-align:center;
   height:3rem;
 }
 .signup-button:hover{
-  background-color: rgba(155, 209, 169,0);
+  background-color: #6f7680;
 }
 .member-status-bar{
   float:right;
-  background-color: rgba(171, 222, 184, 1);
+  background-color: #3E78B2;
   color: rgba(245, 245, 245,1);
   font-size:1.1rem;
   padding:0.3rem;
   padding-left:0.5rem;
   padding-right:0.5rem;
-  margin-right: 0.5rem;
 }
 
 li{
@@ -110,7 +110,7 @@ li{
 }
 
 .index-top{
-  width:60%;
+  width:80rem;
   height:30rem;
   margin-top:0.5rem;
   margin-left:auto;
@@ -119,17 +119,14 @@ li{
   overflow:hidden;
 }
 .index-bottom{
-  width:60%;
+  width:80rem;
   margin-left:auto;
   margin-right:auto;
   margin-top:1.5rem;
 }
-.frame{
-
-}
 .overlay{
   position: absolute;
-  /* background-color: rgba(180,180,180,0.5); */
+  background-color: rgba(180,180,180,0.3);
   z-index: 5;
   width:inherit;
   height:inherit;
@@ -138,6 +135,8 @@ li{
 h1{
   padding:0;
   margin:0;
+  color:white;
+  font-size:3rem;
 }
 h2{
   padding:0;
@@ -147,25 +146,25 @@ h2{
 .index-heading{
   margin:0;
   padding:0;
-  padding-top:15rem;
-  padding-left:0.5rem;
-  width:25rem;
+  padding-top:8rem;
+  padding-left:2rem;
+  width:30rem;
   height:inherit;
-  background-color: rgba(180, 180, 180,0.6);
+  <!-- background-color: #4b525c; -->
   color:white;
   font-weight: normal;
   font-size: 1rem;
 }
 .heading-subtitle{
-  color:black;
+  color:;
 }
 
 .index-browsebutton{
   width:8rem;
   padding:0.3rem;
   text-align:center;
-  color:rgba(80, 80, 80, 1);
-  background-color: rgba(171, 222, 184, 1);
+  color: white;
+  background-color: #004BA8;
   transition:background-color 0.3s ease-out;
 }
 .index-browsebutton:hover{
@@ -214,15 +213,17 @@ span.errorMsg{
   font-weight: bold;
 }
 .browse-box{
-  padding-top:3rem;
   width:60%;
+  height:100vh;
   margin-left:auto;
   margin-right:auto;
 }
 .filter-box{
   flex:1;
-  background-color:#F8F8F8;
   font-size:0.8rem;
+}
+.queryForm{
+  
 }
 .filter-type-name{
   font-weight: bold;
@@ -263,6 +264,11 @@ span.errorMsg{
 
 .icon-meter{
   width: 2rem;
+}
+
+.browse-box{
+  flex:3;
+  padding:0;
 }
 
 .disabled-pagination{
