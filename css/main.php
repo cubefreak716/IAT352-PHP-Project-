@@ -276,22 +276,29 @@ span.errorMsg{
   pointer-events: none;
   cursor: default;
   flex:1
+  color:white;
+  font-weight:bold;
+  flex:1;
+  text-align: center;
+  background-color: #4A525A;
 }
 
 .pages-bar{
   margin-top:2rem;
-  background-color: rgba(209, 237, 216,1);
+
 }
 .curr-page{
   flex:1;
   text-align: center;
 }
 .pagination-button{
+  color:white;
+  font-weight:bold;
   flex:1;
   text-align: center;
-  background-color: rgba(182, 209, 189,1);
+  background-color: #4A525A;
   transition:background-color 0.3s ease-out;
 }
 .pagination-button:hover{
-  background-color: rgba(182, 209, 189,0);
+  background-color: #3E78B2;
 }

@@ -146,7 +146,7 @@
     <div class="browse-box box">
       <form class="queryForm" action="browse.php" method="post" onchange="changePage()">
       <div class="filter-box">
-        <div class="filter-type-name">Meter type</div>
+        <div class="filter-type-name">Meter type</div><br>
           <input type="checkbox" class="meter-type" name="metertype[]" value="Paystation" onchange="refreshPage(this.value)">Paystation<br>
           <input type="checkbox" class="meter-type" name="metertype[]" value="EV"  onchange="refreshPage(this.value)">EV charging station<br>
         <div class="filter-type-name">Operation Hours</div><br>
@@ -161,8 +161,8 @@
           <input type="checkbox" name="zonetype[]" value="On-Street Parking" onclick="refreshPage(this.value)">On-street<br>
           <input type="checkbox" name="zonetype[]" value="Public" onclick="refreshPage(this.value)" onclick="refreshPage(this.value)">Public<br>
           <input type="checkbox" name="zonetype[]" value="employee" onclick="refreshPage(this.value)">Employee<br>
-          <input type="checkbox" name="zonetype[]" value="underground" onclick="refreshPage(this.value)">Underground<br>
-          <input type="checkbox" name="zonetype[]" value="pavedoffstreet" onclick="refreshPage(this.value)">Surface Paved Off-street<br>
+          <input type="checkbox" name="zonetype[]" value="Below Ground" onclick="refreshPage(this.value)">Underground<br>
+          <input type="checkbox" name="zonetype[]" value="Surface Paved Off-Street" onclick="refreshPage(this.value)">Surface Paved Off-street<br>
           <input type="checkbox" name="zonetype[]" value="Surface Gravel Off-Street" onclick="refreshPage(this.value)">Surface Gravel Off-street<br>
           <input type="checkbox" name="zonetype[]" value="fleet" onclick="refreshPage(this.value)">Fleet<br>
         <div class="filter-type-name">Payment Methods</div><br>
