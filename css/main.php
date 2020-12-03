@@ -56,6 +56,8 @@ nav {
 }
 nav>a{
     color:white;
+    font-weight:bold;
+    font-size:1.3rem;
     flex:1;
 }
 .signup-button{
@@ -75,6 +77,7 @@ nav>a{
   background-color: #3E78B2;
   color: rgba(245, 245, 245,1);
   font-size:1.1rem;
+  font-weight:bold;
   padding:0.3rem;
   padding-left:0.5rem;
   padding-right:0.5rem;
@@ -100,10 +103,10 @@ li{
 
   justify-content: space-around;
 }
+
 .container2{
   display:flex;
   width:70%;
-  border: 1px solid rgba(89, 255, 170,1);
   margin-top:2rem;
   margin-left:auto;
   margin-right:auto;
@@ -126,7 +129,7 @@ li{
 }
 .overlay{
   position: absolute;
-  background-color: rgba(180,180,180,0.3);
+  background-color:rgba(0, 64, 143,0.4);
   z-index: 5;
   width:inherit;
   height:inherit;
@@ -145,26 +148,42 @@ h2{
 }
 .index-heading{
   margin:0;
+  margin-bottom:0.4rem;
   padding:0;
-  padding-top:8rem;
+  padding-top:8.5rem;
   padding-left:2rem;
   width:30rem;
   height:inherit;
-  <!-- background-color: #4b525c; -->
   color:white;
   font-weight: normal;
   font-size: 1rem;
 }
-.heading-subtitle{
-  color:;
+.index-heading-2{
+  text-align:center;
+  border-top: 1.5px solid black;
+  border-bottom:1.5px solid black;
+  margin-top:1.3rem;
+  font-size:1.8rem;
+}
+p.heading-subtitle{
+  color:white;
+  font-weight:bold;
+  font-size:1.2rem;
+  padding:0.2rem;
+  <!-- background-color: #3E78B2; -->
 }
 
-.index-browsebutton{
-  width:8rem;
-  padding:0.3rem;
+a>.index-browsebutton{
+  width:10rem;
+  font-weight:bold;
+  font-size:1.2rem;
+  margin-top:0.5rem;
+  padding:0.5rem;
   text-align:center;
   color: white;
   background-color: #004BA8;
+  border-radius:25px;
+  border:2px solid;
   transition:background-color 0.3s ease-out;
 }
 .index-browsebutton:hover{
@@ -190,7 +209,6 @@ h2{
 }
 p{
   text-align: left;
-  margin-left: 0.4rem;
 }
 
 .signup-form{
@@ -242,7 +260,18 @@ span.errorMsg{
   padding-left:0.5rem;
   padding-bottom:1.5rem;
 }
-.item:hover{
+.item2{
+  flex:1 1 0px;
+  background-color:rgb(242, 242, 242);
+  transition:background-color 0.3s ease-out;
+  text-align: center;
+  margin-right:0.5rem;
+  padding-left:5rem;
+  padding-right:5rem;
+  padding-top:1.5rem;
+  padding-bottom:2rem;
+}
+.item:hover, .item2:hover{
   background-color: rgba(160, 160, 160, 1);
 }
 .item-num{
@@ -265,6 +294,9 @@ span.errorMsg{
 .icon-meter{
   width: 2rem;
 }
+.icon-meter-large{
+  width:5rem;
+}
 
 .browse-box{
   flex:3;
@@ -280,7 +312,7 @@ span.errorMsg{
   font-weight:bold;
   flex:1;
   text-align: center;
-  background-color: #4A525A;
+  <!-- background-color: #4A525A; -->
 }
 
 .pages-bar{

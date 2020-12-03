@@ -1,7 +1,6 @@
 <!DOCTYPE HTML>
 <?php
 session_start();
-
 ?>
 <html lang="en">
 <head>
@@ -12,10 +11,36 @@ session_start();
 
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/main.php">
-  <!-- <link rel="stylesheet" href="css/main.css"> -->
   <link rel="stylesheet" href="css/louiscss.php">
   <link rel="stylesheet" href="css/fonts.css">
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script>
+    function getXMLHTTPRequest(){
+      var request = false;
+      try{
+        // Firefox
+        request = new XMLHttpRequest();
+      } catch (err){
+        try{
+          //ie
+          request = new ActiveXObject("Msxml2.XMLHTTP");
+        }catch(err){
+          try{
+            //other ie
+            request = new ActiveXObject("Microsoft.XMLHTTP");
+          }catch(err){
+            request = false;
+          }
+        }
+      }
+      return request;
+    }
+    </script>
+
+</head>
+
+<body>
   <?php
       if(isset($_GET["data"]))
       {
@@ -74,10 +99,6 @@ session_start();
     $bookmarkErr="";
     $occupyErr="";
   ?>
-
-</head>
-
-<body>
   <?php
   //calculate number of $occupiedSpace
   $occupied_query="SELECT * from occupy where ID_paystation = '".$_SESSION["current-item"]."'";
@@ -100,7 +121,8 @@ session_start();
       <a href="browse.php"><div class="nav-button"> Browse </div></a>
       <?php
       if(isset($_SESSION['log_username'])){
-        echo "<a href='settings.php'><div class='nav-button'> Settings </div></a>";
+        echo "<a href='settings.php'><div class='nav-button'> ".$_SESSION['log_username']."";
+        echo "</div></a>";
         echo "<a href='logout.php'><div class='signup-button'> Log Out </div></a>";
       }
       else{
@@ -108,17 +130,6 @@ session_start();
       }
       ?>
     </nav>
-    <div class="member-status-bar">
-      <?php
-        if(isset($_SESSION['log_username'])){
-          echo "Welcome: ";
-          echo $_SESSION['log_username'];
-        }
-        else{
-          echo "Welcome guest";
-        }
-      ?>
-    </div>
   </div>
 
 <?php
@@ -151,12 +162,12 @@ $myfile =fopen("registrationText.txt","r") or die ("Unable to open file!");
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACgCZhwU6s-5ODqPU8LqmVvvSa8nq2wZk&callback=myMap"></script>
 
   <div class="iteminfo">
-    <p class="meterlist"><em class="meterlist">Meter ID: </em><?php echo $_SESSION['current-item'] ?></p>
+    <p class="meterlist"><em>Meter ID: </em><?php echo $_SESSION['current-item'] ?></p>
     <p class="meterlist"><em>Meter type: </em><?php echo $meterType  ?></p>
     <p class="meterlist"><em>Operation Hours: </em><?php echo $operationHours  ?> </p>
     <p class="meterlist"><em>Operation Days: </em><?php echo $operationDays  ?> </p>
     <p class="meterlist"><em>Hourly Rate: </em><?php echo $hourlyRate  ?></p>
-    <p class="meterlist"><em>Daily Rate: </em><?php echo $dailyRate  ?></p>
+    <p class="meterlist"><em>Daily Rate: </em>$<?php echo $dailyRate  ?></p>
     <p class="meterlist"><em>Maximum Hours:</em> <?php echo $maximumHours  ?></p>
     <p class="meterlist"><em>Zone Type: </em><?php echo $zoneType  ?></p>
     <p class="meterlist"><em>Payment Methods: </em><?php echo $paymentMethods  ?></p>
@@ -243,6 +254,7 @@ $myfile =fopen("registrationText.txt","r") or die ("Unable to open file!");
           else{
             $occupyErr = "Parking space is full!";
           }
+          header("Location: item.php?data=".$_SESSION["current-item"]."");
         }//end of occupy isset
         //occupy feature
         echo "<form method='post' action='item.php?data=".$_SESSION['current-item']."'>";

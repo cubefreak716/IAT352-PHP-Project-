@@ -148,23 +148,24 @@
         $status = "Profile Updated Successfully. </br></br>
         <a href='settings.php'>View Updated Profile</a>";
         echo '<p style="color:#FF0000;">'.$status.'</p>';
+        header("Location: settings.php");
 
       }else {
       ?>
         <div class="profile-box">
           <form name="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" enctype="multipart/form-data">
             <input type="hidden" name="new" value="1" />
-            <input name="id" type="hidden" value="<?php echo $row['ID'];?>" />
+            <input name="id" type="hidden" value="<?php echo $row['ID'];?>" /><br>
             <p><input type="text" name="username" placeholder="Enter Username"
-              required value="<?php echo $row['username'];?>" /></p>
+              required value="<?php echo $row['username'];?>" /></p><br>
             <p><input type="text" name="password" placeholder="Enter Password"
-              required value="<?php echo "NewPassword";?>" /></p>
+              required value="<?php echo "NewPassword";?>" /></p><br>
             <p><input type="text" name="email" placeholder="Enter Email"
-              required value="<?php echo $row['email'];?>" /></p>
+              required value="<?php echo $row['email'];?>" /></p><br>
             <p><input type="text" name="phonenumber" placeholder="Enter Phone Number"
-              required value="<?php echo $row['phone_number'];?>" /></p>
+              required value="<?php echo $row['phone_number'];?>" /></p><br>
 
-            <p><input type="file" name="fileToUpload" id="fileToUpload"></p>
+            <p><input type="file" name="fileToUpload" id="fileToUpload"></p><br>
             <p><input name="submit" type="submit" value="Update" /></p>
           </form>
             <?php } ?>

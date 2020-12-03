@@ -283,7 +283,7 @@
       echo "<a class='pagination-button' onclick='pagination(".($pageNum-1).")'> < </a>";
       }
       else{
-        echo "<a class='disabled-pagination' onclick='pagination(".($pageNum-1).")'> < </a>";
+        echo "<a class='disabled-pagination' onclick='pagination(".($pageNum-1).")'>  </a>";
       }
       echo "<div class='curr-page'>";
       echo $pageNum;
@@ -292,7 +292,7 @@
         echo "<a class='pagination-button' onclick='pagination(".($pageNum+1).")'> > </a>";
       }
       else{
-        echo "<a class='disabled-pagination' onclick='pagination(".($pageNum+1).")'> > </a>";
+        echo "<a class='disabled-pagination' onclick='pagination(".($pageNum+1).")'>  </a>";
       }
     ?>
   </div>

@@ -34,13 +34,23 @@
     }
   ?>
 
-  <nav class="box">
-    <div class="nav-title">Paystation Finder </div>
-    <a href="index.php"><div class="nav-button">  Home  </div></a>
-    <a href="browse.php"><div class="nav-button"> Browse </div></a>
-    <a href="settings.php"> <div class="nav-button"> Settings  </div></a>
-    <a href="signup.php"><div class="signup-button">  Sign up </div></a>
-  </nav>
+  <div class="nav-box">
+    <nav class="box">
+      <div class="nav-title">Paystation Finder </div>
+      <a href="index.php"><div class="nav-button">  Home  </div></a>
+      <a href="browse.php"><div class="nav-button"> Browse </div></a>
+      <?php
+      if(isset($_SESSION['log_username'])){
+        echo "<a href='settings.php'><div class='nav-button'> ".$_SESSION['log_username']."";
+        echo "</div></a>";
+        echo "<a href='logout.php'><div class='signup-button'> Log Out </div></a>";
+      }
+      else{
+        echo "<a href='signup.php'><div class='signup-button'> Sign up/Sign in </div></a>";
+      }
+      ?>
+    </nav>
+  </div>
 
 <?php
 

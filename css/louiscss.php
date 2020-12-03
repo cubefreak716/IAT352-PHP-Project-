@@ -16,7 +16,8 @@ li{
 }
 
 .itempage-heading{
-  margin-left:5rem;
+  margin-left:3rem;
+  color:black;
 }
 em{
   font-weight:bold;
@@ -52,17 +53,25 @@ p.meterlist{
   padding-left: auto;
   padding-right: auto;
   padding-top:0.5rem;
-  border: 1px solid rgba(89, 255, 170,1);
 }
 .favourite-box{
-  flex:3;
+  flex:4;
   margin-left: auto;
   margin-right: auto;
   margin-bottom:1rem;
   padding-left: auto;
   padding-right: auto;
-  border: 1px solid rgba(89, 255, 170,1);
+  border-left: 4px solid #004BA8;
 }
+.index-favourite-box{
+  width:60%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom:1rem;
+  padding-left: auto;
+  padding-right: auto;
+}
+
 
 .userinfosquare {
   margin-top:0.5vh;
@@ -89,8 +98,9 @@ p.meterlist{
 }
 .iteminfo>p{
   font-size:1rem;
-  border:4px rgba(62, 102, 82,1);
+  border:4px #004BA8;
   border-style: none none none solid;
+  padding-left:0.4rem;
 }
 .edit-features{
   text-align:center;
@@ -103,4 +113,37 @@ p.meterlist{
   margin-top:2rem;
   margin-left:auto;
   margin-right:auto;
+}
+#bk-table, #ocp-table{
+  margin-top:3rem;
+  margin-left:1.5rem;
+  width:30rem;
+  margin-bottom:2rem;
+}
+
+#bk-table th, #ocp-table th{
+ background-color:#4e5257;
+ color:white;
+}
+#bk-table.table-spacing, #ocp-table.table-spacing{
+  padding:0.5rem;
+
+}
+#bk-table tr:nth-child(even){
+  background-color: #c8d3de;
+}
+.remove-button{
+  text-align:center;
+
+}
+div.remove-bk{
+  color:white;
+  background-color:#00408F;
+  width:100%;
+}
+.remove-bk>a{
+  color:white;
+}
+.remove-bk:hover{
+  background-color:#3E78B2;
 }

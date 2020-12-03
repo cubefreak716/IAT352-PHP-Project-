@@ -42,7 +42,8 @@
       <a href="browse.php"><div class="nav-button"> Browse </div></a>
       <?php
       if(isset($_SESSION['log_username'])){
-        echo "<a href='settings.php'><div class='nav-button'> Settings </div></a>";
+        echo "<a href='settings.php'><div class='nav-button'> ".$_SESSION['log_username']."";
+        echo "</div></a>";
         echo "<a href='logout.php'><div class='signup-button'> Log Out </div></a>";
       }
       else{
@@ -50,17 +51,6 @@
       }
       ?>
     </nav>
-    <div class="member-status-bar">
-      <?php
-        if(isset($_SESSION['log_username'])){
-          echo "Welcome: ";
-          echo $_SESSION['log_username'];
-        }
-        else{
-          echo "Welcome guest";
-        }
-      ?>
-    </div>
   </div>
 
 

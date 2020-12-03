@@ -28,7 +28,7 @@ if(mysqli_connect_errno()){
   <!-- <link rel="stylesheet" href="css/normalize.css"> -->
   <link rel="stylesheet" href="css/main.php">
   <link rel="stylesheet" href="css/fonts.css">
-  <!-- <link rel="stylesheet" href="css/main.css"> -->
+  <link rel="stylesheet" href="css/louiscss.php">
 
 
 </head>
@@ -47,7 +47,8 @@ if(mysqli_connect_errno()){
       <a href="browse.php"><div class="nav-button"> Browse </div></a>
       <?php
       if(isset($_SESSION['log_username'])){
-        echo "<a href='settings.php'><div class='nav-button'> Settings </div></a>";
+        echo "<a href='settings.php'><div class='nav-button'> ".$_SESSION['log_username']."";
+        echo "</div></a>";
         echo "<a href='logout.php'><div class='signup-button'> Log Out </div></a>";
       }
       else{
@@ -55,17 +56,6 @@ if(mysqli_connect_errno()){
       }
       ?>
     </nav>
-    <div class="member-status-bar">
-      <?php
-        if(isset($_SESSION['log_username'])){
-          echo "Welcome: ";
-          echo $_SESSION['log_username'];
-        }
-        else{
-          echo "Welcome guest";
-        }
-      ?>
-    </div>
   </div>
 
 
@@ -82,10 +72,9 @@ if(mysqli_connect_errno()){
 
 <?php
 if(isset($_SESSION["ID"])){
-echo'<div class="favourite-box">
-  <h2 class=""> Favourite Paystations</h2>
-  <div class="bookmark-list">
-    <ul>';
+echo'<div class="index-favourite-box">
+  <h2 class="index-heading-2"> Paystations</h2>
+  <div class="bookmark-list box">';
 
       $query_getBookmarks = "SELECT * FROM bookmarks WHERE bookmarks.ID_user = '";
       $query_getBookmarks .= $_SESSION['ID']. "'";
@@ -98,7 +87,7 @@ echo'<div class="favourite-box">
 
         $isempty=0;
         while($row = mysqli_fetch_assoc($result)){
-          echo "<li>";
+          // echo "<li>";
           $isempty=1;
           //echo $row['ID_paystation'];
           echo " ";
@@ -106,30 +95,31 @@ echo'<div class="favourite-box">
           $query_getStreetName .= $row['ID_paystation']. "'";
           $result2 = mysqli_query($connection, $query_getStreetName);
           while($strname = mysqli_fetch_assoc($result2)){
-            echo "<a href='item.php?data=".$strname["METER_ID"]."'><div class='item'>";
-            echo "<div class='item-num'>";
-            echo $strname["METER_ID"];
-            echo "</div> ";
+            echo "<a class='item2' href='item.php?data=".$strname["METER_ID"]."'>";
             if(strpos($strname["METER_TYPE"],'Paystation') !== false){
-              echo "<img class='icon-meter' src='img/parking.png' alt='paystationicon'> ";
+              echo "<img class='icon-meter-large' src='img/parking.png' alt='paystationicon'> ";
             }
             if(strpos($strname["METER_TYPE"],'EV') !== false){
-              echo "<img class='icon-meter' src='img/charging.png' alt='chargingstationicon'> ";
+              echo "<img class='icon-meter-large' src='img/charging.png' alt='chargingstationicon'> ";
             }
+            echo "<br><div class='item-num'>";
+            echo $strname["METER_ID"];
+            echo "</div> <br>";
+
             echo $strname["ADDRESS"];
-            echo " ";
-            echo "<div class='item-hourrate'> Rate: ";
+            echo "<br>";
+            echo "<div class='item-stationtype'> Rate: ";
             echo $strname["HOURLY_RATE"];
             echo "</div>";
-            echo "</div></a>";
+            echo "</a>";
           }
-          echo "</li>";
+          // echo "</li>";
         }
       }
       if($isempty==0){
-        echo'<p>You Do Not Have Any Favourites. Here Are Some Suggestions:</p>';
+        // echo'<p>You Do Not Have Any Favourites. Here Are Some Suggestions:</p>';
 
-          echo "<li>";
+          // echo "<li>";
 
           //echo $row['ID_paystation'];
           echo " ";
@@ -137,28 +127,30 @@ echo'<div class="favourite-box">
 
           $result2 = mysqli_query($connection, $query_getStreetName);
           while($strname = mysqli_fetch_assoc($result2)){
-            echo "<a href='item.php?data=".$strname["METER_ID"]."'><div class='item'>";
-            echo "<div class='item-num'>";
-            echo $strname["METER_ID"];
-            echo "</div> ";
+            echo "<a class='item2' href='item.php?data=".$strname["METER_ID"]."'>";
             if(strpos($strname["METER_TYPE"],'Paystation') !== false){
-              echo "<img class='icon-meter' src='img/parking.png' alt='paystationicon'> ";
+              echo "<img class='icon-meter-large' src='img/parking.png' alt='paystationicon'> ";
             }
             if(strpos($strname["METER_TYPE"],'EV') !== false){
-              echo "<img class='icon-meter' src='img/charging.png' alt='chargingstationicon'> ";
+              echo "<img class='icon-meter-large' src='img/charging.png' alt='chargingstationicon'> ";
             }
+
+            echo "<br><div class='item-num'>";
+            echo $strname["METER_ID"];
+            echo "</div> <br>";
+
             echo $strname["ADDRESS"];
-            echo " ";
-            echo "<div class='item-hourrate'> Rate: ";
+            echo "<br>";
+            echo "<div class='item-stationtype'> Rate: ";
             echo $strname["HOURLY_RATE"];
             echo "</div>";
-            echo "</div></a>";
+            echo "</a>";
           }
-          echo "</li>";
+          // echo "</li>";
 
       }
     echo'
-    </ul>
+
   </div>
 </div>';
 
