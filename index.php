@@ -161,19 +161,22 @@ echo'<div class="index-favourite-box">
   echo '<div class="index-bottom box">
     <div class="index-info">
       <div class="title">What is Paystation Finder</div>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ornare tincidunt lacus sit amet pellentesque. Nulla sodales eros risus, vitae tincidunt magna viverra sagittis. convallis mi eu, sodales tellus.
-    </div>
-    <div class="index-info ">
-      <div class="title">Company Values</div>
-      <p>
-        Duis id sapien odio. Nunc vitae semper lacus, sagittis cursus magna. Quisque sed est et risus euismod vulputate non eget ex. Quisque rutrum diam in feugiat posuere.
+      <p class="index-info-p">
+        This is a website that helps you find a pay station matching your needs.
+
       </p>
     </div>
     <div class="index-info">
-      <div class="title">Future Products</div>
-      <p>
-        Sed ac justo nec nisi rutrum luctus. Maecenas justo sapien, ullamcorper sed malesuada feugiat, commodo ac sem. Morbi id turpis ultrices, dapibus dui eget, interdum sapien.
+      <div class="title">Is it Free</div>
+      <p class="index-info-p">
+        Yes. This is service is 100% free.
+      </p>
+    </div>
+    <div class="index-info">
+      <div class="title">Will This Work Beyond Surrey</div>
+      <p class="index-info-p">
+      No, unfortunately this web application does not work with any other cities.
+      However, we are looking towards expanding a greater audience at a later time.
       </p>
     </div>
   </div>';

@@ -198,7 +198,6 @@ $myfile =fopen("registrationText.txt","r") or die ("Unable to open file!");
 
               $result_bookmark = mysqli_query($connection, $query_bookmark);
 
-
               if($result_bookmark){
                 $bookmarkErr = "Bookmarked!";
               }

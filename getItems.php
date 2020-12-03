@@ -169,29 +169,13 @@
   $offset = ($pageNum-1) * $maxItemPerPage;
   $totalPagesSQL = "SELECT COUNT(*) FROM pay_stations WHERE ";
   $totalPagesSQL = $totalPagesSQL.$query;
-  // echo $totalPagesSQL;
   $result2 = mysqli_query($connection, $totalPagesSQL);
   $total_rows = mysqli_fetch_array($result2)[0];
   $total_pages = ceil($total_rows / $maxItemPerPage);
-  // echo "got page num = ".$pageNum;
-  // echo " offset = ".$offset;
-  // echo " total_row = ".$total_rows;
-  // echo " total pages = ".$total_pages;
   $noLimitQuery = $query0.$query;
   $query .= "LIMIT $offset, $maxItemPerPage";
 
   $query = $query0.$query;
-  // echo "<br>";
-  // echo $query;
-  // echo "<br>";
-  // $result = mysqli_query($connection, $query);
-  // if(!$result){
-  //   die("query failed");
-  // }
-  // else{
-  //   // echo "success";
-  // }
-
 ?>
 
 <?php
@@ -220,12 +204,8 @@
     }
     $xmlFile->saveXML();
     $xmlFile ->save("query.xml");
-
 ?>
 
-
-
-<!-- Items from future database -->
 <div class="items-box">
   <?php
     // for loop to grab items from future database
@@ -255,24 +235,6 @@
         echo "</div>";
         echo "</div></a>";
     }
-    // while($row = mysqli_fetch_assoc($result)){
-    //   echo "<a href='item.php?data=".$row["METER_ID"]."'><div class='item'>";
-    //   echo "<div class='item-num'>";
-    //   echo $row["METER_ID"];
-    //   echo "</div> ";
-    //   if(strpos($row["METER_TYPE"],'Paystation') !== false){
-    //     echo "<img class='icon-meter' src='img/parking.png' alt='paystationicon'> ";
-    //   }
-    //   if(strpos($row["METER_TYPE"],'EV') !== false){
-    //     echo "<img class='icon-meter' src='img/charging.png' alt='chargingstationicon'> ";
-    //   }
-    //   echo $row["ADDRESS"];
-    //   echo " ";
-    //   echo "<div class='item-hourrate'> Rate: ";
-    //   echo $row["HOURLY_RATE"];
-    //   echo "</div>";
-    //   echo "</div></a>";
-    // }
 
   ?>
 

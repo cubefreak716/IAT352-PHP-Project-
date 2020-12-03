@@ -192,23 +192,27 @@ a>.index-browsebutton{
 
 .index-info{
   width:100%;
-  height:12rem;
+  height:15rem;
   flex:1;
   margin-right:0.3rem;
   background-color:rgb(240,240,240);
   transition:background-color 0.3s ease-out;
-  text-align:center;
+
 }
 
 .title{
   padding:1.5rem;
+  margin-bottom:0.5rem;
   font-size:1.2rem;
   width:inherit;
-  color: rgba(114, 173, 130,1);
-  background-color: rgba(197, 250, 211, 1);
+  color: white;
+  text-align:center;
+  background-color: #00408F;
 }
-p{
-  text-align: left;
+p.index-info-p{
+  font-size:2vh;
+  margin-top:0.6rem;
+  text-align:left;
 }
 
 .signup-form{

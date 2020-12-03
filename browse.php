@@ -62,7 +62,6 @@
         xmlhttp.open("POST","getItems.php?metertype="+filterString+"<?php echo $pageNum ?>",true);
         xmlhttp.send();
       }
-
     }
     function pagination(page){
       var clist = document.forms[0];
@@ -134,32 +133,51 @@
 
     <!-- Filter box -->
     <div class="browse-box box">
-      <form class="queryForm" action="browse.php" method="post" onchange="changePage()">
+      <form action="browse.php" method="post" onchange="changePage()">
       <div class="filter-box">
         <div class="filter-type-name">Meter type</div><br>
-          <input type="checkbox" class="meter-type" name="metertype[]" value="Paystation" onchange="refreshPage(this.value)">Paystation<br>
-          <input type="checkbox" class="meter-type" name="metertype[]" value="EV"  onchange="refreshPage(this.value)">EV charging station<br>
+          <input type="checkbox" class="meter-type" name="metertype[]" value="Paystation">
+          Paystation<br>
+          <input type="checkbox" class="meter-type" name="metertype[]" value="EV">
+          EV charging station<br>
         <div class="filter-type-name">Operation Hours</div><br>
-          <input type="checkbox" name="ophours[]" value="6:00 AM to 6:00 PM" onclick="refreshPage(this.value)">6:00am - 6:00pm<br>
-          <input type="checkbox" name="ophours[]" value="8:00 AM to 11:00 PM" onclick="refreshPage(this.value)">8:00am - 11:00pm<br>
-          <input type="checkbox" name="ophours[]" value="Outside of City Hall/Library Hours" onclick="refreshPage(this.value)">City Hall/Library Hours<br>
-          <input type="checkbox" name="ophours[]" value="24 Hours" onclick="refreshPage(this.value)">24 hours<br>
+          <input type="checkbox" name="ophours[]" value="6:00 AM to 6:00 PM" >
+          6:00am - 6:00pm<br>
+          <input type="checkbox" name="ophours[]" value="8:00 AM to 11:00 PM" >
+          8:00am - 11:00pm<br>
+          <input type="checkbox" name="ophours[]" value="Outside of City Hall/Library Hours" >
+          City Hall/Library Hours<br>
+          <input type="checkbox" name="ophours[]" value="24 Hours" >
+          24 hours<br>
         <div class="filter-type-name">Operation Days</div><br>
-          <input type="checkbox" name="opdays[]" value="7 Days/Week" onclick="refreshPage(this.value)">7 days a week<br>
-          <input type="checkbox" name="opdays[]" value="Mon - Fri" onclick="refreshPage(this.value)">Weekdays<br>
+          <input type="checkbox" name="opdays[]" value="7 Days/Week" >
+          7 days a week<br>
+          <input type="checkbox" name="opdays[]" value="Mon - Fri" >
+          Weekdays<br>
         <div class="filter-type-name">Zone Type</div><br>
-          <input type="checkbox" name="zonetype[]" value="On-Street Parking" onclick="refreshPage(this.value)">On-street<br>
-          <input type="checkbox" name="zonetype[]" value="Public" onclick="refreshPage(this.value)" onclick="refreshPage(this.value)">Public<br>
-          <input type="checkbox" name="zonetype[]" value="employee" onclick="refreshPage(this.value)">Employee<br>
-          <input type="checkbox" name="zonetype[]" value="Below Ground" onclick="refreshPage(this.value)">Underground<br>
-          <input type="checkbox" name="zonetype[]" value="Surface Paved Off-Street" onclick="refreshPage(this.value)">Surface Paved Off-street<br>
-          <input type="checkbox" name="zonetype[]" value="Surface Gravel Off-Street" onclick="refreshPage(this.value)">Surface Gravel Off-street<br>
-          <input type="checkbox" name="zonetype[]" value="fleet" onclick="refreshPage(this.value)">Fleet<br>
+          <input type="checkbox" name="zonetype[]" value="On-Street Parking" >
+          On-street<br>
+          <input type="checkbox" name="zonetype[]" value="Public"  >
+          Public<br>
+          <input type="checkbox" name="zonetype[]" value="employee" >
+          Employee<br>
+          <input type="checkbox" name="zonetype[]" value="Below Ground" >
+          Underground<br>
+          <input type="checkbox" name="zonetype[]" value="Surface Paved Off-Street" >
+          Surface Paved Off-street<br>
+          <input type="checkbox" name="zonetype[]" value="Surface Gravel Off-Street" >
+          Surface Gravel Off-street<br>
+          <input type="checkbox" name="zonetype[]" value="fleet" >
+          Fleet<br>
         <div class="filter-type-name">Payment Methods</div><br>
-          <input type="checkbox" name="paymethod[]" value="Cash" onclick="refreshPage(this.value)">Cash<br>
-          <input type="checkbox" name="paymethod[]" value="Credit Card" onclick="refreshPage(this.value)">Credit Card<br>
-          <input type="checkbox" name="paymethod[]" value="PayByPhone" onclick="refreshPage(this.value)">Pay by Phone<br>
-          <input type="checkbox" name="paymethod[]" value="Invoice" onclick="refreshPage(this.value)">Invoice
+          <input type="checkbox" name="paymethod[]" value="Cash" >
+          Cash<br>
+          <input type="checkbox" name="paymethod[]" value="Credit Card" >
+          Credit Card<br>
+          <input type="checkbox" name="paymethod[]" value="PayByPhone" >
+          Pay by Phone<br>
+          <input type="checkbox" name="paymethod[]" value="Invoice" >
+          Invoice
       </div>
       </form>
       <div id="db_display" class="browse-box"></div>
