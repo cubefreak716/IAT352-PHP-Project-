@@ -62,9 +62,7 @@
        $weekdays=0;
      }
        $queryTest = "SELECT * from personalization where ID_user='{$_SESSION["ID"]}';";
-       $resultTest = mysqli_query($connection, $query) or die ( mysqli_error());
-       $rowTest = mysqli_fetch_assoc($resultTest);
-
+       $resultTest = mysqli_query($connection, $queryTest) or die ( mysqli_error());
        if($rowTest=mysqli_fetch_assoc($resultTest)){
          $query = "UPDATE personalization set paystations= $paystayPref, ev=$evPref, weekdays=$weekdays  where ID_user='{$_SESSION["ID"]}';";
          mysqli_query($connection, $query) or die ( mysqli_error());

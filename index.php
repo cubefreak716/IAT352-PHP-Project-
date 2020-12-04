@@ -102,7 +102,7 @@ if($row=mysqli_fetch_assoc($result)){
     $weekdays= $row["weekdays"];
 
 
-  
+
 
 }
 
@@ -146,13 +146,14 @@ if($paystayPref==1&&$ev==1&&$weekdays==1){
           if($queryPref!=""&&$isempty==1){
 
             $queryPref.=" AND ";
-          }elseif($isempty<1){
+          }elseif($isempty<2){
             $queryPref=" WHERE ";
           }
 
           $query_getStreetName = "SELECT * FROM pay_stations ".$queryPref."pay_stations.METER_ID ='";
           $query_getStreetName .= $row['ID_paystation']. "' LIMIT 0,4";
           $result2 = mysqli_query($connection, $query_getStreetName);
+
           while($strname = mysqli_fetch_assoc($result2)){
             echo "<a class='item2' href='item.php?data=".$strname["METER_ID"]."'>";
             if(strpos($strname["METER_TYPE"],'Paystation') !== false){
@@ -182,8 +183,8 @@ if($paystayPref==1&&$ev==1&&$weekdays==1){
 
           //echo $row['ID_paystation'];
           echo " ";
-          $query_getStreetName = "SELECT * FROM pay_stations LIMIT 0,4";
-
+          $query_getStreetName = "SELECT * FROM pay_stations ".$queryPref." LIMIT 0,4";
+        
           $result2 = mysqli_query($connection, $query_getStreetName);
           while($strname = mysqli_fetch_assoc($result2)){
             echo "<a class='item2' href='item.php?data=".$strname["METER_ID"]."'>";
