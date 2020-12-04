@@ -56,24 +56,24 @@
      }else{
        $evPref=0;
      }
-     if(isset($_POST["weekends"])){
-       $weekends=$_POST["weekends"];
+     if(isset($_POST["weekdays"])){
+       $weekdayss=$_POST["weekdays"];
      }else{
-       $weekends=0;
+       $weekdays=0;
      }
        $queryTest = "SELECT * from personalization where ID_user='{$_SESSION["ID"]}';";
        $resultTest = mysqli_query($connection, $query) or die ( mysqli_error());
        $rowTest = mysqli_fetch_assoc($resultTest);
 
        if($rowTest=mysqli_fetch_assoc($resultTest)){
-         $query = "UPDATE personalization set paystations= $paystayPref, ev=$evPref, weekends=$weekends  where ID_user='{$_SESSION["ID"]}';";
-         $result = mysqli_query($connection, $query) or die ( mysqli_error());
+         $query = "UPDATE personalization set paystations= $paystayPref, ev=$evPref, weekdays=$weekdays  where ID_user='{$_SESSION["ID"]}';";
+         mysqli_query($connection, $query) or die ( mysqli_error());
 
 
        }else{
 
-       $query = "INSERT INTO personalization (ID_user, paystations, ev, weekends) VALUES ({$_SESSION["ID"]}, {$paystayPref}, {$evPref}, {$weekends});";
-       $result = mysqli_query($connection, $query) or die ( mysqli_error());
+       $query = "INSERT INTO personalization (ID_user, paystations, ev, weekdays) VALUES ({$_SESSION["ID"]}, {$paystayPref}, {$evPref}, {$weekdays});";
+       mysqli_query($connection, $query) or die ( mysqli_error());
 
 
 
@@ -255,8 +255,8 @@
           <label for="paystations"> Show Regular paystations</label><br>
           <input type="checkbox" id="EV" name="EV" value=1>
           <label for="EV"> Show Electric paystations</label><br>
-          <input type="checkbox" id="weekends" name="weekends" value=1>
-          <label for="weekends"> Open on Weekends</label><br>
+          <input type="checkbox" id="weekdays" name="weekdays" value=1>
+          <label for="weekdays"> Open on weekdays</label><br>
           <p><input name="submit" type="submit" value="Update" /></p>
         </form>
 

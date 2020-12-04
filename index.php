@@ -1,23 +1,22 @@
 <!DOCTYPE HTML>
 <?php
 session_start();
-//connection set up
-$dbhost = "localhost";
-$dbuser = "root";
-$dbpass = "";
-$dbname = "louis_fourie";
-$connection = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
 
-//testing connection
-if(mysqli_connect_errno()){
-  die("Database connection failed: " . mysqli_connect_error() .
-  " (" . mysqli_connect_errno() . ")"
-  );
-}
+
+  //connection set up
+  $dbhost = "localhost";
+  $dbuser = "root";
+  $dbpass = "";
+  $dbname = "louis_fourie";
+  $connection = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
+
+  //testing connection
+  if(mysqli_connect_errno()){
+    die("Database connection failed: " . mysqli_connect_error() .
+    " (" . mysqli_connect_errno() . ")"
+    );
+  }
  ?>
-
-
-
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -70,11 +69,64 @@ if(mysqli_connect_errno()){
     <img class="index-image" src="img/Pay-Parking-t2.jpg" alt="payparkingheader">
   </div>
 
+
 <?php
 if(isset($_SESSION["ID"])){
 echo'<div class="index-favourite-box">
   <h2 class="index-heading-2"> Paystations</h2>
   <div class="bookmark-list box">';
+
+
+  $paystayPref= 0;
+
+  $ev= 0;
+
+  $weekdays=0;
+
+  $query="SELECT * from personalization where ID_user = '".$_SESSION['ID']."'";
+
+  $result = mysqli_query($connection, $query);
+  if(!$result){
+    die("query failed");
+  }
+  else{
+    // echo "success";
+  }
+if($row=mysqli_fetch_assoc($result)){
+  while($row = mysqli_fetch_assoc($result)){
+
+    $paystayPref= $row["paystation"];
+
+    $ev= $row["ev"];
+
+    $weekdays= $row["weekdays"];
+
+
+  }
+}
+
+
+$queryPref="";
+
+if($paystayPref&&$ev&&$weekdays){
+
+}elseif ($paystayPref && $ev) {
+
+}elseif ($paystayPref&&$weekdays) {
+  $queryPref="WHERE pay_stations.METER_TYPE LIKE binary '%Paystation%' AND pay_stations.OPERATION_HOURS LIKE '%Mon - Fri%'";
+}elseif($ev&&$weekdays){
+  $queryPref="WHERE pay_stations.METER_TYPE LIKE binary '%EV%' AND pay_stations.OPERATION_HOURS LIKE '%Mon - Fri%'";
+
+}elseif ($paystayPref) {
+  $queryPref="WHERE pay_stations.METER_TYPE LIKE binary '%Paystation%' ";
+
+}elseif ($ev) {
+  $queryPref="WHERE pay_stations.METER_TYPE LIKE binary '%EV%'";
+
+}elseif ($weekdays) {
+  $queryPref="WHERE pay_stations.OPERATION_HOURS LIKE '%Mon - Fri%'";
+
+}
 
       $query_getBookmarks = "SELECT * FROM bookmarks WHERE bookmarks.ID_user = '";
       $query_getBookmarks .= $_SESSION['ID']. "'";
@@ -90,9 +142,13 @@ echo'<div class="index-favourite-box">
           // echo "<li>";
           $isempty=1;
           //echo $row['ID_paystation'];
-          echo " ";
-          $query_getStreetName = "SELECT * FROM pay_stations WHERE pay_stations.METER_ID ='";
-          $query_getStreetName .= $row['ID_paystation']. "'";
+          if($queryPref!=""){
+            $queryPref.=" AND ";
+          }else{
+            $queryPref=" WHERE ";
+          }
+          $query_getStreetName = "SELECT * FROM pay_stations ".$queryPref."pay_stations.METER_ID ='";
+          $query_getStreetName .= $row['ID_paystation']. "' LIMIT 0,4";
           $result2 = mysqli_query($connection, $query_getStreetName);
           while($strname = mysqli_fetch_assoc($result2)){
             echo "<a class='item2' href='item.php?data=".$strname["METER_ID"]."'>";
@@ -153,11 +209,18 @@ echo'<div class="index-favourite-box">
 
   </div>
 </div>';
-
 }
- ?>
+?>
+  <!-- <div class="index-heading-2"><h2>Popular Meters</h2></div> -->
 
-<?php if(!isset($_SESSION["ID"])){
+
+
+
+
+
+
+<?php
+if(!isset($_SESSION['ID'])){
   echo '<div class="index-bottom box">
     <div class="index-info">
       <div class="title">What is Paystation Finder</div>
@@ -179,8 +242,11 @@ echo'<div class="index-favourite-box">
       However, we are looking towards expanding a greater audience at a later time.
       </p>
     </div>
-  </div>';
-} ?>
+  </div>
+  ';
+}
+  ?>
+
 
 </body>
 </html>
