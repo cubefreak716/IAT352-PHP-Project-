@@ -95,7 +95,7 @@ echo'<div class="index-favourite-box">
 if($row=mysqli_fetch_assoc($result)){
   while($row = mysqli_fetch_assoc($result)){
 
-    $paystayPref= $row["paystation"];
+    $paystayPref= $row["paystations"];
 
     $ev= $row["ev"];
 
@@ -140,9 +140,9 @@ if($paystayPref&&$ev&&$weekdays){
         $isempty=0;
         while($row = mysqli_fetch_assoc($result)){
           // echo "<li>";
-          $isempty=1;
+          $isempty+=1;
           //echo $row['ID_paystation'];
-          if($queryPref!=""){
+          if($queryPref!=""&&!$isempty==1){
             $queryPref.=" AND ";
           }else{
             $queryPref=" WHERE ";
