@@ -33,6 +33,5 @@
       $query .= $_SESSION["remove-id"]."'";
       $result = mysqli_query($connection, $query);
   }
-
   header("Location: settings.php");
 ?>
