@@ -57,7 +57,7 @@
        $evPref=0;
      }
      if(isset($_POST["weekdays"])){
-       $weekdayss=$_POST["weekdays"];
+       $weekdays=$_POST["weekdays"];
      }else{
        $weekdays=0;
      }

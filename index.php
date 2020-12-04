@@ -93,7 +93,7 @@ echo'<div class="index-favourite-box">
     // echo "success";
   }
 if($row=mysqli_fetch_assoc($result)){
-  while($row = mysqli_fetch_assoc($result)){
+
 
     $paystayPref= $row["paystations"];
 
@@ -102,28 +102,29 @@ if($row=mysqli_fetch_assoc($result)){
     $weekdays= $row["weekdays"];
 
 
-  }
+  
+
 }
 
 
 $queryPref="";
 
-if($paystayPref&&$ev&&$weekdays){
+if($paystayPref==1&&$ev==1&&$weekdays==1){
+  $queryPref="WHERE pay_stations.OPERATION_HOURS LIKE '%Mon - Fri%'";
 
-}elseif ($paystayPref && $ev) {
+}elseif ($paystayPref==1 && $ev==1) {
 
-}elseif ($paystayPref&&$weekdays) {
+}elseif ($paystayPref==1&&$weekdays==1) {
   $queryPref="WHERE pay_stations.METER_TYPE LIKE binary '%Paystation%' AND pay_stations.OPERATION_HOURS LIKE '%Mon - Fri%'";
-}elseif($ev&&$weekdays){
+}elseif($ev==1&&$weekdays==1){
   $queryPref="WHERE pay_stations.METER_TYPE LIKE binary '%EV%' AND pay_stations.OPERATION_HOURS LIKE '%Mon - Fri%'";
 
-}elseif ($paystayPref) {
+}elseif ($paystayPref==1) {
   $queryPref="WHERE pay_stations.METER_TYPE LIKE binary '%Paystation%' ";
 
-}elseif ($ev) {
+}elseif ($ev==1) {
   $queryPref="WHERE pay_stations.METER_TYPE LIKE binary '%EV%'";
-
-}elseif ($weekdays) {
+}elseif ($weekdays==1) {
   $queryPref="WHERE pay_stations.OPERATION_HOURS LIKE '%Mon - Fri%'";
 
 }
@@ -142,11 +143,13 @@ if($paystayPref&&$ev&&$weekdays){
           // echo "<li>";
           $isempty+=1;
           //echo $row['ID_paystation'];
-          if($queryPref!=""&&!$isempty==1){
+          if($queryPref!=""&&$isempty==1){
+
             $queryPref.=" AND ";
-          }else{
+          }elseif($isempty<1){
             $queryPref=" WHERE ";
           }
+
           $query_getStreetName = "SELECT * FROM pay_stations ".$queryPref."pay_stations.METER_ID ='";
           $query_getStreetName .= $row['ID_paystation']. "' LIMIT 0,4";
           $result2 = mysqli_query($connection, $query_getStreetName);
